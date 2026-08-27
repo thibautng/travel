@@ -1,0 +1,29 @@
+# Métadonnées du voyage. Voir SPEC.md, section 5.1.
+# Les lieux arrivent au lot 2 : le lot 1 ne lit que la source et le fuseau.
+
+id: 2026-alpes
+titre: Tour des Alpes orientales et Slovénie
+sous_titre: Allemagne, Autriche, Slovénie, Italie
+date_debut: 2026-07-24
+date_fin: 2026-08-15
+pays: [DE, AT, SI, IT, FR]
+distance_km: 4400
+nuits: 22
+mode: voiture et camping
+
+# Toutes les étapes du voyage sont en CEST. Voir SPEC.md, section 6.2, note
+# de fin : aucune résolution de fuseau à partir des coordonnées n'est faite.
+fuseau: Europe/Paris
+
+# Dossier en LECTURE SEULE. Le pipeline ne doit jamais y écrire.
+source_photos: "P:/Photos/Thibaut/2026 Tour des Alpes"
+
+# Contrainte C8 : [Originals] contient des homonymes des fichiers de la racine.
+dossiers_ignores:
+  - "[Originals]"
+  - ".thumbnails"
+  - "@eaDir"
+
+notion: "https://app.notion.com/p/371ec81aae12810fa2e9dfbe7adbcff8"
+
+lieux: []

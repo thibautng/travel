@@ -1,0 +1,14 @@
+# Fins de ligne normalisées en LF dans le dépôt, quelle que soit la machine.
+* text=auto eol=lf
+
+# Fichiers binaires, jamais convertis.
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.avif binary
+*.webp binary
+*.mp4 binary
+*.pmtiles binary
+
+# Fixtures de test : leur contenu octet par octet est le sujet du test.
+carnet/tests/fixtures/** binary

@@ -1,0 +1,24 @@
+# Dérivés produits par carnet, poussés vers R2, jamais versionnés (SPEC section 4)
+/media/
+
+# Rust
+/carnet/target/
+**/*.rs.bk
+
+# Site Astro
+/site/node_modules/
+/site/dist/
+/site/.astro/
+
+# Secrets, jamais versionnés (SPEC section 6.5)
+.env
+.env.*
+!.env.exemple
+
+# Système
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Note : /data/ EST versionné. C'est une sortie de carnet, mais légère et
+# nécessaire au build du site sur Cloudflare Pages, qui ne voit pas le disque P:.

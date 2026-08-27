@@ -2,13 +2,8 @@
 //!
 //! Voir SPEC.md, section 6. Le lot 1 implémente `scan` et `stats`.
 
-mod emit;
-mod noms;
-mod quality;
-mod scan;
-mod voyage;
-
 use anyhow::{bail, Context, Result};
+use carnet::{emit, quality, scan, voyage};
 use clap::{Parser, Subcommand};
 use std::path::{Path, PathBuf};
 

@@ -12,6 +12,7 @@ use indicatif::{ProgressBar, ProgressStyle};
 use nom_exif::{ExifTag, MediaKind, MediaParser, MediaSource, TrackInfoTag};
 use rayon::prelude::*;
 use serde::Serialize;
+use std::cell::RefCell;
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 
@@ -140,6 +141,7 @@ pub struct Media {
     pub octets: u64,
 }
 
+#[derive(Debug)]
 pub struct Inventaire {
     pub medias: Vec<Media>,
     /// Fichiers écartés parce qu'ils ne sont pas des médias.
@@ -355,13 +357,19 @@ pub fn inventorier(voyage: &Voyage, silencieux: bool) -> Result<Inventaire, Erre
     let racine = &voyage.source_photos;
     let mut fichiers: Vec<(PathBuf, PathBuf, NomAnalyse, u64)> = Vec::new();
     let mut non_medias = 0usize;
-    let mut dossiers_sautes = Vec::new();
 
+    // `filter_entry` élague l'entrée avant qu'on la voie : les dossiers sautés
+    // se notent donc ici, sans quoi le rapport les passerait sous silence.
+    let sautes = RefCell::new(Vec::new());
     let parcours = WalkDir::new(racine).into_iter().filter_entry(|e| {
         if e.depth() == 0 || !e.file_type().is_dir() {
             return true;
         }
-        !voyage.dossier_ignore(&e.file_name().to_string_lossy())
+        if voyage.dossier_ignore(&e.file_name().to_string_lossy()) {
+            sautes.borrow_mut().push(e.path().to_path_buf());
+            return false;
+        }
+        true
     });
 
     for entree in parcours {
@@ -369,9 +377,6 @@ pub fn inventorier(voyage: &Voyage, silencieux: bool) -> Result<Inventaire, Erre
             return Err(ErreurScan::Parcours(racine.clone()));
         };
         if entree.file_type().is_dir() {
-            if entree.depth() > 0 && voyage.dossier_ignore(&entree.file_name().to_string_lossy()) {
-                dossiers_sautes.push(entree.path().to_path_buf());
-            }
             continue;
         }
         let chemin = entree.path();
@@ -432,7 +437,7 @@ pub fn inventorier(voyage: &Voyage, silencieux: bool) -> Result<Inventaire, Erre
     Ok(Inventaire {
         medias,
         non_medias,
-        dossiers_sautes,
+        dossiers_sautes: sautes.into_inner(),
     })
 }
 

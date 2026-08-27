@@ -517,7 +517,15 @@ Ce qui distingue réellement les deux populations est la **valeur strictement nu
 
 Les preuves sont sans ambiguïté : dix-huit photos du 27 juillet portent la même position en montagne avec une altitude de 0, et les photos prises à Roissy le 19 octobre 2024 affichent elles aussi 0 mètre, pour un aéroport situé à 119 mètres. À l’inverse, une vraie mesure au niveau de la mer donne une décimale, jamais un zéro exact : les 56 positions polynésiennes, toutes littorales, s’échelonnent de 6,2 à 579,4 mètres.
 
-Règle : **altitude non nulle = position fiable, altitude nulle ou absente = position suspecte**. Les positions `basse` ne sont pas affichées sur la carte par défaut, mais restent dans `media.json`. Le taux d’environ 30 % annoncé en version 1.0 est confirmé : 32 % sur le Tour des Alpes.
+Règle : **altitude non nulle = position fiable, altitude nulle ou absente = position suspecte**. Les positions `basse` ne sont pas affichées sur la carte par défaut, mais restent dans `media.json`. Le taux d’environ 30 % annoncé en version 1.0 est confirmé : 223 photos déclassées sur 691 géolocalisées, soit 32 %.
+
+**Cette règle ne vaut que pour les photos.** La première exécution du pipeline l’a établi : les 128 vidéos du voyage portent une position, et **aucune ne porte d’altitude**. Le conteneur MP4 range la position dans une chaîne ISO 6709 dont ce téléphone omet la composante verticale. Appliquée telle quelle, la règle déclasse donc 100 % des vidéos.
+
+C’est sans conséquence sur la trace, qui se construit à partir des photos, bien plus nombreuses et mieux réparties. C’en est une sur l’affichage : une vidéo n’apparaîtra jamais en pastille sur la carte. Trois options, à trancher au lot 2 :
+
+1. Laisser en l’état, les vidéos restent visibles dans le récit et absentes de la carte.
+2. Faire hériter une vidéo de la fiabilité de la photo la plus proche dans le temps, en deçà d’un seuil de quelques minutes.
+3. Juger la position d’une vidéo sur le seul critère du clonage, l’altitude n’étant pas un discriminant pour ce format.
 
 **C2 | Détection des positions clonées.** Deux médias éloignés de plus de 20 minutes et portant des coordonnées identiques à la cinquième décimale reçoivent l’anomalie `position_clonee`, **quelle que soit leur altitude**. Le signalement ne déclasse pas à lui seul : le déclassement vient de C1.
 
@@ -532,6 +540,10 @@ Ce découplage est ce qui rend la détection utile, et l’audit le confirme dan
 **C5 | Deux journées ont un trou de trace assumé.** Le 31 juillet au Königssee, aucune position ne descend au sud de 47,512 / 12,993, alors que la marche est bien allée jusqu’à l’Obersee et la Fischunkelalm : décrochage GPS en vallée encaissée. Le 6 août, la dernière position est à Tassenbach, à mi-parcours, alors que Lienz a bien été atteinte à vélo. Ces deux traces se complètent à la main via `segments`.
 
 Le pipeline ne peut pas savoir qu’une marche est allée plus loin que la dernière photo : il ne détecte donc pas ces trous, il les **signale comme candidats**. Heuristique : tout couple de positions fiables consécutives d’une journée séparées de plus de 2 km et de plus de 45 minutes, ainsi que toute journée dont les positions fiables couvrent moins de la moitié de l’amplitude horaire de ses médias. L’humain tranche dans `overrides.yaml`.
+
+**Le 6 août est signalé, le 31 juillet ne l’est pas, et ne peut pas l’être.** L’exécution du lot 1 a tranché la question. Ce jour-là, 57 positions fiables s’échelonnent de 8 h 32 à 12 h 51, toutes comprises entre 47,512 et 47,589 de latitude, sans le moindre saut de temps ni de distance. Les dix positions suspectes de la journée tombent, elles aussi, à l’intérieur de cette emprise. Autrement dit, la marche vers l’Obersee et la Fischunkelalm n’a laissé **aucune trace** dans les données : ni saut, ni gel de position détectable, ni couverture partielle.
+
+Une heuristique qui signalerait quand même ce jour-là le ferait pour de mauvaises raisons. Le 31 juillet relève donc de la saisie manuelle dans `segments`, comme le prévoyait déjà cette contrainte, et non de la détection automatique.
 
 **C6 | Trois familles de noms hostiles, pas une.** Le dossier contient :
 
@@ -648,11 +660,11 @@ Critère de fin, contrainte par contrainte :
 
 | Contrainte | Attendu | Repère chiffré sur le Tour des Alpes |
 |---|---|---|
-| C1 | Positions à altitude nulle déclassées en `basse` | 219 photos sur 688 géolocalisées |
-| C2 | Positions clonées détectées, listées, non déclassées à ce titre | 137 groupes, dont un à altitude réelle identique |
+| C1 | Positions à altitude nulle déclassées en `basse` | 223 photos sur 691, plus les 128 vidéos |
+| C2 | Positions clonées détectées, listées, non déclassées à ce titre | 24 groupes, 186 médias, dont 4 à altitude réelle identique |
 | C3 | Les cinq fichiers repartagés datés par l’EXIF, anomalie posée | 5 fichiers |
 | C4 | Les GoPro identifiés, anomalie `horloge_perdue` | 14 fichiers, tous au 3 janvier 2016 |
-| C5 | Trous candidats signalés par l’heuristique | au moins le 31 juillet et le 6 août |
+| C5 | Trous candidats signalés par l’heuristique | 26 candidats, dont le 6 août. Pas le 31 juillet, voir C5 |
 | C6 | Noms normalisés, suffixes de variante préservés, anomalie posée | 22 fichiers hors convention |
 | C7 | Volumétrie rapportée par `carnet stats` | 835 fichiers, 8,6 Go |
 | C8 | `[Originals]` ignoré, toute collision résiduelle fait échouer la commande | 2 homonymes |
@@ -729,6 +741,14 @@ La réponse est oui partout, et l’audit a rapporté quatre constats qui n’é
 - **Le partage des voyages n’est pas chronologique mais matériel.** Japon 2024 et Tunisie 2025, pris avec le même téléphone que les Alpes, relèvent du régime riche et ne demandent aucun traitement spécial. Seule la Polynésie 2019 relève du régime pauvre. Le lot 7 et la section 1 sont réécrits en conséquence.
 
 Deux points nouveaux restent en suspens, tous deux sans effet sur les lots 1 à 6 : le fuseau des horloges polynésiennes, faute d’`OffsetTimeOriginal`, et le sort des positions clonées dont l’altitude est réelle et strictement identique, que `carnet stats` doit désormais compter séparément.
+
+### Ce que la première exécution a corrigé
+
+Le lot 1 a tourné sur les 833 médias du dossier source. Trois constats ont été reversés dans ce document.
+
+- **La règle C1 ne vaut que pour les photos.** Les 128 vidéos portent une position sans altitude, le MP4 omettant la composante verticale. La règle les déclasse toutes. Trois options sont posées en C1, à trancher au lot 2.
+- **Le trou du 31 juillet n’est pas détectable.** Les données ne portent aucune trace de la marche vers l’Obersee : ni saut, ni gel de position, ni couverture partielle. Le critère de fin du lot 1 est corrigé en conséquence, plutôt que d’inventer une heuristique qui viserait juste par hasard.
+- **Les repères chiffrés de C2 étaient faux.** Les 137 groupes annoncés comptaient toutes les coordonnées répétées, y compris deux photos prises coup sur coup. Avec le seuil de vingt minutes qui définit la contrainte, il y a 24 groupes et 186 médias.
 
 ---
 

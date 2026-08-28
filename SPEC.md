@@ -89,6 +89,26 @@ Les modes `marche`, `velo`, `bateau`, `train` et `telepherique` ne sont **jamais
 
 Un itinéraire calculé est le trajet le plus rapide, pas nécessairement celui qui a été pris. Sur les cols alpins l’écart peut être franc, un tunnel au lieu d’un col. D’où deux exigences : `overrides.yaml` peut imposer des points de passage sur un segment `route`, et le rendu distingue visuellement le tracé mesuré du tracé calculé (section 9.2).
 
+### D7 | Tout n’est pas publié
+
+Le dossier source est une archive, le site est un récit. Les deux n’ont pas la même vocation, et 833 médias pour 23 journées, ce n’est pas un journal de voyage, c’est une sauvegarde.
+
+Un fichier `content/voyages/<id>/selection.yaml` désigne donc les médias retenus. Trois règles :
+
+- tout média cité par une directive `::photo`, `::galerie` ou `::video` dans le récit est retenu d’office, sans avoir à le répéter ;
+- `retenus` et `exclus` complètent ce choix à la main, par identifiant ou par motif ;
+- en l’absence de ce fichier, tout est retenu, ce qui préserve le comportement actuel.
+
+Conséquences. `media.json` continue de décrire **tous** les médias, avec un champ `publie`, pour que l’inventaire reste complet et que rien ne se perde. Mais seuls les médias retenus reçoivent des dérivés et montent sur R2. C’est le levier principal sur le coût d’hébergement : les 10 Go gratuits de R2 sont largement suffisants pour une sélection, ils le seraient beaucoup moins pour l’intégralité des vidéos.
+
+La route « toutes les photos du voyage » de la section 9.1 s’entend donc comme toutes les photos **retenues**.
+
+### D8 | Les vidéos attendent
+
+Le pipeline prévoit le transcodage vidéo (section 6.2, étape 10) et la fiabilité de leur position (C1), mais **la génération des dérivés vidéo reste en pause** jusqu’à ce que la sélection soit faite. Motif : 5,6 Go de source pour 128 vidéos, dont une partie seulement mérite d’être publiée, et le transcodage est de loin l’étape la plus coûteuse du pipeline.
+
+Concrètement, le drapeau `--videos` existe, la sélection le précède. Les vidéos restent inventoriées, datées, positionnées et visibles dans les statistiques.
+
 ---
 
 ## 3. Il n’existe rien à forker
@@ -131,6 +151,7 @@ voyages/
       2026-alpes/
         voyage.yaml            métadonnées du voyage, lieux, section 5.1
         overrides.yaml         corrections manuelles, section 7
+        selection.yaml         médias retenus pour publication, D7
         jours/
           2026-07-24.md
           2026-07-25.md
@@ -265,6 +286,7 @@ L’unicité est vérifiée. **Une collision d’identifiant fait échouer `carn
   "fiabilite": "haute",
   "origine_position": "exif",
   "lieu": null,
+  "publie": true,
   "anomalies": [],
   "largeur": 4096,
   "hauteur": 3072,
@@ -293,6 +315,8 @@ Le critère est l’altitude **non nulle**, et non la simple présence du champ.
 `origine_position` prend `exif`, `override`, `heritee` ou `interpolee`.
 
 `lieu` porte l’identifiant du lieu dont la position a été héritée, et vaut `null` sinon.
+
+`publie` dit si le média est retenu pour le site (D7). Un média non retenu reste décrit ici, mais ne reçoit aucun dérivé et ne monte pas sur R2.
 
 `anomalies` est un tableau, éventuellement vide, qui documente **pourquoi** un média est suspect. Valeurs : `altitude_nulle`, `position_clonee`, `nom_menteur`, `horloge_perdue`, `homonyme`, `nom_normalise`, `exif_absent`, `date_du_nom`, `hemisphere_absent`.
 
@@ -363,7 +387,7 @@ carnet stats    <voyage>   récapitulatif : nb médias, couverture GPS, trous ho
 
 Il n’existe pas de sous-commande `push`. La synchronisation de `media/` vers R2 se fait avec `rclone`, documenté dans le README. Motif : `rclone` gère déjà le différentiel, la reprise, les sommes de contrôle et le parallélisme. Le réécrire en Rust ajouterait une dépendance lourde pour un gain nul.
 
-`carnet build` est idempotent. Un média déjà dérivé, dont la source n’a pas changé (taille et mtime) **et dont les paramètres d’encodage n’ont pas changé**, n’est pas retraité. Voir étape 13.
+`carnet build` est idempotent. Un média déjà dérivé, dont la source n’a pas changé (taille et mtime) **et dont les paramètres d’encodage n’ont pas changé**, n’est pas retraité. Voir étape 14.
 
 ### 6.2 Étapes de `build`
 
@@ -376,12 +400,13 @@ Il n’existe pas de sous-commande `push`. La synchronisation de `media/` vers R
 5. **Rattachement au jour.** Un média appartient au jour civil de sa prise de vue, en heure locale du voyage.
 6. **Héritage.** Tout média encore sans position reçoit celle du `lieu` de sa journée, avec `origine_position: heritee` et `fiabilite: basse` (D5). Si la journée ne déclare pas de lieu, la position reste `absente`.
 7. **Interpolation.** Un média sans position EXIF, encadré dans la même journée par deux positions fiables, reçoit une position pondérée par le temps, sous garde-fous : moins de 30 minutes d’écart de part et d’autre, et moins de 5 km entre les deux bornes. `origine_position: interpolee`, `fiabilite: basse`. L’interpolation prime sur l’héritage, qui est plus grossier.
-8. **Dérivés images.** Trois largeurs, 320, 1024 et 2048 pixels. Le format est un **paramètre du pipeline**, dont la valeur par défaut est AVIF (encodage `ravif`), avec WebP comme valeur alternative sur une machine dépourvue d’AVX2. Un unique repli JPEG en 1024 est produit dans tous les cas, comme filet de sécurité pour les appareils anciens. Redimensionnement avec `fast_image_resize`. Rotation appliquée selon l’orientation EXIF, puis métadonnées EXIF supprimées des dérivés, hors copyright.
-9. **LQIP.** Génération d’un aperçu de 16 pixels de large encodé en base64, inline dans le JSON, pour un rendu progressif sans requête supplémentaire.
-10. **Dérivés vidéos.** Appel à `ffmpeg` en sous-processus : H.264 720p, CRF 23, audio AAC 128 kb/s, plus une image poster extraite à 1 seconde. `ffmpeg` est une dépendance externe assumée, ne pas tenter de transcoder en Rust pur. Étape activée par le drapeau `--videos`.
-11. **Itinéraires.** Pour chaque couple de positions fiables consécutives d’une journée en mode `route`, résolution de l’itinéraire par le moteur de routage, puis écriture dans `data/<voyage>/itineraires.json`. **Le cache est consulté avant tout appel réseau** : un build ultérieur n’émet aucune requête. La clé de cache est le couple de coordonnées arrondi, le mode et les éventuels points de passage.
-12. **Traces.** Pour chaque journée et chaque mode, tri des positions par heure, construction des `LineString`, substitution des tronçons `route` par leur itinéraire calculé, injection des segments manuels d’`overrides.yaml`. Renseignement de `source` pour chaque `Feature`.
-13. **Émission.** Écriture de `media.json`, `jours.json`, `trace.geojson` et `itineraires.json` dans `data/<voyage>/`, des fichiers dérivés dans `media/<voyage>/`, et de `.build-cache.json`, qui porte pour chaque source son couple taille et mtime **ainsi qu’une empreinte des paramètres d’encodage** (format, qualité, tailles, version du pipeline). Un changement de paramètre invalide le cache. Le drapeau `--force` ignore le cache.
+8. **Sélection.** Lecture de `selection.yaml` et des directives du récit, renseignement du champ `publie` (D7). Les étapes suivantes ne traitent que les médias retenus.
+9. **Dérivés images.** Trois largeurs, 320, 1024 et 2048 pixels. Le format est un **paramètre du pipeline**, dont la valeur par défaut est AVIF (encodage `ravif`), avec WebP comme valeur alternative sur une machine dépourvue d’AVX2. Un unique repli JPEG en 1024 est produit dans tous les cas, comme filet de sécurité pour les appareils anciens. Redimensionnement avec `fast_image_resize`. Rotation appliquée selon l’orientation EXIF, puis métadonnées EXIF supprimées des dérivés, hors copyright.
+10. **LQIP.** Génération d’un aperçu de 16 pixels de large encodé en base64, inline dans le JSON, pour un rendu progressif sans requête supplémentaire.
+11. **Dérivés vidéos.** Appel à `ffmpeg` en sous-processus : H.264 720p, CRF 23, audio AAC 128 kb/s, plus une image poster extraite à 1 seconde. `ffmpeg` est une dépendance externe assumée, ne pas tenter de transcoder en Rust pur. Étape activée par le drapeau `--videos`, et **en pause** jusqu'à la sélection (D8).
+12. **Itinéraires.** Pour chaque couple de positions fiables consécutives d’une journée en mode `route`, résolution de l’itinéraire par le moteur de routage, puis écriture dans `data/<voyage>/itineraires.json`. **Le cache est consulté avant tout appel réseau** : un build ultérieur n’émet aucune requête. La clé de cache est le couple de coordonnées arrondi, le mode et les éventuels points de passage.
+13. **Traces.** Pour chaque journée et chaque mode, tri des positions par heure, construction des `LineString`, substitution des tronçons `route` par leur itinéraire calculé, injection des segments manuels d’`overrides.yaml`. Renseignement de `source` pour chaque `Feature`.
+14. **Émission.** Écriture de `media.json`, `jours.json`, `trace.geojson` et `itineraires.json` dans `data/<voyage>/`, des fichiers dérivés dans `media/<voyage>/`, et de `.build-cache.json`, qui porte pour chaque source son couple taille et mtime **ainsi qu’une empreinte des paramètres d’encodage** (format, qualité, tailles, version du pipeline). Un changement de paramètre invalide le cache. Le drapeau `--force` ignore le cache.
 
 Note sur les fuseaux. `chrono-tz` convertit une zone connue, il ne la déduit pas de coordonnées. Le champ `fuseau` du voyage suffit au Tour des Alpes et à tout voyage tenant dans un seul fuseau. Le jour où un voyage traversera plusieurs fuseaux (Japon, Polynésie), deux options seront à trancher : une liste de fuseaux datés dans `voyage.yaml`, ou l’ajout de `tzf-rs` pour résoudre la zone à partir de la position. Ne rien implémenter avant d’en avoir besoin.
 
@@ -521,11 +546,14 @@ Règle : **altitude non nulle = position fiable, altitude nulle ou absente = pos
 
 **Cette règle ne vaut que pour les photos.** La première exécution du pipeline l’a établi : les 128 vidéos du voyage portent une position, et **aucune ne porte d’altitude**. Le conteneur MP4 range la position dans une chaîne ISO 6709 dont ce téléphone omet la composante verticale. Appliquée telle quelle, la règle déclasse donc 100 % des vidéos.
 
-C’est sans conséquence sur la trace, qui se construit à partir des photos, bien plus nombreuses et mieux réparties. C’en est une sur l’affichage : une vidéo n’apparaîtra jamais en pastille sur la carte. Trois options, à trancher au lot 2 :
+C’est sans conséquence sur la trace, qui se construit à partir des photos, bien plus nombreuses et mieux réparties. C’en serait une sur l’affichage : une vidéo n’apparaîtrait jamais en pastille sur la carte.
 
-1. Laisser en l’état, les vidéos restent visibles dans le récit et absentes de la carte.
-2. Faire hériter une vidéo de la fiabilité de la photo la plus proche dans le temps, en deçà d’un seuil de quelques minutes.
-3. Juger la position d’une vidéo sur le seul critère du clonage, l’altitude n’étant pas un discriminant pour ce format.
+**Règle retenue : une vidéo hérite de la fiabilité de la photo fiable la plus proche dans le temps.** L’altitude n’est pas un discriminant pour ce format. La promotion en `haute` demande deux conditions cumulées :
+
+1. une photo de fiabilité `haute` prise à moins de **dix minutes** de la vidéo ;
+2. une distance de moins de **500 mètres** entre les deux positions.
+
+La seconde condition n’est pas un excès de prudence. Sans elle, une vidéo dont la position est gelée depuis une heure serait promue par une photo prise au même moment ailleurs. Quand les deux coordonnées concordent, en revanche, le téléphone tenait bien un point satellite à cet instant, et celui de la vidéo est aussi bon que celui de la photo. Une vidéo sans position du tout relève, elle, de l’héritage depuis le lieu de la journée (D5).
 
 **C2 | Détection des positions clonées.** Deux médias éloignés de plus de 20 minutes et portant des coordonnées identiques à la cinquième décimale reçoivent l’anomalie `position_clonee`, **quelle que soit leur altitude**. Le signalement ne déclasse pas à lui seul : le déclassement vient de C1.
 
@@ -555,7 +583,7 @@ Les vidéos suivent une convention distincte, `VIDAAAAMMJJHHMMSS.mp4`, que la no
 
 Règle : normalisation à l’ingestion (5.3), suffixes de variante conservés, anomalie `nom_normalise` posée sur tout fichier dont l’identifiant diffère du nom d’origine.
 
-**C7 | Volumétrie.** 835 fichiers au total, 8,6 Go dont 5,6 Go de vidéo : 707 fichiers `.jpg` et 128 fichiers `.mp4`. Sur les 707 photos, 705 sont à la racine (dont 14 GoPro) et 2 dans le sous-dossier `[Originals]`, voir C8. Aucun fichier HEIF, MOV ou 3GP : pour ce voyage, `nom-exif` n’a besoin de couvrir que JPEG et MP4. Après dérivés, prévoir environ 200 Mo de photos et environ 1 Go de vidéo. Ne jamais servir les originaux depuis le site.
+**C7 | Volumétrie.** Cible d’hébergement : rester dans les 10 Go gratuits de R2, sélection comprise (D7). Dossier source : 835 fichiers au total, 8,6 Go dont 5,6 Go de vidéo : 707 fichiers `.jpg` et 128 fichiers `.mp4`. Sur les 707 photos, 705 sont à la racine (dont 14 GoPro) et 2 dans le sous-dossier `[Originals]`, voir C8. Aucun fichier HEIF, MOV ou 3GP : pour ce voyage, `nom-exif` n’a besoin de couvrir que JPEG et MP4. Après dérivés, prévoir environ 200 Mo de photos et environ 1 Go de vidéo. Ne jamais servir les originaux depuis le site.
 
 **C8 | Un sous-dossier `[Originals]` produit des homonymes.** Le dossier source contient `[Originals]`, comportement classique de l’éditeur photo Android : la version retouchée reste à la racine, l’original y est déplacé. Il renferme deux fichiers, `IMG20260731092009.jpg` et `IMG20260808120006.jpg`, tous deux **homonymes exacts** de fichiers de la racine. Un parcours récursif naïf produit donc deux collisions d’identifiant.
 
@@ -677,7 +705,7 @@ Les contraintes C9 et C10 ne se manifestent pas sur le Tour des Alpes. Elles son
 
 Critère de fin : `trace.geojson` visuellement correct dans [geojson.io](https://geojson.io), chaque journée portant soit une trace continue, soit un trou explicitement documenté dans `overrides.yaml`. Aucun tronçon `marche` calculé sur le réseau routier.
 
-**Lot 3 | Dérivés.** Génération des trois tailles d’images, repli JPEG, LQIP, posters vidéo. Transcodage vidéo derrière `--videos`. **À exécuter sur la machine cible**, celle qui dispose d’AVX2.
+**Lot 3 | Dérivés.** Génération des trois tailles d’images, repli JPEG, LQIP, posters vidéo, **pour les seuls médias retenus** (D7). Le transcodage vidéo reste en pause (D8) : le drapeau `--videos` existe, il attend la sélection. **À exécuter sur la machine cible**, celle qui dispose d’AVX2.
 
 Critère de fin : `carnet build` idempotent, un second passage ne produisant aucun travail, et temps du premier passage mesuré et consigné dans le README. Objectif indicatif : moins de 3 minutes pour les 705 photos.
 

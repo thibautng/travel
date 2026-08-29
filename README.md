@@ -45,4 +45,12 @@ Outils externes attendus, par lot :
 
 ## État
 
-Lot 1, inventaire. Voir la feuille de route en section 11 de [SPEC.md](SPEC.md).
+Lots 1 et 2 terminés. Voir la feuille de route en section 11 de [SPEC.md](SPEC.md).
+
+`carnet build 2026-alpes` produit `data/2026-alpes/` : 833 médias inventoriés,
+23 journées, 121 tronçons de trace, 3 491 km. Les dérivés d’images arrivent au
+lot 3, et le transcodage vidéo attend la sélection (D8).
+
+La clé OpenRouteService se place dans la variable d’environnement
+`CARNET_ORS_CLE`. Une fois `data/2026-alpes/itineraires.json` peuplé, elle
+n’est plus nécessaire : le cache rend le build reproductible hors ligne.

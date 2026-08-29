@@ -5,6 +5,7 @@
 //! binaire `carnet` n'est qu'une fine couche de ligne de commande par-dessus.
 
 pub mod emit;
+pub mod itineraire;
 pub mod jours;
 pub mod lieux;
 pub mod noms;

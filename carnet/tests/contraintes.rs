@@ -33,6 +33,8 @@ fn voyage_de_test(dossiers_ignores: Vec<String>) -> Voyage {
         fuseau: chrono_tz::Europe::Paris,
         source_photos: fixtures(),
         dossiers_ignores,
+        depart: None,
+        arrivee: None,
         notion: None,
         lieux: vec![],
     }

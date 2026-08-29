@@ -487,7 +487,7 @@ exclusions:
 
 # Redater en bloc un lot de fichiers sans EXIF fiable
 lots:
-  - motif: "GOPR27*.JPG"
+  - motif: "GOPR2*.JPG"
     jour: 2026-08-02
     position: { lat: 46.2010, lon: 13.6480 }
     repartir_sur_segment: true
@@ -514,6 +514,8 @@ itineraires:
 ```
 
 Règle de priorité : `overrides` écrase `exif`, toujours, sans avertissement. `carnet check` liste les surcharges appliquées pour qu’elles restent visibles.
+
+Attention à la portée du motif : les fichiers GoPro vont de `GOPR2699` à `GOPR2717`, et le motif `GOPR27*` en raterait le premier. Un motif trop étroit ne prévient pas, il applique la correction à une partie du lot seulement. `carnet check` affiche le nombre de fichiers touchés par chaque lot, c’est ce compte qu’il faut vérifier.
 
 `repartir_sur_segment` répartit les médias d’un lot le long du segment manuel de la journée, au lieu de les empiler sur un point unique. L’ordre relatif vient de l’horodatage EXIF, faux en absolu mais cohérent en relatif, avec repli sur le numéro de fichier.
 

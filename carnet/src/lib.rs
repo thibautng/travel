@@ -6,6 +6,8 @@
 
 pub mod emit;
 pub mod noms;
+pub mod overrides;
 pub mod quality;
 pub mod scan;
+pub mod track;
 pub mod voyage;

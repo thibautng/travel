@@ -1,0 +1,38 @@
+# Corrections manuelles du Tour des Alpes. Voir SPEC.md, section 7.
+#
+# Une surcharge écrase l'EXIF, toujours, sans avertissement. En contrepartie,
+# `carnet check` liste ce qui a été appliqué et échoue sur une surcharge qui
+# ne vise rien.
+#
+# Ce qui ne figure pas ici, volontairement :
+#
+# - Les cinq fichiers repartagés de C3 (IMG_20260730_071148 et les autres)
+#   n'ont pas besoin de surcharge : leur EXIF porte déjà la bonne date, et le
+#   pipeline date par l'EXIF. L'exemple de la section 7 de la spec est une
+#   illustration du mécanisme, pas une correction nécessaire.
+# - Aucune exclusion : les 833 médias sont inventoriés. Le tri de ce qui est
+#   publié relève de selection.yaml (D7), pas d'ici.
+
+# Contrainte C4 : 14 fichiers GoPro HERO7, sans GPS, tous horodatés au
+# 3 janvier 2016. Le motif couvre GOPR2699 à GOPR2717 : « GOPR27* » raterait
+# GOPR2699, premier du lot.
+lots:
+  - motif: "GOPR2*.JPG"
+    jour: 2026-08-02
+    position: { lat: 46.2010, lon: 13.6480 }
+    repartir_sur_segment: true
+    note: "GoPro sans GPS, horloge perdue. Canyoning du Sušec."
+
+# Contrainte C5 : deux journées ont un trou de trace assumé, que le GPS ne
+# peut pas combler. Ces tronçons sont tracés à la main.
+segments:
+  - jour: 2026-07-31
+    mode: bateau
+    points: [[12.9887, 47.5893], [12.9797, 47.5225], [12.9847, 47.4967]]
+    note: "Königssee, Schönau vers St. Bartholomä puis Salet. Décrochage GPS en vallée encaissée."
+
+  - jour: 2026-08-06
+    mode: velo
+    apres: IMG20260806133042
+    points: [[12.5320, 46.7575], [12.6100, 46.7900], [12.7690, 46.8290]]
+    note: "Seconde moitié Tassenbach vers Lienz, aucune photo prise."

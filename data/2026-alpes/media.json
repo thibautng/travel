@@ -759,7 +759,7 @@
       "lat": 48.4812,
       "lon": 8.274700000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -1257,7 +1257,7 @@
       "lat": 47.497,
       "lon": 11.090200000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -1274,7 +1274,7 @@
       "lat": 47.4975,
       "lon": 11.0899
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -1762,7 +1762,7 @@
       "lat": 47.4557,
       "lon": 10.9772
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -1802,7 +1802,7 @@
       "lat": 47.4575,
       "lon": 10.9804
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -1842,7 +1842,7 @@
       "lat": 47.4575,
       "lon": 10.9804
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -2262,7 +2262,7 @@
       "lat": 47.4579,
       "lon": 10.9765
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -2437,7 +2437,7 @@
       "lat": 47.4975,
       "lon": 11.09
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -2454,7 +2454,7 @@
       "lat": 47.5027,
       "lon": 11.099300000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -2471,7 +2471,7 @@
       "lat": 47.5027,
       "lon": 11.099300000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -2488,7 +2488,7 @@
       "lat": 47.4974,
       "lon": 11.090100000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -3305,7 +3305,7 @@
       "lat": 47.4409,
       "lon": 11.0338
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -4536,7 +4536,7 @@
       "lat": 47.6378,
       "lon": 13.017900000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -4553,7 +4553,7 @@
       "lat": 47.6378,
       "lon": 13.017900000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -4570,7 +4570,7 @@
       "lat": 47.6378,
       "lon": 13.017900000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -5128,7 +5128,7 @@
       "lat": 47.7964,
       "lon": 13.0462
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -5225,7 +5225,7 @@
       "lat": 47.7952,
       "lon": 13.0478
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -5382,7 +5382,7 @@
       "lat": 47.806799999999996,
       "lon": 13.0412
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -5787,7 +5787,7 @@
       "lat": 47.5739,
       "lon": 12.987699999999998
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7131,7 +7131,7 @@
       "lat": 46.2472,
       "lon": 13.5778
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7148,7 +7148,7 @@
       "lat": 46.2472,
       "lon": 13.5778
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7388,7 +7388,7 @@
       "lat": 46.251,
       "lon": 13.5867
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7533,7 +7533,7 @@
       "lat": 46.4186,
       "lon": 13.7373
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7670,7 +7670,7 @@
       "lat": 46.4389,
       "lon": 13.7496
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7729,7 +7729,7 @@
       "lat": 46.3135,
       "lon": 13.6567
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7746,7 +7746,7 @@
       "lat": 46.3105,
       "lon": 13.6601
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7763,7 +7763,7 @@
       "lat": 46.243700000000004,
       "lon": 13.584200000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7780,7 +7780,7 @@
       "lat": 46.2372,
       "lon": 13.4452
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7897,7 +7897,7 @@
       "lat": 46.2291,
       "lon": 13.439400000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7914,7 +7914,7 @@
       "lat": 46.2291,
       "lon": 13.439400000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -7931,7 +7931,7 @@
       "lat": 46.2291,
       "lon": 13.439400000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8296,7 +8296,7 @@
       "lat": 46.2445,
       "lon": 13.566
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8533,7 +8533,7 @@
       "lat": 46.7754,
       "lon": 12.036
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8607,7 +8607,7 @@
       "lat": 46.733000000000004,
       "lon": 12.283000000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8624,7 +8624,7 @@
       "lat": 46.7308,
       "lon": 12.3205
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8641,7 +8641,7 @@
       "lat": 46.7308,
       "lon": 12.3205
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8658,7 +8658,7 @@
       "lat": 46.7343,
       "lon": 12.336400000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8675,7 +8675,7 @@
       "lat": 46.7339,
       "lon": 12.3423
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8752,7 +8752,7 @@
       "lat": 46.7428,
       "lon": 12.3731
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -8789,7 +8789,7 @@
       "lat": 46.7403,
       "lon": 12.3652
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -9183,7 +9183,7 @@
       "lat": 46.7491,
       "lon": 12.5092
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -9222,7 +9222,7 @@
       "lat": 46.7721,
       "lon": 12.6088
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -9239,7 +9239,7 @@
       "lat": 46.7773,
       "lon": 12.6326
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -9256,7 +9256,7 @@
       "lat": 46.7838,
       "lon": 12.6591
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -9273,7 +9273,7 @@
       "lat": 46.785399999999996,
       "lon": 12.6868
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -9290,7 +9290,7 @@
       "lat": 46.785399999999996,
       "lon": 12.6868
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -11292,7 +11292,7 @@
       "lat": 46.562999999999995,
       "lon": 12.4158
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -12848,7 +12848,7 @@
       "lat": 46.6117,
       "lon": 12.2921
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -12865,7 +12865,7 @@
       "lat": 46.6117,
       "lon": 12.2921
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -12882,7 +12882,7 @@
       "lat": 46.6099,
       "lon": 12.2889
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -13287,7 +13287,7 @@
       "lat": 46.5335,
       "lon": 11.5335
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -13404,7 +13404,7 @@
       "lat": 46.5249,
       "lon": 11.533100000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -13443,7 +13443,7 @@
       "lat": 46.5299,
       "lon": 11.5198
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -13504,7 +13504,7 @@
       "lat": 46.4859,
       "lon": 11.4552
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -13521,7 +13521,7 @@
       "lat": 46.5394,
       "lon": 11.4589
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -13740,7 +13740,7 @@
       "lat": 46.532399999999996,
       "lon": 11.532900000000001
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -14161,7 +14161,7 @@
       "lat": 46.5258,
       "lon": 11.640799999999999
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -14707,7 +14707,7 @@
       "lat": 46.5396,
       "lon": 11.4637
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -14804,7 +14804,7 @@
       "lat": 45.8799,
       "lon": 10.8551
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -14941,7 +14941,7 @@
       "lat": 45.8777,
       "lon": 10.8574
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -14958,7 +14958,7 @@
       "lat": 45.8775,
       "lon": 10.857
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -15790,7 +15790,7 @@
       "lat": 45.6051,
       "lon": 7.3568999999999996
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -15807,7 +15807,7 @@
       "lat": 45.608000000000004,
       "lon": 7.3564
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -16564,7 +16564,7 @@
       "lat": 45.611000000000004,
       "lon": 7.3617
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -16603,7 +16603,7 @@
       "lat": 45.611000000000004,
       "lon": 7.3617
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"
@@ -16788,7 +16788,7 @@
       "lat": 45.588300000000004,
       "lon": 7.343299999999999
     },
-    "fiabilite": "basse",
+    "fiabilite": "haute",
     "origine_position": "exif",
     "anomalies": [
       "altitude_nulle"

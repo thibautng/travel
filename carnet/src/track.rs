@@ -164,6 +164,10 @@ pub struct BilanTraces {
     pub troncons_droits: usize,
     /// Lots à répartir dont la journée ne porte aucun segment manuel.
     pub repartitions_sans_segment: Vec<NaiveDate>,
+    /// Journées de déplacement dont l’itinéraire entre camps a été calculé.
+    pub transits: usize,
+    /// Journées de déplacement dont l’itinéraire n’a pas pu l’être.
+    pub transits_manques: Vec<NaiveDate>,
 }
 
 pub struct Traces {
@@ -258,6 +262,7 @@ pub fn construire(
         }
     }
 
+    tracer_transits(medias, voyage, itineraires, &mut traces);
     heriter_des_lieux(voyage, journees, &mut traces);
 
     let traces_par_jour: BTreeMap<NaiveDate, ()> =
@@ -364,6 +369,124 @@ fn tracer_journee(
         troncons.push(termine);
     }
     troncons
+}
+
+/// Camp où l'on a dormi la nuit qui suit `nuit`.
+///
+/// Un camp déclaré `du` au `au` couvre les nuits de `du` inclus à `au` exclu :
+/// arriver le 12 et repartir le 15, c'est y dormir les 12, 13 et 14.
+fn camp_de_la_nuit(voyage: &Voyage, nuit: NaiveDate) -> Option<&crate::voyage::Lieu> {
+    voyage.lieux.iter().find(|lieu| {
+        lieu.type_lieu == crate::voyage::TypeLieu::Camp
+            && lieu.du.map(|d| d <= nuit).unwrap_or(false)
+            && lieu.au.map(|a| nuit < a).unwrap_or(false)
+    })
+}
+
+/// Distance en deçà de laquelle un déplacement entre deux camps ne mérite pas
+/// d'itinéraire : on n'a pas vraiment bougé.
+const METRES_TRANSIT_MINIMUM: f64 = 3_000.0;
+
+/// Trace les journées de déplacement d'un camp à l'autre.
+///
+/// Les photos ne documentent pas les trajets : sur 4 400 km annoncés, elles
+/// n'en dessinent que 888, et les jours de transit les plus longs sont ceux
+/// où l'on photographie le moins. Quand le camp du soir diffère de celui de
+/// la veille, l'itinéraire routier de l'un à l'autre est donc calculé.
+///
+/// La trace produite est `heritee` : elle ne dit pas par où l'on est passé,
+/// elle dit d'où l'on est parti et où l'on est arrivé, la route entre les
+/// deux étant celle que propose le moteur. `points_de_passage` dans
+/// `overrides.yaml` corrige un trajet plausible mais faux.
+fn tracer_transits(
+    medias: &[Media],
+    voyage: &Voyage,
+    itineraires: &mut Itineraires,
+    traces: &mut Traces,
+) {
+    let mut jour = voyage.date_debut;
+    while jour <= voyage.date_fin {
+        let veille = jour.pred_opt().and_then(|d| camp_de_la_nuit(voyage, d));
+        let soir = camp_de_la_nuit(voyage, jour);
+
+        // Même camp au coucher qu'au réveil : la journée est sur place.
+        if let (Some(a), Some(b)) = (veille, soir) {
+            if a.id == b.id {
+                jour = match jour.succ_opt() {
+                    Some(suivant) => suivant,
+                    None => break,
+                };
+                continue;
+            }
+        }
+
+        // Au premier et au dernier jour, un des deux bouts manque : on prend
+        // la position connue la plus extrême de la journée.
+        let depart = veille
+            .map(position_du_lieu)
+            .or_else(|| extremite_du_jour(medias, jour, true));
+        let arrivee = soir
+            .map(position_du_lieu)
+            .or_else(|| extremite_du_jour(medias, jour, false));
+
+        let (Some(depart), Some(arrivee)) = (depart, arrivee) else {
+            jour = match jour.succ_opt() {
+                Some(suivant) => suivant,
+                None => break,
+            };
+            continue;
+        };
+
+        if distance_m(&depart, &arrivee) >= METRES_TRANSIT_MINIMUM {
+            if let Ok(Resolution::Cache(trajet)) | Ok(Resolution::Calcule(trajet)) =
+                itineraires.resoudre(Mode::Route, &depart, &arrivee, &[])
+            {
+                // L'itinéraire du jour remplace les tronçons routiers déduits
+                // de la vitesse : c'est le même trajet, tracé en mieux.
+                traces
+                    .troncons
+                    .retain(|t| !(t.jour == jour && t.mode == Mode::Route));
+                traces.troncons.push(Troncon {
+                    jour,
+                    mode: Mode::Route,
+                    source: SourceTrace::Heritee,
+                    points: trajet.points,
+                });
+                traces.bilan.transits += 1;
+            } else {
+                traces.bilan.transits_manques.push(jour);
+            }
+        }
+
+        jour = match jour.succ_opt() {
+            Some(suivant) => suivant,
+            None => break,
+        };
+    }
+}
+
+fn position_du_lieu(lieu: &crate::voyage::Lieu) -> Position {
+    Position {
+        lat: lieu.position.lat,
+        lon: lieu.position.lon,
+        alt: lieu.position.alt,
+    }
+}
+
+/// Première ou dernière position connue d'une journée, quelle que soit sa
+/// fiabilité : pour amorcer un transit, une position approximative vaut mieux
+/// que pas de trace du tout.
+fn extremite_du_jour(medias: &[Media], jour: NaiveDate, premiere: bool) -> Option<Position> {
+    let mut du_jour: Vec<&Media> = medias
+        .iter()
+        .filter(|m| m.jour == Some(jour) && m.position.is_some() && m.prise_le.is_some())
+        .collect();
+    du_jour.sort_by_key(|m| m.prise_le);
+    if premiere {
+        du_jour.first().and_then(|m| m.position)
+    } else {
+        du_jour.last().and_then(|m| m.position)
+    }
 }
 
 /// Trace de repli pour les journées sans aucune position : la polyligne des

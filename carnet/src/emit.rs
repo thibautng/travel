@@ -513,7 +513,10 @@ pub fn rapport_traces(
 
     println!();
     println!("POSITIONS RECONSTITUÉES (D5, C1)");
-    println!("  vidéos promues {}", lieux.videos_promues);
+    println!(
+        "  vidéos promues {} ({} par une photo proche, {} faute de clonage)",
+        lieux.videos_promues, lieux.videos_par_photo, lieux.videos_sans_clone
+    );
     println!("  interpolées    {}", lieux.interpolees);
     println!("  héritées       {}", lieux.heritees);
     println!("  sans position  {}", lieux.sans_position);
@@ -539,6 +542,11 @@ pub fn rapport_traces(
     println!(
         "  tronçons routiers : {} calculés, {} restés droits",
         traces.bilan.troncons_calcules, traces.bilan.troncons_droits
+    );
+    println!(
+        "  transits entre camps : {} calculés, {} en échec",
+        traces.bilan.transits,
+        traces.bilan.transits_manques.len()
     );
 
     println!();

@@ -87,6 +87,12 @@ Pour le seul mode `route`, `carnet` interroge donc un moteur d’itinéraire ent
 
 Les modes `marche`, `velo`, `bateau`, `train` et `telepherique` ne sont **jamais** calculés sur le réseau routier : segments droits, ou tracé manuel via `segments`. Une randonnée map-matchée suivrait les départementales.
 
+**Les journées de déplacement se tracent d’un camp à l’autre.** Les photos ne documentent pas les trajets : sur les 4 400 km annoncés, elles n’en dessinaient que 888, et les jours de transit sont précisément ceux où l’on photographie le moins. Le 24 juillet, jour du départ, porte cinq médias et ne produisait aucune trace.
+
+Quand le camp du soir diffère de celui de la veille, l’itinéraire routier de l’un à l’autre est donc calculé, et la trace produite est de source `heritee` : elle ne prétend pas dire par où l’on est passé, elle dit d’où l’on est parti et où l’on est arrivé. Elle remplace, ce jour-là, les tronçons routiers déduits de la vitesse, qui décrivent le même trajet en moins bien. Au premier et au dernier jour du voyage, où l’un des deux camps manque, la position connue la plus extrême de la journée en tient lieu.
+
+Le résultat porte le total de 888 à **2 760 km**, dont 2 159 hérités. L’écart restant tient aux excursions à la journée, parties et revenues au même camp, que l’inférence par la vitesse classe encore en `velo` : elles se corrigent dans `modes`.
+
 Un itinéraire calculé est le trajet le plus rapide, pas nécessairement celui qui a été pris. Sur les cols alpins l’écart peut être franc, un tunnel au lieu d’un col. D’où deux exigences : `overrides.yaml` peut imposer des points de passage sur un segment `route`, et le rendu distingue visuellement le tracé mesuré du tracé calculé (section 9.2).
 
 ### D7 | Tout n’est pas publié
@@ -370,7 +376,7 @@ Un `FeatureCollection` GeoJSON par voyage. Une `Feature` de type `LineString` pa
 | `mesuree` | Positions EXIF fiables reliées entre elles |
 | `calculee` | Itinéraire produit par le moteur de routage, mode `route` uniquement |
 | `manuelle` | Points saisis dans `segments` d’`overrides.yaml` |
-| `heritee` | Polyligne des lieux successifs, en l’absence de toute position de média |
+| `heritee` | Itinéraire calculé entre deux lieux déclarés : transit d’un camp au suivant (D6), ou polyligne des lieux successifs faute de toute position de média |
 
 ---
 
@@ -564,12 +570,13 @@ Règle : **altitude non nulle = position fiable, altitude nulle ou absente = pos
 
 C’est sans conséquence sur la trace, qui se construit à partir des photos, bien plus nombreuses et mieux réparties. C’en serait une sur l’affichage : une vidéo n’apparaîtrait jamais en pastille sur la carte.
 
-**Règle retenue : une vidéo hérite de la fiabilité de la photo fiable la plus proche dans le temps.** L’altitude n’est pas un discriminant pour ce format. La promotion en `haute` demande deux conditions cumulées :
+**Règle retenue : une vidéo est fiable si une photo proche la confirme, ou si sa position n’est pas clonée.** L’altitude n’est pas un discriminant pour ce format, le conteneur MP4 ne la porte pas.
 
-1. une photo de fiabilité `haute` prise à moins de **dix minutes** de la vidéo ;
-2. une distance de moins de **500 mètres** entre les deux positions.
+La confirmation par une photo demande deux conditions cumulées : une photo de fiabilité `haute` prise à moins de **dix minutes** de la vidéo, et une distance de moins de **500 mètres** entre les deux positions. La seconde n’est pas un excès de prudence : sans elle, une vidéo dont la position est gelée serait promue par une photo prise au même moment ailleurs.
 
-La seconde condition n’est pas un excès de prudence. Sans elle, une vidéo dont la position est gelée depuis une heure serait promue par une photo prise au même moment ailleurs. Quand les deux coordonnées concordent, en revanche, le téléphone tenait bien un point satellite à cet instant, et celui de la vidéo est aussi bon que celui de la photo. Une vidéo sans position du tout relève, elle, de l’héritage depuis le lieu de la journée (D5).
+Le second critère, l’absence de clonage, traite le cas majoritaire. La première application de la seule règle de proximité n’a promu que 44 vidéos sur 128, faute de photo au bon moment, et laissait de côté les deux seules positions documentant le trajet du 5 août. Or 66 des 84 vidéos écartées portaient une position non clonée, donc plausible. Avec les deux critères, 110 vidéos sur 128 sont fiables.
+
+Une vidéo sans position du tout relève, elle, de l’héritage depuis le lieu de la journée (D5).
 
 **C2 | Détection des positions clonées.** Deux médias éloignés de plus de 20 minutes et portant des coordonnées identiques à la cinquième décimale reçoivent l’anomalie `position_clonee`, **quelle que soit leur altitude**. Le signalement ne déclasse pas à lui seul : le déclassement vient de C1.
 

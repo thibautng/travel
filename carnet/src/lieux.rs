@@ -14,7 +14,7 @@ use chrono::NaiveDate;
 use std::collections::BTreeMap;
 
 use crate::jours::Journee;
-use crate::scan::{Fiabilite, Media, OriginePosition, Position, TypeMedia};
+use crate::scan::{Anomalie, Fiabilite, Media, OriginePosition, Position, TypeMedia};
 use crate::voyage::Voyage;
 
 /// Écart maximal, en minutes, entre une vidéo et la photo dont elle hérite
@@ -36,6 +36,10 @@ const METRES_INTERPOLATION: f64 = 5_000.0;
 #[derive(Debug, Default)]
 pub struct Bilan {
     pub videos_promues: usize,
+    /// Promues par une photo fiable proche.
+    pub videos_par_photo: usize,
+    /// Promues faute de clonage, aucune photo n’ayant pu les confirmer.
+    pub videos_sans_clone: usize,
     pub interpolees: usize,
     pub heritees: usize,
     /// Médias qui restent sans position après les trois mécanismes.
@@ -108,15 +112,25 @@ fn promouvoir_videos(medias: &mut [Media], bilan: &mut Bilan) {
             continue;
         };
         let minutes = (*instant_repere - instant).num_minutes().abs();
-        if minutes > MINUTES_PROMOTION_VIDEO {
-            continue;
-        }
-        if distance_m(&position, position_repere) > METRES_PROMOTION_VIDEO {
+        let confirmee_par_photo = minutes <= MINUTES_PROMOTION_VIDEO
+            && distance_m(&position, position_repere) <= METRES_PROMOTION_VIDEO;
+
+        // Faute de photo au bon moment, la position d'une vidéo se juge sur
+        // le seul critère qui la concerne : le clonage. L'altitude n'en est
+        // pas un, le format MP4 ne la porte pas.
+        let non_clonee = !media.anomalies.contains(&Anomalie::PositionClonee);
+
+        if !confirmee_par_photo && !non_clonee {
             continue;
         }
         // L'anomalie reste : c'est un fait constaté. Seul le verdict change.
         media.fiabilite = Fiabilite::Haute;
         bilan.videos_promues += 1;
+        if confirmee_par_photo {
+            bilan.videos_par_photo += 1;
+        } else {
+            bilan.videos_sans_clone += 1;
+        }
     }
 }
 
@@ -285,28 +299,66 @@ mod tests {
         assert!(v.anomalies.contains(&Anomalie::AltitudeNulle));
     }
 
-    /// La condition de distance est ce qui empêche une position gelée d'être
-    /// promue par une photo prise au même moment ailleurs.
+    /// Faute de photo au bon moment, c'est le clonage qui tranche. Une vidéo
+    /// dont la position n'est pas clonée est fiable, l'altitude n'étant pas
+    /// un discriminant pour ce format.
     #[test]
-    fn video_non_promue_si_la_position_est_loin() {
+    fn video_non_clonee_est_promue_sans_photo_proche() {
+        let mut medias = vec![
+            media("PHOTO", "2026-08-14T09:00:00+02:00", Some((45.5, 7.4)), Fiabilite::Haute),
+            video("VIDEO", "2026-08-14T18:05:00+02:00", (46.7, 12.0)),
+        ];
+        let mut bilan = Bilan::default();
+        promouvoir_videos(&mut medias, &mut bilan);
+        assert_eq!(bilan.videos_promues, 1);
+        assert_eq!(bilan.videos_sans_clone, 1);
+        assert_eq!(bilan.videos_par_photo, 0);
+    }
+
+    /// Une position clonée, elle, ne se rattrape que par une photo proche.
+    #[test]
+    fn video_clonee_et_sans_photo_proche_reste_basse() {
+        let mut clonee = video("VIDEO", "2026-08-14T18:05:00+02:00", (46.7, 12.0));
+        clonee.anomalies.push(Anomalie::PositionClonee);
+        let mut medias = vec![
+            media("PHOTO", "2026-08-14T09:00:00+02:00", Some((45.5, 7.4)), Fiabilite::Haute),
+            clonee,
+        ];
+        let mut bilan = Bilan::default();
+        promouvoir_videos(&mut medias, &mut bilan);
+        assert_eq!(bilan.videos_promues, 0);
+        let v = medias.iter().find(|m| m.id == "VIDEO").expect("vidéo");
+        assert_eq!(v.fiabilite, Fiabilite::Basse);
+    }
+
+    /// La condition de distance garde son rôle : elle empêche une position
+    /// clonée d'être confirmée par une photo prise au même moment ailleurs.
+    #[test]
+    fn video_clonee_non_promue_si_la_photo_est_loin() {
+        let mut clonee = video("VIDEO", "2026-08-14T10:05:00+02:00", (45.6, 7.6));
+        clonee.anomalies.push(Anomalie::PositionClonee);
         let mut medias = vec![
             media("PHOTO", "2026-08-14T10:00:00+02:00", Some((45.5, 7.4)), Fiabilite::Haute),
-            video("VIDEO", "2026-08-14T10:05:00+02:00", (45.6, 7.6)),
+            clonee,
         ];
         let mut bilan = Bilan::default();
         promouvoir_videos(&mut medias, &mut bilan);
         assert_eq!(bilan.videos_promues, 0);
     }
 
+    /// Mais une photo proche rattrape bien une position clonée.
     #[test]
-    fn video_non_promue_si_la_photo_est_trop_ancienne() {
+    fn video_clonee_confirmee_par_une_photo_proche() {
+        let mut clonee = video("VIDEO", "2026-08-14T10:05:00+02:00", (45.5005, 7.4005));
+        clonee.anomalies.push(Anomalie::PositionClonee);
         let mut medias = vec![
-            media("PHOTO", "2026-08-14T09:00:00+02:00", Some((45.5, 7.4)), Fiabilite::Haute),
-            video("VIDEO", "2026-08-14T10:05:00+02:00", (45.5001, 7.4001)),
+            media("PHOTO", "2026-08-14T10:00:00+02:00", Some((45.5, 7.4)), Fiabilite::Haute),
+            clonee,
         ];
         let mut bilan = Bilan::default();
         promouvoir_videos(&mut medias, &mut bilan);
-        assert_eq!(bilan.videos_promues, 0);
+        assert_eq!(bilan.videos_promues, 1);
+        assert_eq!(bilan.videos_par_photo, 1);
     }
 
     #[test]

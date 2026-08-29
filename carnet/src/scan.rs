@@ -155,11 +155,26 @@ pub struct Inventaire {
 /// Si l'EXIF portait `OffsetTimeOriginal`, cet offset fait foi. Sinon,
 /// l'horodatage est interprété dans le fuseau du voyage. Voir SPEC.md,
 /// section 6.2, étape 2.
-fn ancrer(naif: NaiveDateTime, offset_connu: Option<FixedOffset>, fuseau: Tz) -> DateTime<FixedOffset> {
+///
+/// `naif_est_utc` traite le cas des conteneurs MP4, dont le `CreateDate` est
+/// exprimé en temps universel par la norme. Sur le Tour des Alpes, `nom-exif`
+/// renvoie ces dates avec leur offset `Z`, et c'est donc la première branche
+/// qui s'applique. Le drapeau est un garde-fou pour les fichiers qui ne
+/// déclarent aucun offset : les interpréter en heure locale les décalerait
+/// silencieusement de la valeur du fuseau.
+fn ancrer(
+    naif: NaiveDateTime,
+    offset_connu: Option<FixedOffset>,
+    fuseau: Tz,
+    naif_est_utc: bool,
+) -> DateTime<FixedOffset> {
     if let Some(offset) = offset_connu {
         if let Some(dt) = naif.and_local_timezone(offset).single() {
             return dt;
         }
+    }
+    if naif_est_utc {
+        return naif.and_utc().with_timezone(&fuseau).fixed_offset();
     }
     match fuseau.from_local_datetime(&naif).earliest() {
         Some(dt) => dt.fixed_offset(),
@@ -291,15 +306,19 @@ fn construire(
 
     // Datation : EXIF, puis nom, puis rien. Jamais la date de modification
     // du fichier, qui ne survit pas aux copies (SPEC.md, section 6.2).
+    // Le CreateDate d'un MP4 est en temps universel ; le nom de fichier du
+    // téléphone, lui, porte l'heure locale. La source décide donc du fuseau
+    // d'interprétation, pas le média.
+    let video = noms::est_video(chemin);
     let (prise_le, origine_date) = match lecture.prise_le {
         Some(naif) => (
-            Some(ancrer(naif, lecture.offset, fuseau)),
+            Some(ancrer(naif, lecture.offset, fuseau, video)),
             OrigineDate::Exif,
         ),
         None => match nom.horodatage {
             Some(naif) => {
                 anomalies.push(Anomalie::DateDuNom);
-                (Some(ancrer(naif, None, fuseau)), OrigineDate::Nom)
+                (Some(ancrer(naif, None, fuseau, false)), OrigineDate::Nom)
             }
             None => (None, OrigineDate::Absente),
         },
@@ -324,7 +343,7 @@ fn construire(
 
     let jour = prise_le.map(|d| d.with_timezone(&fuseau).date_naive());
 
-    let type_media = if noms::est_video(chemin) {
+    let type_media = if video {
         TypeMedia::Video
     } else {
         TypeMedia::Photo
@@ -458,6 +477,7 @@ fn format_collisions(collisions: &[Collision]) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use chrono::Timelike;
     use chrono::NaiveTime;
 
     fn naif(a: i32, m: u32, j: u32, h: u32, mi: u32) -> NaiveDateTime {
@@ -468,7 +488,23 @@ mod tests {
 
     #[test]
     fn ancrage_sans_offset_utilise_le_fuseau_du_voyage() {
-        let dt = ancrer(naif(2026, 8, 14, 15, 16), None, chrono_tz::Europe::Paris);
+        let dt = ancrer(naif(2026, 8, 14, 15, 16), None, chrono_tz::Europe::Paris, false);
+        assert_eq!(dt.hour(), 15);
+    }
+
+    /// Le `CreateDate` d'un MP4 est en temps universel. Les vidéos du Tour
+    /// des Alpes déclarent leur offset `Z`, donc le cas ne se présente pas :
+    /// ce test garde la porte pour les fichiers qui n'en déclarent aucun,
+    /// qu'une lecture en heure locale décalerait sans rien signaler.
+    #[test]
+    fn horodatage_video_interprete_en_temps_universel() {
+        let dt = ancrer(naif(2026, 8, 4, 15, 50), None, chrono_tz::Europe::Paris, true);
+        assert_eq!(dt.hour(), 17, "une vidéo de 15 h 50 UTC est prise à 17 h 50 en CEST");
+    }
+
+    #[test]
+    fn horodatage_photo_reste_local() {
+        let dt = ancrer(naif(2026, 8, 14, 15, 16), None, chrono_tz::Europe::Paris, false);
         // CEST en août : UTC+2.
         assert_eq!(dt.offset().local_minus_utc(), 2 * 3600);
         assert_eq!(dt.naive_local(), naif(2026, 8, 14, 15, 16));
@@ -477,7 +513,7 @@ mod tests {
     #[test]
     fn ancrage_respecte_offset_exif() {
         let offset = FixedOffset::east_opt(9 * 3600).expect("offset valide");
-        let dt = ancrer(naif(2024, 10, 19, 11, 40), Some(offset), chrono_tz::Europe::Paris);
+        let dt = ancrer(naif(2024, 10, 19, 11, 40), Some(offset), chrono_tz::Europe::Paris, false);
         assert_eq!(dt.offset().local_minus_utc(), 9 * 3600);
     }
 }

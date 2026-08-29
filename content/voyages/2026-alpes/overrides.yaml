@@ -20,8 +20,9 @@ lots:
   - motif: "GOPR2*.JPG"
     jour: 2026-08-02
     position: { lat: 46.2010, lon: 13.6480 }
-    repartir_sur_segment: true
-    note: "GoPro sans GPS, horloge perdue. Canyoning du Sušec."
+    note: "GoPro sans GPS, horloge perdue. Canyoning du Sušec. Les quatorze
+      fichiers sont empilés sur un point unique, et c'est voulu : les photos
+      d'eau ont été prises au même endroit, il y avait peu de mouvement."
 
 # Contrainte C5 : deux journées ont un trou de trace assumé, que le GPS ne
 # peut pas combler. Ces tronçons sont tracés à la main.
@@ -36,3 +37,13 @@ segments:
     apres: IMG20260806133042
     points: [[12.5320, 46.7575], [12.6100, 46.7900], [12.7690, 46.8290]]
     note: "Seconde moitié Tassenbach vers Lienz, aucune photo prise."
+
+# Modes de déplacement, quand l’inférence par la vitesse se trompe.
+# Une voiture arrêtée pour déjeuner affiche la vitesse moyenne d’un vélo.
+modes:
+  # Journée de transit : Kobarid, halte du midi au Faaker See en Autriche,
+  # puis le Sud-Tyrol. Aucune photo pendant les trajets, seulement aux
+  # étapes, d’où une trace qui ne montrait rien.
+  - jour: 2026-08-05
+    mode: route
+    note: "Kobarid vers le Sud-Tyrol par l’Autriche, halte au Faaker See."

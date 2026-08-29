@@ -176,9 +176,12 @@ fn deriver(
         if !force {
             if let Some(entree) = cache.valide(&media.id, signature, &dossier) {
                 let (derives, lqip) = (entree.derives.clone(), entree.lqip.clone());
+                let (largeur, hauteur) = (entree.largeur, entree.hauteur);
                 let media = &mut p.inventaire.medias[indice];
                 media.derives = Some(derives);
                 media.lqip = Some(lqip);
+                media.largeur = Some(largeur);
+                media.hauteur = Some(hauteur);
                 caches += 1;
                 continue;
             }
@@ -196,7 +199,7 @@ fn deriver(
     type Resultat = (
         usize,
         (u64, i64),
-        Result<(derive::Derives, String), derive::ErreurDerive>,
+        Result<derive::Production, derive::ErreurDerive>,
     );
     let resultats: Vec<Resultat> =
         a_produire
@@ -220,19 +223,23 @@ fn deriver(
 
     for (indice, signature, resultat) in resultats {
         match resultat {
-            Ok((derives, lqip)) => {
+            Ok(production) => {
                 cache.inserer(
                     &p.inventaire.medias[indice].id,
                     derive::EntreeCache {
                         octets: signature.0,
                         mtime: signature.1,
-                        derives: derives.clone(),
-                        lqip: lqip.clone(),
+                        derives: production.derives.clone(),
+                        lqip: production.lqip.clone(),
+                        largeur: production.largeur,
+                        hauteur: production.hauteur,
                     },
                 );
                 let media = &mut p.inventaire.medias[indice];
-                media.derives = Some(derives);
-                media.lqip = Some(lqip);
+                media.derives = Some(production.derives);
+                media.lqip = Some(production.lqip);
+                media.largeur = Some(production.largeur);
+                media.hauteur = Some(production.hauteur);
                 bilan.produits += 1;
             }
             Err(erreur) => bilan.echecs.push(format!(

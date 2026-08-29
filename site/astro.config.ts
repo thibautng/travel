@@ -1,10 +1,14 @@
 import { defineConfig, passthroughImageService } from "astro/config";
+import remarkDirective from "remark-directive";
+import { directivesMedias } from "./src/directives";
 import { createReadStream, existsSync, statSync } from "node:fs";
 import path from "node:path";
+import type { Plugin } from "vite";
+import type { IncomingMessage, ServerResponse } from "node:http";
 
 const RACINE = process.env.VOYAGES_RACINE ?? path.resolve(process.cwd(), "..");
 
-const TYPES = {
+const TYPES: Record<string, string> = {
   ".avif": "image/avif",
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
@@ -21,26 +25,29 @@ const TYPES = {
  * dans le déploiement, alors qu'ils sont destinés à R2. D'où ce service
  * limité au serveur de développement, `apply: "serve"`.
  */
-function mediasLocaux() {
+function mediasLocaux(): Plugin {
   const dossier = path.join(RACINE, "media");
   return {
     name: "medias-locaux",
     apply: "serve",
     configureServer(serveur) {
-      serveur.middlewares.use("/media", (requete, reponse, suivant) => {
-        const relatif = decodeURIComponent((requete.url ?? "/").split("?")[0]);
-        const chemin = path.normalize(path.join(dossier, relatif));
-        // Garde contre la remontée de chemin.
-        if (!chemin.startsWith(dossier) || !existsSync(chemin) || !statSync(chemin).isFile()) {
-          return suivant();
-        }
-        reponse.setHeader(
-          "Content-Type",
-          TYPES[path.extname(chemin).toLowerCase()] ?? "application/octet-stream",
-        );
-        reponse.setHeader("Cache-Control", "public, max-age=3600");
-        createReadStream(chemin).pipe(reponse);
-      });
+      serveur.middlewares.use(
+        "/media",
+        (requete: IncomingMessage, reponse: ServerResponse, suivant: () => void) => {
+          const relatif = decodeURIComponent((requete.url ?? "/").split("?")[0]);
+          const chemin = path.normalize(path.join(dossier, relatif));
+          // Garde contre la remontée de chemin.
+          if (!chemin.startsWith(dossier) || !existsSync(chemin) || !statSync(chemin).isFile()) {
+            return suivant();
+          }
+          reponse.setHeader(
+            "Content-Type",
+            TYPES[path.extname(chemin).toLowerCase()] ?? "application/octet-stream",
+          );
+          reponse.setHeader("Cache-Control", "public, max-age=3600");
+          createReadStream(chemin).pipe(reponse);
+        },
+      );
     },
   };
 }
@@ -57,6 +64,11 @@ export default defineConfig({
     // le repli et l'aperçu. Le service de passage évite d'embarquer `sharp`,
     // qui referait le travail plus mal et alourdirait l'installation.
     service: passthroughImageService(),
+  },
+  markdown: {
+    // remark-directive fait l'analyse syntaxique de `::photo{...}`, notre
+    // greffon la resout contre media.json. Voir SPEC.md, section 5.2.
+    remarkPlugins: [remarkDirective, directivesMedias],
   },
   build: {
     // Une page par dossier, pour des URL en /voyages/2026-alpes/ plutôt

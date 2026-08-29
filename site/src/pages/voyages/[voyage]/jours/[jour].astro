@@ -97,6 +97,51 @@ const lien = (e: CollectionEntry<"journees">) =>
   article :global(em) {
     color: var(--discret);
   }
+
+  /* Directives du récit, résolues au build par src/directives.ts. Les
+     photos débordent de la colonne de texte sur grand écran : le sujet du
+     site, ce sont les images, pas la justification. */
+  article :global(figure.photo) {
+    margin: 2rem 0;
+  }
+  article :global(figure.photo img) {
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+    background-color: var(--trait);
+  }
+  article :global(figure.photo figcaption) {
+    margin-top: 0.5rem;
+    color: var(--discret);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.88rem;
+  }
+  article :global(.galerie) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 0.5rem;
+    margin: 2rem 0;
+  }
+  article :global(.galerie img) {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 2px;
+    background-color: var(--trait);
+  }
+  article :global(video) {
+    width: 100%;
+    height: auto;
+    margin: 2rem 0;
+  }
+  article :global(.video-en-attente) {
+    color: var(--discret);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.9rem;
+    border-left: 2px solid var(--trait);
+    padding-left: 0.8rem;
+  }
   .galerie {
     margin-top: 3rem;
   }

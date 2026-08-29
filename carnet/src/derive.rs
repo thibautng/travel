@@ -99,7 +99,7 @@ impl Reglages {
     /// Empreinte des paramètres, pour le cache de build (étape 14).
     pub fn empreinte(&self) -> String {
         format!(
-            "v1|{}|q{}|s{}|{}x{}x{}|repli{}",
+            "v2|{}|q{}|s{}|{}x{}x{}|repli{}",
             self.format.extension(),
             self.qualite,
             self.vitesse_avif,
@@ -109,6 +109,20 @@ impl Reglages {
             LARGEUR_REPLI
         )
     }
+}
+
+/// Ce qu'une photo a produit.
+///
+/// Les dimensions sont relevées ici et non au scan : le téléphone ne les
+/// écrit pas dans l'EXIF, seules 16 photos sur 705 en portaient. Or ce module
+/// décode déjà chaque image pour la redimensionner, et il les connaît donc
+/// après redressement, ce qui est la valeur utile au site.
+#[derive(Debug, Clone)]
+pub struct Production {
+    pub derives: Derives,
+    pub lqip: String,
+    pub largeur: u32,
+    pub hauteur: u32,
 }
 
 /// Chemins des dérivés, relatifs à `media/<voyage>/`.
@@ -283,7 +297,7 @@ pub fn produire(
     source: &Path,
     dossier: &Path,
     reglages: &Reglages,
-) -> Result<(Derives, String), ErreurDerive> {
+) -> Result<Production, ErreurDerive> {
     debug_assert_eq!(media.type_media, TypeMedia::Photo);
 
     let originale = ImageReader::open(source)
@@ -326,15 +340,17 @@ pub fn produire(
 
     let apercu = lqip(&originale, &dossier.join("lqip"))?;
 
-    Ok((
-        Derives {
+    Ok(Production {
+        derives: Derives {
             vignette: chemins[0].clone(),
             moyen: chemins[1].clone(),
             grand: chemins[2].clone(),
             repli: relatif_repli,
         },
-        apercu,
-    ))
+        lqip: apercu,
+        largeur: originale.width(),
+        hauteur: originale.height(),
+    })
 }
 
 #[cfg(test)]
@@ -439,6 +455,8 @@ pub struct EntreeCache {
     pub mtime: i64,
     pub derives: Derives,
     pub lqip: String,
+    pub largeur: u32,
+    pub hauteur: u32,
 }
 
 /// Cache de build, ecrit dans `data/<voyage>/.build-cache.json`.

@@ -27,6 +27,15 @@ lots:
 # Contrainte C5 : deux journées ont un trou de trace assumé, que le GPS ne
 # peut pas combler. Ces tronçons sont tracés à la main.
 segments:
+  # Du camping de Ramsau à l’embarcadère du Königssee. Aucune photo pendant
+  # le trajet : les premières de la journée sont déjà prises à l’embarcadère.
+  # `calculer` fait tracer la route par le moteur au lieu d’une droite.
+  - jour: 2026-07-31
+    mode: route
+    calculer: true
+    points: [[12.89263, 47.60736], [12.98931, 47.58931]]
+    note: "Winkl-Landthal vers l’embarcadère du Königssee, en voiture."
+
   - jour: 2026-07-31
     mode: bateau
     points: [[12.9887, 47.5893], [12.9797, 47.5225], [12.9847, 47.4967]]
@@ -35,7 +44,7 @@ segments:
   - jour: 2026-08-06
     mode: velo
     apres: IMG20260806161600
-    points: [[12.6326, 46.7773], [12.7690, 46.8290]]
+    points: [[12.6868, 46.7854], [12.7690, 46.8290]]
     note: "Derniers kilomètres vers Lienz, après la dernière photo de la sortie.
       La sortie est partie de San Candido, pas de Tassenbach, et les photos la
       documentent jusqu’à ce point : ce segment ne couvre que ce qui manque,
@@ -91,10 +100,11 @@ modes:
     de: "10:45"
     a: "10:55"
 
-  # 31 juillet, route vers le Königssee en voiture, puis bateau. Le bateau est
-  # aussi tracé à la main plus haut, là où le GPS avait décroché.
+  # 31 juillet, tout ce qui bouge est sur le lac. La voiture s’est arrêtée à
+  # l’embarcadère avant la première photo, et son trajet est déclaré en segment
+  # calculé plus haut. Ce qui suit est la traversée vers St. Bartholomä.
   - jour: 2026-07-31
-    mode: route
+    mode: bateau
     de: "08:45"
     a: "09:25"
   - jour: 2026-07-31
@@ -141,6 +151,14 @@ modes:
     mode: velo
     de: "15:45"
     a: "15:55"
+  # Retour de Lienz en train. Sans cette ligne, le trajet de retour était
+  # rattaché à la sortie à vélo et repassait sur elle, donnant l’impression
+  # d’un aller-retour à vélo qui n’a pas eu lieu.
+  - jour: 2026-08-06
+    mode: train
+    de: "16:10"
+    a: "19:00"
+    note: "Retour de Lienz à San Candido en train."
 
   # 11 août, descente vers le lac de Garde. Un seul tronçon de 89 km, que dix
   # heures d’écart entre deux photos faisaient passer pour du vélo.
@@ -167,6 +185,11 @@ itineraires:
 
   # 15 août, retour par le col du Petit-Saint-Bernard et non par le tunnel du
   # Mont-Blanc. Le point est celui des photos prises au col à 13 h 39.
+  # Deux points, et l’ordre compte. Avec le seul col, le moteur y montait
+  # puis redescendait en Italie pour prendre le tunnel du Mont-Blanc, qu’il
+  # jugeait plus rapide vers Paris. Le second point, relevé près de Lyon à
+  # 17 h 45, force la descente par la Tarentaise.
   - jour: 2026-08-15
-    points_de_passage: [[6.88669, 45.68517]]
-    note: "Col du Petit-Saint-Bernard, et non le tunnel du Mont-Blanc."
+    points_de_passage: [[6.88669, 45.68517], [5.21311, 45.61349]]
+    note: "Col du Petit-Saint-Bernard puis la Tarentaise et Lyon, et non le
+      tunnel du Mont-Blanc."

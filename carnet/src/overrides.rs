@@ -94,6 +94,14 @@ pub struct Segment {
     pub apres: Option<String>,
     /// Points en ordre GeoJSON : `[longitude, latitude]`.
     pub points: Vec<[f64; 2]>,
+    /// Faire calculer le tracé entre les points par le moteur d'itinéraire,
+    /// au lieu de les relier par des droites.
+    ///
+    /// Utile pour un trajet routier qu'aucune photo ne documente : on déclare
+    /// le départ et l'arrivée, le moteur trouve la route. Sans effet sur les
+    /// modes non calculables (D6).
+    #[serde(default)]
+    pub calculer: bool,
     #[serde(default)]
     pub note: Option<String>,
 }

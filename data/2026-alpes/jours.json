@@ -214,7 +214,7 @@
       12.9949,
       47.589311111111115
     ],
-    "distance_trace_km": 24.6,
+    "distance_trace_km": 35.1,
     "modes": [
       "route",
       "marche",
@@ -375,10 +375,11 @@
       12.6868,
       46.785399999999996
     ],
-    "distance_trace_km": 81.2,
+    "distance_trace_km": 77.2,
     "modes": [
       "marche",
-      "velo"
+      "velo",
+      "train"
     ],
     "anomalies": [
       "trou_candidat",
@@ -625,7 +626,7 @@
       6.886688888888888,
       45.68517222222222
     ],
-    "distance_trace_km": 728.8,
+    "distance_trace_km": 766.3,
     "modes": [
       "route"
     ],

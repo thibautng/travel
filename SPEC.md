@@ -535,7 +535,9 @@ Attention à la portée du motif : les fichiers GoPro vont de `GOPR2699` à `GOP
 
 `repartir_sur_segment` répartit les médias d’un lot le long du segment manuel de la journée, au lieu de les empiler sur un point unique. L’ordre relatif vient de l’horodatage EXIF, faux en absolu mais cohérent en relatif, avec repli sur le numéro de fichier.
 
-`points_de_passage` impose au moteur d’itinéraire de passer par les points donnés, pour corriger un trajet plausible mais faux (D6).
+`points_de_passage` impose au moteur d’itinéraire de passer par les points donnés, pour corriger un trajet plausible mais faux (D6). L’ordre compte : sur le retour du 15 août, le seul col du Petit-Saint-Bernard ne suffisait pas, le moteur y montait puis redescendait en Italie pour prendre le tunnel du Mont-Blanc, qu’il jugeait plus rapide. Un second point relevé près de Lyon a forcé la descente par la Tarentaise.
+
+`calculer: true` sur un segment fait tracer la route entre ses points par le moteur, au lieu de les relier par des droites. C’est ce qui permet de déclarer un trajet routier qu’aucune photo ne documente : le 31 juillet, la voiture s’est arrêtée à l’embarcadère du Königssee avant la première photo de la journée, et le trajet depuis le camping n’existait nulle part. Le drapeau reste sans effet sur les modes non calculables, où la garde de D6 s’applique.
 
 `modes` corrige le mode de déplacement inféré. L’inférence par la vitesse entre deux photos consécutives est une proposition, jamais un verdict : une voiture arrêtée pour déjeuner affiche la vitesse moyenne d’un vélo, et la première exécution du lot 2 a effectivement classé en `velo` plusieurs centaines de kilomètres parcourus en voiture. Une entrée sans `de` ni `a` couvre la journée entière ; la première règle qui couvre l’instant l’emporte, donc une tranche horaire déclarée avant la règle de journée prime sur elle.
 

@@ -244,13 +244,40 @@ pub fn construire(
         traces.troncons.extend(troncons);
     }
 
-    // Segments saisis à la main : ils forment leurs propres tronçons.
+    // Segments saisis à la main : ils forment leurs propres tronçons. Un
+    // segment marqué `calculer` fait tracer la route entre ses points par le
+    // moteur, ce qui sert aux trajets routiers qu'aucune photo ne documente.
     for segment in &overrides.segments {
+        let mut points = segment.points.clone();
+        let mut source = SourceTrace::Manuelle;
+
+        if segment.calculer && segment.mode.calculable() && segment.points.len() >= 2 {
+            let depart = Position {
+                lat: segment.points[0][1],
+                lon: segment.points[0][0],
+                alt: None,
+            };
+            let dernier = segment.points[segment.points.len() - 1];
+            let arrivee = Position {
+                lat: dernier[1],
+                lon: dernier[0],
+                alt: None,
+            };
+            let passages = &segment.points[1..segment.points.len() - 1];
+            if let Ok(Resolution::Cache(trajet)) | Ok(Resolution::Calcule(trajet)) =
+                itineraires.resoudre(segment.mode, &depart, &arrivee, passages)
+            {
+                points = trajet.points;
+                source = SourceTrace::Calculee;
+                traces.bilan.troncons_calcules += 1;
+            }
+        }
+
         traces.troncons.push(Troncon {
             jour: segment.jour,
             mode: segment.mode,
-            source: SourceTrace::Manuelle,
-            points: segment.points.clone(),
+            source,
+            points,
         });
     }
 

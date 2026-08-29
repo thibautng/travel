@@ -528,3 +528,63 @@ impl CacheBuild {
         })
     }
 }
+
+#[cfg(test)]
+mod calibrage {
+    use super::*;
+
+    /// Mesure le cout d'encodage d'une vraie photo, dans les deux formats.
+    ///
+    /// Ignore par defaut : il depend d'un fichier hors du depot. A lancer
+    /// pour calibrer une machine, avant de promettre un temps de build.
+    ///
+    /// ```text
+    /// CARNET_PHOTO_TEST=".../IMG20260814151616.jpg" \
+    ///   cargo test --release calibrage -- --ignored --nocapture
+    /// ```
+    #[test]
+    #[ignore]
+    fn cout_d_encodage_par_photo() {
+        let Ok(chemin) = std::env::var("CARNET_PHOTO_TEST") else {
+            eprintln!("CARNET_PHOTO_TEST non definie, mesure sautee");
+            return;
+        };
+        let originale = ImageReader::open(&chemin)
+            .expect("photo lisible")
+            .decode()
+            .expect("photo decodable");
+        eprintln!(
+            "photo {} x {} pixels",
+            originale.width(),
+            originale.height()
+        );
+
+        let dossier = std::env::temp_dir().join("carnet-calibrage");
+        for format in [Format::Jpeg, Format::Avif] {
+            let reglages = Reglages {
+                format,
+                ..Reglages::default()
+            };
+            let debut = std::time::Instant::now();
+            let mut octets = 0u64;
+            for largeur in LARGEURS {
+                let cible = dossier.join(format!("essai-{largeur}.{}", format.extension()));
+                let reduite = redimensionner(&originale, largeur, &cible).expect("redimension");
+                match format {
+                    Format::Avif => encoder_avif(&reduite, &reglages, &cible).expect("avif"),
+                    Format::Jpeg => {
+                        encoder_jpeg(&reduite, reglages.qualite, &cible).expect("jpeg")
+                    }
+                }
+                octets += std::fs::metadata(&cible).map(|m| m.len()).unwrap_or(0);
+            }
+            eprintln!(
+                "  {:<5} {:>7.2} s pour les trois tailles, {:>5} Ko",
+                format.extension(),
+                debut.elapsed().as_secs_f64(),
+                octets / 1024
+            );
+        }
+        let _ = std::fs::remove_dir_all(&dossier);
+    }
+}

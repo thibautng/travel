@@ -1,0 +1,115 @@
+---
+/**
+ * Vue d'ensemble d'un voyage : chiffres clés et frise des journées.
+ * Voir SPEC.md, section 9.1. La carte arrive au lot 5.
+ */
+import Page from "../../../layouts/Page.astro";
+import { tousLesVoyages, camps, type Voyage } from "../../../voyages";
+import { jours, type JourAgrege } from "../../../donnees";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  return tousLesVoyages().map((v) => ({ params: { voyage: v.id }, props: { v } }));
+}
+
+interface Props {
+  v: Voyage;
+}
+const { v } = Astro.props;
+
+const journees = await getCollection("journees", (e) => e.id.startsWith(`${v.id}/`));
+journees.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const agreges = new Map<string, JourAgrege>(jours(v.id).map((j) => [j.jour, j]));
+const km = Math.round(jours(v.id).reduce((t, j) => t + j.distance_trace_km, 0));
+
+const dateIso = (d: Date) => d.toISOString().slice(0, 10);
+const enFrancais = (d: Date) =>
+  d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+---
+
+<Page titre={v.titre} description={v.sous_titre}>
+  <h1>{v.titre}</h1>
+  {v.sous_titre && <p class="discret">{v.sous_titre}</p>}
+
+  <dl class="chiffres">
+    <div><dt>Journées</dt><dd>{journees.length}</dd></div>
+    <div><dt>Kilomètres</dt><dd>{km.toLocaleString("fr-FR")}</dd></div>
+    {v.nuits && <div><dt>Nuits</dt><dd>{v.nuits}</dd></div>}
+    <div><dt>Campings</dt><dd>{camps(v).length}</dd></div>
+  </dl>
+
+  <h2>Jour par jour</h2>
+  <ol class="frise">
+    {
+      journees.map((journee) => {
+        const jour = dateIso(journee.data.date);
+        const agrege = agreges.get(jour);
+        return (
+          <li>
+            <a href={`/voyages/${v.id}/jours/${jour}/`}>
+              <span class="date discret">{enFrancais(journee.data.date)}</span>
+              <span class="titre">{journee.data.titre}</span>
+            </a>
+            {agrege && (
+              <span class="discret">
+                {agrege.medias.total} médias
+                {agrege.distance_trace_km > 0 && ` · ${agrege.distance_trace_km} km`}
+              </span>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</Page>
+
+<style>
+  .chiffres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 1.2rem 0;
+    border-top: 1px solid var(--trait);
+    border-bottom: 1px solid var(--trait);
+  }
+  .chiffres div {
+    margin: 0;
+  }
+  .chiffres dt {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--discret);
+  }
+  .chiffres dd {
+    margin: 0.15rem 0 0;
+    font-size: 1.5rem;
+  }
+  .frise {
+    list-style: none;
+    padding: 0;
+  }
+  .frise li {
+    border-top: 1px solid var(--trait);
+    padding: 0.9rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .frise a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+  }
+  .frise .date {
+    font-size: 0.85rem;
+  }
+  .frise .titre {
+    color: var(--encre);
+  }
+</style>

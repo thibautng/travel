@@ -1,0 +1,97 @@
+---
+/**
+ * Toutes les photos retenues du voyage, groupées par jour.
+ * Voir SPEC.md, section 9.1 : « toutes les photos » s'entend au sens de
+ * toutes les photos retenues, la sélection relevant de D7.
+ *
+ * Les aperçus inline sont volontairement absents ici, alors que les pages de
+ * journée les portent. À 965 octets pièce, 705 aperçus faisaient à eux seuls
+ * 680 Ko de HTML sur cette page. Les vignettes de 320 pixels arrivent assez
+ * vite pour s'en passer, ce qui n'est pas le cas des grandes images du récit.
+ */
+import Page from "../../../layouts/Page.astro";
+import { tousLesVoyages, type Voyage } from "../../../voyages";
+import { medias, urlMedia, type Media } from "../../../donnees";
+
+export async function getStaticPaths() {
+  return tousLesVoyages().map((v) => ({ params: { voyage: v.id }, props: { v } }));
+}
+
+interface Props {
+  v: Voyage;
+}
+const { v } = Astro.props;
+
+const parJour = new Map<string, Media[]>();
+for (const media of medias(v.id)) {
+  if (media.type !== "photo" || !media.publie || !media.derives || !media.jour) continue;
+  const liste = parJour.get(media.jour) ?? [];
+  liste.push(media);
+  parJour.set(media.jour, liste);
+}
+const groupes = [...parJour.entries()].sort(([a], [b]) => a.localeCompare(b));
+for (const [, liste] of groupes) {
+  liste.sort((a, b) => (a.prise_le ?? "").localeCompare(b.prise_le ?? ""));
+}
+const total = groupes.reduce((t, [, liste]) => t + liste.length, 0);
+
+const enFrancais = (jour: string) =>
+  new Date(`${jour}T12:00:00Z`).toLocaleDateString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+---
+
+<Page titre={`Photos — ${v.titre}`}>
+  <p class="discret"><a href={`/voyages/${v.id}/`}>{v.titre}</a></p>
+  <h1>Photos</h1>
+  <p class="discret">{total} photos sur {groupes.length} journées.</p>
+
+  {
+    groupes.map(([jour, liste]) => (
+      <section>
+        <h2>
+          <a href={`/voyages/${v.id}/jours/${jour}/`}>{enFrancais(jour)}</a>
+        </h2>
+        <div class="grille">
+          {liste.map((photo) => (
+            <img
+              src={urlMedia(photo.derives!.vignette, v.id)}
+              srcset={`${urlMedia(photo.derives!.vignette, v.id)} 320w, ${urlMedia(photo.derives!.moyen, v.id)} 1024w`}
+              sizes="(min-width: 48rem) 11rem, 30vw"
+              width={photo.largeur}
+              height={photo.hauteur}
+              loading="lazy"
+              decoding="async"
+              alt=""
+            />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</Page>
+
+<style>
+  h2 {
+    margin-top: 2.5rem;
+    font-size: 1.05rem;
+  }
+  h2 a {
+    text-decoration: none;
+  }
+  .grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+    gap: 0.4rem;
+  }
+  .grille img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 2px;
+    background-color: var(--trait);
+  }
+</style>

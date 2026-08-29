@@ -1,0 +1,130 @@
+---
+/**
+ * Une journée : le récit et sa galerie. Voir SPEC.md, section 9.1.
+ * La mini-carte arrive au lot 5, les directives au commit suivant.
+ */
+import Page from "../../../../layouts/Page.astro";
+import { tousLesVoyages, lieu, type Voyage } from "../../../../voyages";
+import { mediasDuJour, urlMedia, type Media } from "../../../../donnees";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const chemins = [];
+  for (const v of tousLesVoyages()) {
+    const journees = await getCollection("journees", (e) => e.id.startsWith(`${v.id}/`));
+    journees.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+    for (const [rang, journee] of journees.entries()) {
+      chemins.push({
+        params: { voyage: v.id, jour: journee.data.date.toISOString().slice(0, 10) },
+        props: {
+          v,
+          journee,
+          precedente: journees[rang - 1],
+          suivante: journees[rang + 1],
+        },
+      });
+    }
+  }
+  return chemins;
+}
+
+interface Props {
+  v: Voyage;
+  journee: CollectionEntry<"journees">;
+  precedente?: CollectionEntry<"journees">;
+  suivante?: CollectionEntry<"journees">;
+}
+const { v, journee, precedente, suivante } = Astro.props;
+const { Content } = await render(journee);
+
+const jour = journee.data.date.toISOString().slice(0, 10);
+const photos: Media[] = mediasDuJour(v.id, jour).filter((m) => m.type === "photo" && m.derives);
+const camp = lieu(v, journee.data.camp);
+
+const enFrancais = (d: Date) =>
+  d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const lien = (e: CollectionEntry<"journees">) =>
+  `/voyages/${v.id}/jours/${e.data.date.toISOString().slice(0, 10)}/`;
+---
+
+<Page titre={`${journee.data.titre} — ${v.titre}`}>
+  <p class="discret">
+    <a href={`/voyages/${v.id}/`}>{v.titre}</a>
+  </p>
+  <h1>{journee.data.titre}</h1>
+  <p class="discret">
+    {enFrancais(journee.data.date)}
+    {camp && ` · ${camp.nom}`}
+  </p>
+
+  <article>
+    <Content />
+  </article>
+
+  {
+    photos.length > 0 && (
+      <section class="galerie">
+        <h2>Les photos du jour</h2>
+        <div class="grille">
+          {photos.map((photo) => (
+            <img
+              src={urlMedia(photo.derives!.moyen, v.id)}
+              srcset={`${urlMedia(photo.derives!.vignette, v.id)} 320w, ${urlMedia(photo.derives!.moyen, v.id)} 1024w, ${urlMedia(photo.derives!.grand, v.id)} 2048w`}
+              sizes="(min-width: 48rem) 22rem, 45vw"
+              width={photo.largeur}
+              height={photo.hauteur}
+              loading="lazy"
+              decoding="async"
+              alt=""
+              style={photo.lqip ? `background-image:url(${photo.lqip});background-size:cover` : undefined}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <nav class="voisines">
+    {precedente ? <a href={lien(precedente)}>← {precedente.data.titre}</a> : <span />}
+    {suivante ? <a href={lien(suivante)}>{suivante.data.titre} →</a> : <span />}
+  </nav>
+</Page>
+
+<style>
+  article :global(p) {
+    margin: 1.1rem 0;
+  }
+  article :global(em) {
+    color: var(--discret);
+  }
+  .galerie {
+    margin-top: 3rem;
+  }
+  .grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: 0.6rem;
+  }
+  .grille img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 2px;
+    background-color: var(--trait);
+  }
+  .voisines {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--trait);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.9rem;
+  }
+  .voisines a {
+    text-decoration: none;
+    max-width: 45%;
+  }
+</style>

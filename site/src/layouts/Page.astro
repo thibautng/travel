@@ -1,0 +1,89 @@
+---
+/**
+ * Gabarit commun. Voir SPEC.md, section 9.5 : le sujet, ce sont les photos
+ * et le texte, pas l'interface. Le style complet arrive au commit 5 ; ici,
+ * seulement de quoi lire confortablement.
+ */
+interface Props {
+  titre: string;
+  description?: string;
+}
+const { titre, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{titre}</title>
+    {description && <meta name="description" content={description} />}
+    <style>
+      :root {
+        color-scheme: light dark;
+        --fond: #fbf9f6;
+        --encre: #2b2723;
+        --discret: #6f665e;
+        --accent: #c0562a;
+        --trait: #e3ddd5;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --fond: #16130f;
+          --encre: #eae4dc;
+          --discret: #a79c91;
+          --trait: #322c26;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--fond);
+        color: var(--encre);
+        font: 1.05rem/1.65 ui-serif, Georgia, "Times New Roman", serif;
+      }
+      main {
+        max-width: 46rem;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 6rem;
+      }
+      a {
+        color: var(--accent);
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+      }
+      h1 {
+        font-size: clamp(1.7rem, 5vw, 2.4rem);
+        margin: 0 0 0.3rem;
+      }
+      .discret {
+        color: var(--discret);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.9rem;
+      }
+      nav.fil {
+        border-bottom: 1px solid var(--trait);
+        padding: 0.9rem 1.25rem;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.9rem;
+      }
+      nav.fil a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="fil"><a href="/">Voyages</a></nav>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

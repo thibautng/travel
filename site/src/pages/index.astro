@@ -1,35 +1,57 @@
 ---
-// Accueil provisoire. Les routes réelles de la section 9.1 arrivent au
-// commit suivant ; cette page ne sert qu'à vérifier que le site lit bien les
-// sorties du pipeline.
-import { jours, medias } from "../donnees";
+/** Accueil : la liste des voyages. Voir SPEC.md, section 9.1. */
+import Page from "../layouts/Page.astro";
+import { tousLesVoyages } from "../voyages";
+import { jours } from "../donnees";
 
-const VOYAGE = "2026-alpes";
-const tousLesJours = jours(VOYAGE);
-const tousLesMedias = medias(VOYAGE);
-const km = tousLesJours.reduce((total, j) => total + j.distance_trace_km, 0);
+const voyages = tousLesVoyages().map((v) => {
+  const journees = jours(v.id);
+  return {
+    voyage: v,
+    journees: journees.length,
+    km: Math.round(journees.reduce((t, j) => t + j.distance_trace_km, 0)),
+    medias: journees.reduce((t, j) => t + j.medias.total, 0),
+  };
+});
 ---
 
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Voyages</title>
-  </head>
-  <body>
-    <h1>Voyages</h1>
-    <p>
-      Le pipeline a produit {tousLesMedias.length} médias sur
-      {tousLesJours.length} journées, soit {Math.round(km)} kilomètres de trace.
-    </p>
-    <ul>
-      {
-        tousLesJours.map((jour) => (
-          <li>
-            {jour.jour} — {jour.medias.total} médias, {jour.distance_trace_km} km
-          </li>
-        ))
-      }
-    </ul>
-  </body>
-</html>
+<Page titre="Voyages">
+  <h1>Voyages</h1>
+  <p class="discret">Le journal de nos voyages en famille.</p>
+
+  <ul class="liste">
+    {
+      voyages.map(({ voyage, journees, km, medias }) => (
+        <li>
+          <h2>
+            <a href={`/voyages/${voyage.id}/`}>{voyage.titre}</a>
+          </h2>
+          {voyage.sous_titre && <p class="discret">{voyage.sous_titre}</p>}
+          <p class="discret">
+            {journees} journées, {km.toLocaleString("fr-FR")} km, {medias} photos et vidéos
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</Page>
+
+<style>
+  .liste {
+    list-style: none;
+    padding: 0;
+  }
+  .liste li {
+    border-top: 1px solid var(--trait);
+    padding: 1.5rem 0;
+  }
+  .liste h2 {
+    margin: 0 0 0.2rem;
+  }
+  .liste a {
+    text-decoration: none;
+  }
+  .liste p {
+    margin: 0.2rem 0 0;
+  }
+</style>

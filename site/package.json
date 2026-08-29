@@ -11,10 +11,12 @@
     "check": "astro check"
   },
   "dependencies": {
-    "astro": "^5"
+    "astro": "^5",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9",
+    "@types/node": "^26.4.0",
     "typescript": "^5"
   },
   "allowScripts": {

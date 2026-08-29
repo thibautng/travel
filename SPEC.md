@@ -85,7 +85,9 @@ Il n’existe aucun enregistrement GPS continu du voyage, seulement les position
 
 Pour le seul mode `route`, `carnet` interroge donc un moteur d’itinéraire entre deux positions fiables consécutives, et **fige le résultat dans un cache versionné**. Le build reste reproductible hors ligne et sans dépendance permanente à un service tiers.
 
-Les modes `marche`, `velo`, `bateau`, `train` et `telepherique` ne sont **jamais** calculés sur le réseau routier : segments droits, ou tracé manuel via `segments`. Une randonnée map-matchée suivrait les départementales.
+**Chaque mode calculable va sur son propre réseau.** La route emprunte le profil `driving-car`, le vélo le profil `cycling-regular`, qui suit les pistes cyclables et non la chaussée. Les modes `marche`, `bateau`, `train` et `telepherique` ne sont **jamais** calculés : segments droits, ou tracé manuel via `segments`.
+
+La règle n’est donc pas « seule la route est calculée » mais « on ne calcule un mode que sur un réseau qui lui correspond ». Une randonnée envoyée au moteur suivrait les départementales, un bateau n’a pas d’itinéraire, et un train ne suit pas la route. Le vélo, lui, a un réseau à lui. La garde reste un refus et non une convention : `resoudre()` renvoie une erreur pour tout mode dépourvu de profil, et un test le vérifie sur les quatre.
 
 **Les journées de déplacement se tracent d’un camp à l’autre.** Les photos ne documentent pas les trajets : sur les 4 400 km annoncés, elles n’en dessinaient que 888, et les jours de transit sont précisément ceux où l’on photographie le moins. Le 24 juillet, jour du départ, porte cinq médias et ne produisait aucune trace.
 

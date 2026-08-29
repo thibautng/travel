@@ -1,8 +1,8 @@
-//! Itinéraires routiers calculés, et leur cache versionné. Voir D6.
+//! Itinéraires calculés, et leur cache versionné. Voir D6.
 //!
 //! Il n'existe aucun enregistrement GPS continu du voyage : relier deux
-//! positions de photos par une droite ferait traverser les massifs. Pour le
-//! seul mode `route`, un moteur d'itinéraire est interrogé une fois, et le
+//! positions de photos par une droite ferait traverser les massifs. La route
+//! et le vélo partent donc au moteur, chacun sur son réseau, et le
 //! résultat est figé dans `data/<voyage>/itineraires.json`.
 //!
 //! Le cache est consulté avant tout appel réseau. Une fois peuplé, il rend le
@@ -18,7 +18,9 @@ use crate::track::Mode;
 /// Variable d'environnement portant la clé OpenRouteService.
 pub const VARIABLE_CLE: &str = "CARNET_ORS_CLE";
 
-const URL_ORS: &str = "https://api.openrouteservice.org/v2/directions/driving-car/geojson";
+fn url_ors(profil: &str) -> String {
+    format!("https://api.openrouteservice.org/v2/directions/{profil}/geojson")
+}
 
 /// Pause entre deux appels réseau. Le palier gratuit d'OpenRouteService
 /// plafonne à 40 requêtes par minute ; une seconde et demie laisse de la marge.
@@ -187,7 +189,8 @@ impl Itineraires {
         if self.appels > 0 {
             std::thread::sleep(PAUSE_ENTRE_APPELS);
         }
-        let trajet = self.appeler(&cle_api, depart, arrivee, passages)?;
+        let profil = mode.profil().ok_or(ErreurItineraire::ModeNonCalculable(mode.nom()))?;
+        let trajet = self.appeler(profil, &cle_api, depart, arrivee, passages)?;
         self.appels += 1;
         self.contenu.entrees.insert(cle, trajet.clone());
         self.modifie = true;
@@ -196,6 +199,7 @@ impl Itineraires {
 
     fn appeler(
         &self,
+        profil: &str,
         cle_api: &str,
         depart: &Position,
         arrivee: &Position,
@@ -206,7 +210,7 @@ impl Itineraires {
         coordonnees.push([arrivee.lon, arrivee.lat]);
 
         let corps = serde_json::json!({ "coordinates": coordonnees });
-        let reponse = ureq::post(URL_ORS)
+        let reponse = ureq::post(url_ors(profil))
             .header("Authorization", cle_api)
             .header("Content-Type", "application/json")
             .send_json(&corps);
@@ -227,7 +231,7 @@ impl Itineraires {
             .body_mut()
             .read_json()
             .map_err(|_| ErreurItineraire::ReponseInvalide)?;
-        lire_reponse(&json).ok_or(ErreurItineraire::ReponseInvalide)
+        lire_reponse(&json, profil).ok_or(ErreurItineraire::ReponseInvalide)
     }
 
     /// Écrit le cache, s'il a changé.
@@ -252,7 +256,7 @@ impl Itineraires {
 }
 
 /// Extrait la géométrie de la réponse GeoJSON d'OpenRouteService.
-fn lire_reponse(json: &serde_json::Value) -> Option<Trajet> {
+fn lire_reponse(json: &serde_json::Value, profil: &str) -> Option<Trajet> {
     let feature = json.get("features")?.as_array()?.first()?;
     let coordonnees = feature.get("geometry")?.get("coordinates")?.as_array()?;
     let mut points = Vec::with_capacity(coordonnees.len());
@@ -276,7 +280,7 @@ fn lire_reponse(json: &serde_json::Value) -> Option<Trajet> {
             .and_then(|r| r.get("duration"))
             .and_then(|d| d.as_f64())
             .unwrap_or(0.0),
-        moteur: "openrouteservice/driving-car".to_string(),
+        moteur: format!("openrouteservice/{profil}"),
     })
 }
 
@@ -299,7 +303,7 @@ mod tests {
             appels: 0,
             manques: 0,
         };
-        for mode in [Mode::Marche, Mode::Velo, Mode::Bateau, Mode::Train, Mode::Telepherique] {
+        for mode in [Mode::Marche, Mode::Bateau, Mode::Train, Mode::Telepherique] {
             let erreur = itineraires
                 .resoudre(mode, &position(45.0, 7.0), &position(45.1, 7.1), &[])
                 .expect_err("le mode doit être refusé");
@@ -378,7 +382,7 @@ mod tests {
                 "properties": { "summary": { "distance": 12345.6, "duration": 987.0 } }
             }]
         });
-        let trajet = lire_reponse(&json).expect("réponse lisible");
+        let trajet = lire_reponse(&json, "driving-car").expect("réponse lisible");
         assert_eq!(trajet.points.len(), 3);
         assert!((trajet.distance_m - 12345.6).abs() < 1e-6);
     }
@@ -386,6 +390,6 @@ mod tests {
     #[test]
     fn reponse_sans_geometrie_refusee() {
         let json = serde_json::json!({ "features": [] });
-        assert!(lire_reponse(&json).is_none());
+        assert!(lire_reponse(&json, "driving-car").is_none());
     }
 }

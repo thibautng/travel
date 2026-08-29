@@ -46,12 +46,25 @@ impl Mode {
         }
     }
 
-    /// Seuls les tronçons routiers partent au moteur d'itinéraire.
+    /// Profil de routage d'OpenRouteService, quand ce mode en a un.
+    ///
+    /// La route va sur le réseau routier, le vélo sur le réseau cyclable.
+    /// Les autres modes n'en ont pas : c'est la garde de D6.
+    pub fn profil(self) -> Option<&'static str> {
+        match self {
+            Mode::Route => Some("driving-car"),
+            Mode::Velo => Some("cycling-regular"),
+            Mode::Marche | Mode::Bateau | Mode::Train | Mode::Telepherique => None,
+        }
+    }
+
+    /// Vrai si ce mode peut partir au moteur d'itinéraire.
     ///
     /// C'est la garde de D6 : map-matcher une randonnée la ferait suivre les
-    /// départementales. Un test vérifie qu'aucun autre mode ne passe.
+    /// départementales, et un bateau n'a pas d'itinéraire. Un test vérifie
+    /// qu'aucun mode sans réseau ne passe.
     pub fn calculable(self) -> bool {
-        matches!(self, Mode::Route)
+        self.profil().is_some()
     }
 
     /// Nom lisible, pour les rapports en console.
@@ -222,17 +235,9 @@ pub fn construire(
 
     for (jour, mut medias_du_jour) in par_jour {
         medias_du_jour.sort_by_key(|m| m.prise_le);
-        let passages: Vec<[f64; 2]> = overrides
-            .itineraires
-            .iter()
-            .filter(|f| f.jour == jour && f.mode.calculable())
-            .flat_map(|f| f.points_de_passage.clone())
-            .collect();
-
         let troncons = tracer_journee(
             jour,
             &medias_du_jour,
-            &passages,
             overrides,
             voyage.fuseau,
             itineraires,
@@ -318,7 +323,6 @@ pub fn construire(
 fn tracer_journee(
     jour: NaiveDate,
     medias: &[&Media],
-    passages: &[[f64; 2]],
     overrides: &Overrides,
     fuseau: chrono_tz::Tz,
     itineraires: &mut Itineraires,
@@ -359,7 +363,15 @@ fn tracer_journee(
             if let Some(termine) = courant.take() {
                 troncons.push(termine);
             }
-            match itineraires.resoudre(mode, &p0, &p1, passages) {
+            // Les points de passage se filtrent par mode : un col imposé à la
+            // voiture n'a rien à faire dans un itinéraire cyclable.
+            let passages: Vec<[f64; 2]> = overrides
+                .itineraires
+                .iter()
+                .filter(|f| f.jour == jour && f.mode == mode)
+                .flat_map(|f| f.points_de_passage.clone())
+                .collect();
+            match itineraires.resoudre(mode, &p0, &p1, &passages) {
                 Ok(Resolution::Cache(trajet)) | Ok(Resolution::Calcule(trajet)) => {
                     bilan.troncons_calcules += 1;
                     troncons.push(Troncon {
@@ -594,16 +606,14 @@ mod tests {
     use crate::scan::{OrigineDate, TypeMedia};
     use chrono::DateTime;
 
+    /// D6 amendé : la route et le vélo ont chacun leur réseau, les autres
+    /// modes n'en ont pas. Router une randonnée la ferait suivre les
+    /// départementales, et un bateau n'a pas d'itinéraire.
     #[test]
-    fn seule_la_route_part_au_calcul() {
-        assert!(Mode::Route.calculable());
-        for mode in [
-            Mode::Marche,
-            Mode::Velo,
-            Mode::Bateau,
-            Mode::Train,
-            Mode::Telepherique,
-        ] {
+    fn seuls_la_route_et_le_velo_partent_au_calcul() {
+        assert_eq!(Mode::Route.profil(), Some("driving-car"));
+        assert_eq!(Mode::Velo.profil(), Some("cycling-regular"));
+        for mode in [Mode::Marche, Mode::Bateau, Mode::Train, Mode::Telepherique] {
             assert!(
                 !mode.calculable(),
                 "{} ne doit jamais être calculé",
@@ -677,7 +687,6 @@ mod tests {
         let troncons = tracer_journee(
             NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
             &refs,
-            &[],
             &Overrides::default(),
             chrono_tz::Europe::Paris,
             &mut itineraires_vides(),
@@ -700,7 +709,6 @@ mod tests {
         let troncons = tracer_journee(
             NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
             &refs,
-            &[],
             &Overrides::default(),
             chrono_tz::Europe::Paris,
             &mut itineraires_vides(),
@@ -721,7 +729,6 @@ mod tests {
         let troncons = tracer_journee(
             NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
             &refs,
-            &[],
             &Overrides::default(),
             chrono_tz::Europe::Paris,
             &mut itineraires_vides(),
@@ -752,7 +759,6 @@ mod tests {
         let troncons = tracer_journee(
             NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
             &refs,
-            &[],
             &overrides,
             chrono_tz::Europe::Paris,
             &mut itineraires_vides(),

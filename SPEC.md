@@ -680,6 +680,10 @@ Budgets exprimés en **poids transféré, compression brotli comprise, hors tuil
 - moins de 50 Ko de JavaScript sur les pages sans carte ;
 - moins de 300 Ko sur les pages avec carte, MapLibre pesant à lui seul environ 230 Ko.
 
+**Agrandissement des photos.** Un clic sur une photo l’ouvre en plein écran, avec les flèches du clavier, l’échappement et le balayage au doigt pour passer de l’une à l’autre. C’est le seul JavaScript des pages sans carte, et il tient en moins d’un kilooctet : le `<dialog>` natif fournit gratuitement le fond assombri, la fermeture par Échap et le piège de focus, ce qui laisse au script la seule navigation.
+
+Le composant ne connaît aucune photo. Il ramasse au chargement tout ce qui porte un attribut `data-grand`, dans l’ordre du document, de sorte qu’une galerie ajoutée plus tard fonctionne sans qu’il change.
+
 MapLibre n’est chargé qu’à la demande, en `client:visible`. Les images sont servies en AVIF avec `srcset`, en `loading="lazy"`, avec le LQIP en fond le temps du chargement. Les vidéos ne sont jamais préchargées : poster seul, chargement au clic.
 
 ### 9.5 Ton visuel

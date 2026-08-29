@@ -51,6 +51,7 @@ function image(media: Media, voyage: string, tailles: string, apercu: boolean): 
   return (
     `<img src="${urlMedia(d.repli, voyage)}" srcset="${srcset}" sizes="${tailles}"` +
     ` width="${media.largeur ?? ""}" height="${media.hauteur ?? ""}"` +
+    ` data-grand="${urlMedia(d.grand, voyage)}"` +
     ` loading="lazy" decoding="async" alt=""${style}>`
   );
 }

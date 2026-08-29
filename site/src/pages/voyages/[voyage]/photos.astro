@@ -10,6 +10,7 @@
  * vite pour s'en passer, ce qui n'est pas le cas des grandes images du récit.
  */
 import Page from "../../../layouts/Page.astro";
+import Visionneuse from "../../../components/Visionneuse.astro";
 import { tousLesVoyages, type Voyage } from "../../../voyages";
 import { medias, urlMedia, type Media } from "../../../donnees";
 
@@ -62,6 +63,7 @@ const enFrancais = (jour: string) =>
               sizes="(min-width: 48rem) 11rem, 30vw"
               width={photo.largeur}
               height={photo.hauteur}
+              data-grand={urlMedia(photo.derives!.grand, v.id)}
               loading="lazy"
               decoding="async"
               alt=""
@@ -71,6 +73,7 @@ const enFrancais = (jour: string) =>
       </section>
     ))
   }
+  <Visionneuse />
 </Page>
 
 <style>

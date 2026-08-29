@@ -4,6 +4,7 @@
  * La mini-carte arrive au lot 5, les directives au commit suivant.
  */
 import Page from "../../../../layouts/Page.astro";
+import Visionneuse from "../../../../components/Visionneuse.astro";
 import { tousLesVoyages, lieu, type Voyage } from "../../../../voyages";
 import { mediasDuJour, urlMedia, type Media } from "../../../../donnees";
 import { getCollection, render, type CollectionEntry } from "astro:content";
@@ -73,6 +74,7 @@ const lien = (e: CollectionEntry<"journees">) =>
               sizes="(min-width: 48rem) 22rem, 45vw"
               width={photo.largeur}
               height={photo.hauteur}
+              data-grand={urlMedia(photo.derives!.grand, v.id)}
               loading="lazy"
               decoding="async"
               alt=""
@@ -88,6 +90,7 @@ const lien = (e: CollectionEntry<"journees">) =>
     {precedente ? <a href={lien(precedente)}>← {precedente.data.titre}</a> : <span />}
     {suivante ? <a href={lien(suivante)}>{suivante.data.titre} →</a> : <span />}
   </nav>
+  <Visionneuse />
 </Page>
 
 <style>

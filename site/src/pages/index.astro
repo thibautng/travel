@@ -1,0 +1,35 @@
+---
+// Accueil provisoire. Les routes réelles de la section 9.1 arrivent au
+// commit suivant ; cette page ne sert qu'à vérifier que le site lit bien les
+// sorties du pipeline.
+import { jours, medias } from "../donnees";
+
+const VOYAGE = "2026-alpes";
+const tousLesJours = jours(VOYAGE);
+const tousLesMedias = medias(VOYAGE);
+const km = tousLesJours.reduce((total, j) => total + j.distance_trace_km, 0);
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Voyages</title>
+  </head>
+  <body>
+    <h1>Voyages</h1>
+    <p>
+      Le pipeline a produit {tousLesMedias.length} médias sur
+      {tousLesJours.length} journées, soit {Math.round(km)} kilomètres de trace.
+    </p>
+    <ul>
+      {
+        tousLesJours.map((jour) => (
+          <li>
+            {jour.jour} — {jour.medias.total} médias, {jour.distance_trace_km} km
+          </li>
+        ))
+      }
+    </ul>
+  </body>
+</html>

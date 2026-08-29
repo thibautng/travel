@@ -1,0 +1,4 @@
+# Le site est public mais non indexé. Voir SPEC.md, section 10 : le partage
+# se fait par lien, et aucun sitemap n'est soumis.
+User-agent: *
+Disallow: /

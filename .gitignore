@@ -9,6 +9,9 @@
 /site/node_modules/
 /site/dist/
 /site/.astro/
+# Jonction locale vers media/, créée à la main pour le développement. En
+# production, PUBLIC_MEDIA_URL pointe sur R2. Voir le README.
+/site/public/media
 
 # Secrets, jamais versionnés (SPEC section 6.5)
 .env

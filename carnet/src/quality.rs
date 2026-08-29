@@ -142,7 +142,7 @@ pub fn evaluer(medias: &mut [Media], voyage: &Voyage) -> Bilan {
 
 /// C5 : signale les journées où la trace saute, sans prétendre savoir où elle
 /// aurait dû passer. L'humain tranche dans overrides.yaml.
-fn trous_candidats(medias: &[Media]) -> Vec<TrouCandidat> {
+pub fn trous_candidats(medias: &[Media]) -> Vec<TrouCandidat> {
     let mut par_jour: BTreeMap<NaiveDate, Vec<&Media>> = BTreeMap::new();
     for media in medias {
         if let Some(jour) = media.jour {

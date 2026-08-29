@@ -1,10 +1,17 @@
-//! Vocabulaire des traces : modes de déplacement, couleurs, inférence.
+//! Traces : modes de déplacement, et construction des `LineString`.
 //!
-//! Voir SPEC.md, sections 5.6 et D6. La construction des `LineString` arrive
-//! plus loin dans le lot 2 ; ce module commence par le vocabulaire, dont les
-//! surcharges ont besoin.
+//! Voir SPEC.md, sections 5.6, 9.2 et D6.
 
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
+
+use crate::itineraire::{Itineraires, Resolution};
+use crate::jours::Journee;
+use crate::lieux::distance_m;
+use crate::overrides::Overrides;
+use crate::scan::{Fiabilite, Media, OriginePosition, Position};
+use crate::voyage::Voyage;
 
 /// Mode de déplacement d'un tronçon de trace.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Serialize, Deserialize)]
@@ -42,7 +49,7 @@ impl Mode {
     /// Seuls les tronçons routiers partent au moteur d'itinéraire.
     ///
     /// C'est la garde de D6 : map-matcher une randonnée la ferait suivre les
-    /// départementales. Un test du lot 2 vérifie qu'aucun autre mode ne passe.
+    /// départementales. Un test vérifie qu'aucun autre mode ne passe.
     pub fn calculable(self) -> bool {
         matches!(self, Mode::Route)
     }
@@ -76,9 +83,330 @@ impl Mode {
     }
 }
 
+/// D'où vient le tracé. Détermine le style de rendu (SPEC.md, section 9.2).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
+#[serde(rename_all = "lowercase")]
+pub enum SourceTrace {
+    /// Positions EXIF fiables reliées entre elles.
+    Mesuree,
+    /// Itinéraire produit par le moteur de routage, mode `route` uniquement.
+    Calculee,
+    /// Points saisis dans `segments` d'`overrides.yaml`.
+    Manuelle,
+    /// Polyligne des lieux successifs, faute de toute position de média.
+    Heritee,
+}
+
+impl SourceTrace {
+    pub fn nom(self) -> &'static str {
+        match self {
+            SourceTrace::Mesuree => "mesurée",
+            SourceTrace::Calculee => "calculée",
+            SourceTrace::Manuelle => "manuelle",
+            SourceTrace::Heritee => "héritée",
+        }
+    }
+}
+
+/// Un tronçon de trace : une `Feature` de type `LineString` à l'émission.
+#[derive(Debug, Clone)]
+pub struct Troncon {
+    pub jour: NaiveDate,
+    pub mode: Mode,
+    pub source: SourceTrace,
+    /// Points en ordre GeoJSON, `[longitude, latitude]`.
+    pub points: Vec<[f64; 2]>,
+}
+
+impl Troncon {
+    /// Longueur du tronçon, en kilomètres.
+    pub fn longueur_km(&self) -> f64 {
+        self.points
+            .windows(2)
+            .map(|paire| {
+                let a = Position {
+                    lat: paire[0][1],
+                    lon: paire[0][0],
+                    alt: None,
+                };
+                let b = Position {
+                    lat: paire[1][1],
+                    lon: paire[1][0],
+                    alt: None,
+                };
+                distance_m(&a, &b)
+            })
+            .sum::<f64>()
+            / 1000.0
+    }
+}
+
+/// Un média positionné, rendu en `Point` sur la carte.
+#[derive(Debug, Clone)]
+pub struct PointMedia {
+    pub id: String,
+    pub jour: NaiveDate,
+    pub position: Position,
+    pub fiabilite: Fiabilite,
+    pub origine: Option<OriginePosition>,
+}
+
+#[derive(Debug, Default)]
+pub struct BilanTraces {
+    pub jours_traces: usize,
+    /// Journées qui portent des médias mais aucune trace.
+    pub jours_sans_trace: Vec<NaiveDate>,
+    /// Kilomètres par journée et par mode, tels qu'inférés par la vitesse.
+    /// C'est le tableau à relire et à corriger dans `overrides.yaml`.
+    pub km_par_jour: BTreeMap<NaiveDate, BTreeMap<Mode, f64>>,
+    pub troncons_calcules: usize,
+    /// Tronçons routiers restés droits, faute d'itinéraire disponible.
+    pub troncons_droits: usize,
+    /// Lots à répartir dont la journée ne porte aucun segment manuel.
+    pub repartitions_sans_segment: Vec<NaiveDate>,
+}
+
+pub struct Traces {
+    pub troncons: Vec<Troncon>,
+    pub points: Vec<PointMedia>,
+    pub bilan: BilanTraces,
+}
+
+/// Distance en deçà de laquelle deux positions consécutives ne méritent pas
+/// un tronçon : c'est le bruit GPS d'un appareil immobile.
+const METRES_MINIMUM: f64 = 25.0;
+
+/// Construit les traces du voyage.
+pub fn construire(
+    medias: &[Media],
+    voyage: &Voyage,
+    journees: &[Journee],
+    overrides: &Overrides,
+    itineraires: &mut Itineraires,
+) -> Traces {
+    let mut traces = Traces {
+        troncons: Vec::new(),
+        points: Vec::new(),
+        bilan: BilanTraces::default(),
+    };
+
+    // Points de médias : tout ce qui porte une position, quelle qu'en soit
+    // l'origine. Le style de rendu, lui, dépendra de la fiabilité.
+    for media in medias {
+        if let (Some(jour), Some(position)) = (media.jour, media.position) {
+            traces.points.push(PointMedia {
+                id: media.id.clone(),
+                jour,
+                position,
+                fiabilite: media.fiabilite,
+                origine: media.origine_position,
+            });
+        }
+    }
+
+    let mut par_jour: BTreeMap<NaiveDate, Vec<&Media>> = BTreeMap::new();
+    for media in medias {
+        if media.fiabilite == Fiabilite::Haute && media.position.is_some() {
+            if let Some(jour) = media.jour {
+                par_jour.entry(jour).or_default().push(media);
+            }
+        }
+    }
+    let mut jours_avec_medias: Vec<NaiveDate> = medias.iter().filter_map(|m| m.jour).collect();
+    jours_avec_medias.sort();
+    jours_avec_medias.dedup();
+
+    for (jour, mut medias_du_jour) in par_jour {
+        medias_du_jour.sort_by_key(|m| m.prise_le);
+        let passages: Vec<[f64; 2]> = overrides
+            .itineraires
+            .iter()
+            .filter(|f| f.jour == jour && f.mode.calculable())
+            .flat_map(|f| f.points_de_passage.clone())
+            .collect();
+
+        let troncons = tracer_journee(
+            jour,
+            &medias_du_jour,
+            &passages,
+            overrides,
+            itineraires,
+            &mut traces.bilan,
+        );
+        if !troncons.is_empty() {
+            traces.bilan.jours_traces += 1;
+        }
+        traces.troncons.extend(troncons);
+    }
+
+    // Segments saisis à la main : ils forment leurs propres tronçons.
+    for segment in &overrides.segments {
+        traces.troncons.push(Troncon {
+            jour: segment.jour,
+            mode: segment.mode,
+            source: SourceTrace::Manuelle,
+            points: segment.points.clone(),
+        });
+    }
+
+    // Un lot à répartir dont la journée ne porte aucun segment manuel est une
+    // consigne inapplicable : elle doit être dite, pas ignorée.
+    for lot in overrides.lots.iter().filter(|l| l.repartir_sur_segment) {
+        let Some(jour) = lot.jour else { continue };
+        if !overrides.segments.iter().any(|s| s.jour == jour) {
+            traces.bilan.repartitions_sans_segment.push(jour);
+        }
+    }
+
+    heriter_des_lieux(voyage, journees, &mut traces);
+
+    let traces_par_jour: BTreeMap<NaiveDate, ()> =
+        traces.troncons.iter().map(|t| (t.jour, ())).collect();
+    traces.bilan.jours_sans_trace = jours_avec_medias
+        .into_iter()
+        .filter(|j| !traces_par_jour.contains_key(j))
+        .collect();
+
+    for troncon in &traces.troncons {
+        *traces
+            .bilan
+            .km_par_jour
+            .entry(troncon.jour)
+            .or_default()
+            .entry(troncon.mode)
+            .or_insert(0.0) += troncon.longueur_km();
+    }
+
+    traces
+}
+
+/// Découpe la journée en tronçons homogènes, le mode étant inféré de la
+/// vitesse entre deux positions consécutives.
+fn tracer_journee(
+    jour: NaiveDate,
+    medias: &[&Media],
+    passages: &[[f64; 2]],
+    overrides: &Overrides,
+    itineraires: &mut Itineraires,
+    bilan: &mut BilanTraces,
+) -> Vec<Troncon> {
+    let mut troncons: Vec<Troncon> = Vec::new();
+    let mut courant: Option<Troncon> = None;
+
+    for paire in medias.windows(2) {
+        let (Some(p0), Some(p1)) = (paire[0].position, paire[1].position) else {
+            continue;
+        };
+        let (Some(t0), Some(t1)) = (paire[0].prise_le, paire[1].prise_le) else {
+            continue;
+        };
+        let metres = distance_m(&p0, &p1);
+        if metres < METRES_MINIMUM {
+            continue;
+        }
+        // Un mode déclaré dans overrides.yaml l'emporte sur l'inférence : la
+        // vitesse moyenne d'une voiture arrêtée pour déjeuner est celle d'un
+        // vélo, et seul l'humain sait laquelle des deux c'était.
+        let heures = (t1 - t0).num_seconds() as f64 / 3600.0;
+        let mode = overrides
+            .mode_force(jour, t0.time())
+            .unwrap_or(if heures <= 0.0 {
+                Mode::Route
+            } else {
+                Mode::depuis_vitesse(metres / 1000.0 / heures)
+            });
+
+        // Un tronçon routier part au moteur d'itinéraire et forme sa propre
+        // Feature : sa source diffère de celle des tronçons mesurés.
+        if mode.calculable() {
+            if let Some(termine) = courant.take() {
+                troncons.push(termine);
+            }
+            match itineraires.resoudre(mode, &p0, &p1, passages) {
+                Ok(Resolution::Cache(trajet)) | Ok(Resolution::Calcule(trajet)) => {
+                    bilan.troncons_calcules += 1;
+                    troncons.push(Troncon {
+                        jour,
+                        mode,
+                        source: SourceTrace::Calculee,
+                        points: trajet.points,
+                    });
+                }
+                _ => {
+                    bilan.troncons_droits += 1;
+                    troncons.push(Troncon {
+                        jour,
+                        mode,
+                        source: SourceTrace::Mesuree,
+                        points: vec![[p0.lon, p0.lat], [p1.lon, p1.lat]],
+                    });
+                }
+            }
+            continue;
+        }
+
+        match courant.as_mut() {
+            Some(t) if t.mode == mode => t.points.push([p1.lon, p1.lat]),
+            _ => {
+                if let Some(termine) = courant.take() {
+                    troncons.push(termine);
+                }
+                courant = Some(Troncon {
+                    jour,
+                    mode,
+                    source: SourceTrace::Mesuree,
+                    points: vec![[p0.lon, p0.lat], [p1.lon, p1.lat]],
+                });
+            }
+        }
+    }
+    if let Some(termine) = courant {
+        troncons.push(termine);
+    }
+    troncons
+}
+
+/// Trace de repli pour les journées sans aucune position : la polyligne des
+/// lieux successifs. Voir D5 et le lot 7.
+fn heriter_des_lieux(voyage: &Voyage, journees: &[Journee], traces: &mut Traces) {
+    if journees.is_empty() {
+        return;
+    }
+    let positions: BTreeMap<&str, &crate::voyage::Lieu> =
+        voyage.lieux.iter().map(|l| (l.id.as_str(), l)).collect();
+    let deja_trace: BTreeMap<NaiveDate, ()> =
+        traces.troncons.iter().map(|t| (t.jour, ())).collect();
+
+    let mut precedent: Option<[f64; 2]> = None;
+    for journee in journees {
+        let point = journee
+            .lieu
+            .as_deref()
+            .and_then(|id| positions.get(id))
+            .map(|lieu| [lieu.position.lon, lieu.position.lat]);
+        let Some(point) = point else {
+            continue;
+        };
+        if let Some(avant) = precedent {
+            if !deja_trace.contains_key(&journee.date) && avant != point {
+                traces.troncons.push(Troncon {
+                    jour: journee.date,
+                    mode: Mode::Route,
+                    source: SourceTrace::Heritee,
+                    points: vec![avant, point],
+                });
+            }
+        }
+        precedent = Some(point);
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::noms::Convention;
+    use crate::scan::{OrigineDate, TypeMedia};
+    use chrono::DateTime;
 
     #[test]
     fn seule_la_route_part_au_calcul() {
@@ -90,7 +418,11 @@ mod tests {
             Mode::Train,
             Mode::Telepherique,
         ] {
-            assert!(!mode.calculable(), "{} ne doit jamais être calculé", mode.nom());
+            assert!(
+                !mode.calculable(),
+                "{} ne doit jamais être calculé",
+                mode.nom()
+            );
         }
     }
 
@@ -110,5 +442,144 @@ mod tests {
     fn lecture_depuis_le_yaml() {
         let m: Mode = serde_norway::from_str("bateau").expect("mode lisible");
         assert_eq!(m, Mode::Bateau);
+    }
+
+    fn media(id: &str, instant: &str, lat: f64, lon: f64) -> Media {
+        let prise_le = DateTime::parse_from_rfc3339(instant).ok();
+        Media {
+            id: id.to_string(),
+            type_media: TypeMedia::Photo,
+            fichier_source: format!("{id}.jpg"),
+            prise_le,
+            origine_date: OrigineDate::Exif,
+            jour: prise_le.map(|d| d.date_naive()),
+            position: Some(Position {
+                lat,
+                lon,
+                alt: Some(1200.0),
+            }),
+            fiabilite: Fiabilite::Haute,
+            origine_position: Some(OriginePosition::Exif),
+            lieu: None,
+            anomalies: Vec::new(),
+            largeur: None,
+            hauteur: None,
+            orientation: None,
+            appareil: None,
+            convention: Convention::Telephone,
+            octets: 1,
+        }
+    }
+
+    fn itineraires_vides() -> Itineraires {
+        // Sans clé ni cache : les tronçons routiers restent droits, ce qui
+        // suffit à exercer la construction.
+        Itineraires::charger(Path::new("dossier-inexistant"), "aucun").expect("cache vide")
+    }
+
+    use std::path::Path;
+
+    #[test]
+    fn une_marche_donne_un_troncon_mesure() {
+        // Environ 800 mètres en dix minutes, soit 4,7 km/h.
+        let medias = [
+            media("A", "2026-08-14T10:00:00+02:00", 45.5, 7.4),
+            media("B", "2026-08-14T10:10:00+02:00", 45.5, 7.41),
+        ];
+        let refs: Vec<&Media> = medias.iter().collect();
+        let mut bilan = BilanTraces::default();
+        let troncons = tracer_journee(
+            NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
+            &refs,
+            &[],
+            &Overrides::default(),
+            &mut itineraires_vides(),
+            &mut bilan,
+        );
+        assert_eq!(troncons.len(), 1);
+        assert_eq!(troncons[0].mode, Mode::Marche);
+        assert_eq!(troncons[0].source, SourceTrace::Mesuree);
+    }
+
+    #[test]
+    fn le_bruit_gps_ne_cree_pas_de_troncon() {
+        // Dix mètres : un appareil immobile.
+        let medias = [
+            media("A", "2026-08-14T10:00:00+02:00", 45.5, 7.4),
+            media("B", "2026-08-14T10:05:00+02:00", 45.50008, 7.4),
+        ];
+        let refs: Vec<&Media> = medias.iter().collect();
+        let mut bilan = BilanTraces::default();
+        let troncons = tracer_journee(
+            NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
+            &refs,
+            &[],
+            &Overrides::default(),
+            &mut itineraires_vides(),
+            &mut bilan,
+        );
+        assert!(troncons.is_empty());
+    }
+
+    #[test]
+    fn un_troncon_routier_sans_itineraire_reste_droit() {
+        // Vingt kilomètres en dix minutes : 120 km/h.
+        let medias = [
+            media("A", "2026-08-14T10:00:00+02:00", 45.5, 7.4),
+            media("B", "2026-08-14T10:10:00+02:00", 45.68, 7.4),
+        ];
+        let refs: Vec<&Media> = medias.iter().collect();
+        let mut bilan = BilanTraces::default();
+        let troncons = tracer_journee(
+            NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
+            &refs,
+            &[],
+            &Overrides::default(),
+            &mut itineraires_vides(),
+            &mut bilan,
+        );
+        assert_eq!(troncons.len(), 1);
+        assert_eq!(troncons[0].mode, Mode::Route);
+        assert_eq!(troncons[0].source, SourceTrace::Mesuree);
+        assert_eq!(bilan.troncons_droits, 1);
+        assert_eq!(bilan.troncons_calcules, 0);
+    }
+
+    /// Une voiture arrêtée pour déjeuner affiche la vitesse moyenne d'un
+    /// vélo. Le mode déclaré doit l'emporter sur l'inférence.
+    #[test]
+    fn le_mode_declare_emporte_sur_l_inference() {
+        // Huit cents mètres en dix minutes : l'inférence dirait « marche ».
+        let medias = [
+            media("A", "2026-08-14T10:00:00+02:00", 45.5, 7.4),
+            media("B", "2026-08-14T10:10:00+02:00", 45.5, 7.41),
+        ];
+        let refs: Vec<&Media> = medias.iter().collect();
+        let overrides: Overrides = serde_norway::from_str(
+            "modes:\n  - jour: 2026-08-14\n    mode: bateau\n",
+        )
+        .expect("yaml lisible");
+        let mut bilan = BilanTraces::default();
+        let troncons = tracer_journee(
+            NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
+            &refs,
+            &[],
+            &overrides,
+            &mut itineraires_vides(),
+            &mut bilan,
+        );
+        assert_eq!(troncons.len(), 1);
+        assert_eq!(troncons[0].mode, Mode::Bateau);
+    }
+
+    #[test]
+    fn longueur_d_un_troncon() {
+        let troncon = Troncon {
+            jour: NaiveDate::from_ymd_opt(2026, 8, 14).unwrap(),
+            mode: Mode::Marche,
+            source: SourceTrace::Mesuree,
+            points: vec![[7.0, 45.0], [7.01, 45.0]],
+        };
+        assert!((troncon.longueur_km() - 0.787).abs() < 0.01);
     }
 }

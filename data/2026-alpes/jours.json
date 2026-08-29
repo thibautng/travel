@@ -1,0 +1,615 @@
+[
+  {
+    "jour": "2026-07-24",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-24T17:11:45+02:00",
+    "derniere_prise": "2026-07-24T21:40:50+02:00",
+    "medias": {
+      "photo": 5,
+      "video": 0,
+      "total": 5
+    },
+    "couverture": "IMG20260724201243",
+    "bbox": [
+      6.118472222222222,
+      48.42919722222222,
+      8.184377777777778,
+      49.21221944444445
+    ],
+    "distance_trace_km": 0.4,
+    "modes": [
+      "marche"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-07-25",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-25T12:14:33+02:00",
+    "derniere_prise": "2026-07-25T21:19:03+02:00",
+    "medias": {
+      "photo": 26,
+      "video": 5,
+      "total": 31
+    },
+    "couverture": "IMG20260725121433",
+    "bbox": [
+      8.163144444444445,
+      48.429224999999995,
+      8.274700000000001,
+      48.59696666666667
+    ],
+    "distance_trace_km": 34.2,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat",
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-07-26",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-26T12:19:23+02:00",
+    "derniere_prise": "2026-07-26T19:30:30Z",
+    "medias": {
+      "photo": 9,
+      "video": 4,
+      "total": 13
+    },
+    "couverture": "IMG20260726121923",
+    "bbox": [
+      8.950888888888889,
+      47.49036944444445,
+      11.255461111111112,
+      48.33555833333334
+    ],
+    "distance_trace_km": 208.9,
+    "modes": [
+      "route",
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-07-27",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-27T11:10:03+02:00",
+    "derniere_prise": "2026-07-27T20:45:15+02:00",
+    "medias": {
+      "photo": 51,
+      "video": 10,
+      "total": 61
+    },
+    "couverture": "IMG20260727111003",
+    "bbox": [
+      10.9765,
+      47.454225,
+      11.255994444444445,
+      47.5027
+    ],
+    "distance_trace_km": 34.3,
+    "modes": [
+      "route",
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat",
+      "trou_candidat",
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-07-28",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-28T10:01:12+02:00",
+    "derniere_prise": "2026-07-28T19:49:32+02:00",
+    "medias": {
+      "photo": 44,
+      "video": 9,
+      "total": 53
+    },
+    "couverture": "IMG20260728100112",
+    "bbox": [
+      10.980369444444445,
+      47.43774166666666,
+      11.18523888888889,
+      47.483758333333334
+    ],
+    "distance_trace_km": 4.4,
+    "modes": [
+      "marche"
+    ],
+    "anomalies": [
+      "trou_candidat",
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-07-29",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-29T09:13:16+02:00",
+    "derniere_prise": "2026-07-29T20:06:54+02:00",
+    "medias": {
+      "photo": 38,
+      "video": 0,
+      "total": 38
+    },
+    "couverture": "IMG20260729140940",
+    "bbox": [
+      11.537272222222223,
+      47.57501388888889,
+      12.936594444444445,
+      47.67648888888888
+    ],
+    "distance_trace_km": 21.8,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat",
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-07-30",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-30T08:58:41+02:00",
+    "derniere_prise": "2026-07-30T18:52:42+02:00",
+    "medias": {
+      "photo": 53,
+      "video": 7,
+      "total": 60
+    },
+    "couverture": "IMG20260730085841",
+    "bbox": [
+      13.015294444444445,
+      47.63757777777778,
+      13.053844444444445,
+      47.806799999999996
+    ],
+    "distance_trace_km": 21.8,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-07-31",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-07-31T08:32:53+02:00",
+    "derniere_prise": "2026-07-31T12:51:21+02:00",
+    "medias": {
+      "photo": 59,
+      "video": 8,
+      "total": 67
+    },
+    "couverture": "IMG20260731083253",
+    "bbox": [
+      12.971255555555556,
+      47.51183888888889,
+      12.9949,
+      47.589311111111115
+    ],
+    "distance_trace_km": 24.6,
+    "modes": [
+      "marche",
+      "velo",
+      "bateau"
+    ],
+    "anomalies": []
+  },
+  {
+    "jour": "2026-08-01",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-01T17:22:41+02:00",
+    "derniere_prise": "2026-08-01T21:14:46+02:00",
+    "medias": {
+      "photo": 2,
+      "video": 1,
+      "total": 3
+    },
+    "couverture": "IMG20260801172241",
+    "bbox": [
+      13.552675,
+      46.244455555555554,
+      13.56596388888889,
+      46.3252
+    ],
+    "distance_trace_km": 9.0,
+    "modes": [
+      "marche"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-02",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2016-01-03T18:51:02+01:00",
+    "derniere_prise": "2026-08-02T21:54:31+02:00",
+    "medias": {
+      "photo": 34,
+      "video": 5,
+      "total": 39
+    },
+    "couverture": "GOPR2699",
+    "bbox": [
+      13.456388888888888,
+      46.201,
+      13.648,
+      46.251
+    ],
+    "distance_trace_km": 11.7,
+    "modes": [
+      "marche"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-03",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-03T08:16:39Z",
+    "derniere_prise": "2026-08-03T16:09:42Z",
+    "medias": {
+      "photo": 6,
+      "video": 7,
+      "total": 13
+    },
+    "couverture": "IMG20260803121133",
+    "bbox": [
+      13.584200000000001,
+      46.243700000000004,
+      13.7496,
+      46.439024999999994
+    ],
+    "distance_trace_km": 15.7,
+    "modes": [
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat",
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-04",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-04T12:44:34Z",
+    "derniere_prise": "2026-08-04T15:50:18Z",
+    "medias": {
+      "photo": 8,
+      "video": 20,
+      "total": 28
+    },
+    "couverture": "IMG20260804144442",
+    "bbox": [
+      13.439183333333334,
+      46.2291,
+      13.4452,
+      46.2372
+    ],
+    "distance_trace_km": -0.0,
+    "modes": [],
+    "anomalies": []
+  },
+  {
+    "jour": "2026-08-05",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-05T06:42:30Z",
+    "derniere_prise": "2026-08-05T19:28:27Z",
+    "medias": {
+      "photo": 11,
+      "video": 2,
+      "total": 13
+    },
+    "couverture": "IMG20260805124645",
+    "bbox": [
+      12.036,
+      46.2445,
+      13.918927777777776,
+      46.7754
+    ],
+    "distance_trace_km": -0.0,
+    "modes": [],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-06",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-06T10:44:15+02:00",
+    "derniere_prise": "2026-08-06T19:08:19+02:00",
+    "medias": {
+      "photo": 31,
+      "video": 17,
+      "total": 48
+    },
+    "couverture": "IMG20260806104415",
+    "bbox": [
+      12.280108333333335,
+      46.7308,
+      12.6868,
+      46.785399999999996
+    ],
+    "distance_trace_km": 53.0,
+    "modes": [
+      "route",
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-07",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-07T11:24:42+02:00",
+    "derniere_prise": "2026-08-07T18:08:50+02:00",
+    "medias": {
+      "photo": 60,
+      "video": 2,
+      "total": 62
+    },
+    "couverture": "IMG20260807112442",
+    "bbox": [
+      12.033222222222223,
+      46.69365,
+      12.085725,
+      46.775352777777776
+    ],
+    "distance_trace_km": 9.8,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-08",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-08T09:37:49+02:00",
+    "derniere_prise": "2026-08-08T20:20:18+02:00",
+    "medias": {
+      "photo": 112,
+      "video": 5,
+      "total": 117
+    },
+    "couverture": "IMG20260808093749",
+    "bbox": [
+      12.036044444444444,
+      46.552899999999994,
+      12.451783333333333,
+      46.77536111111111
+    ],
+    "distance_trace_km": 47.7,
+    "modes": [
+      "route",
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-09",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-09T08:05:02Z",
+    "derniere_prise": "2026-08-09T19:15:09Z",
+    "medias": {
+      "photo": 18,
+      "video": 6,
+      "total": 24
+    },
+    "couverture": "IMG20260809115633",
+    "bbox": [
+      11.4552,
+      46.485883333333334,
+      11.560208333333334,
+      46.567925
+    ],
+    "distance_trace_km": 12.0,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-10",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-10T11:39:10+02:00",
+    "derniere_prise": "2026-08-10T18:58:39Z",
+    "medias": {
+      "photo": 44,
+      "video": 3,
+      "total": 47
+    },
+    "couverture": "IMG20260810113910",
+    "bbox": [
+      11.4637,
+      46.516558333333336,
+      11.750794444444445,
+      46.55837777777778
+    ],
+    "distance_trace_km": 17.3,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat",
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-11",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-11T08:27:03+02:00",
+    "derniere_prise": "2026-08-11T18:34:48Z",
+    "medias": {
+      "photo": 10,
+      "video": 3,
+      "total": 13
+    },
+    "couverture": "IMG20260811082703",
+    "bbox": [
+      10.853636111111111,
+      45.8775,
+      11.534908333333334,
+      46.53241944444444
+    ],
+    "distance_trace_km": 90.0,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-12",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-12T09:55:09+02:00",
+    "derniere_prise": "2026-08-12T19:58:55+02:00",
+    "medias": {
+      "photo": 33,
+      "video": 0,
+      "total": 33
+    },
+    "couverture": "IMG20260812101411",
+    "bbox": [
+      7.341186111111111,
+      45.58766111111111,
+      10.724902777777778,
+      45.73197777777778
+    ],
+    "distance_trace_km": 263.1,
+    "modes": [
+      "route",
+      "marche",
+      "velo"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-13",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-13T11:11:01+02:00",
+    "derniere_prise": "2026-08-13T16:42:22+02:00",
+    "medias": {
+      "photo": 8,
+      "video": 4,
+      "total": 12
+    },
+    "couverture": "IMG20260813113504",
+    "bbox": [
+      7.335608333333333,
+      45.584744444444446,
+      7.3568999999999996,
+      45.60854444444445
+    ],
+    "distance_trace_km": 3.0,
+    "modes": [
+      "marche"
+    ],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  },
+  {
+    "jour": "2026-08-14",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-14T12:40:55+02:00",
+    "derniere_prise": "2026-08-14T18:19:24Z",
+    "medias": {
+      "photo": 37,
+      "video": 10,
+      "total": 47
+    },
+    "couverture": "IMG20260814124055",
+    "bbox": [
+      7.343299999999999,
+      45.5825,
+      7.435411111111112,
+      45.611000000000004
+    ],
+    "distance_trace_km": 5.6,
+    "modes": [
+      "marche",
+      "velo"
+    ],
+    "anomalies": []
+  },
+  {
+    "jour": "2026-08-15",
+    "lieu": null,
+    "camp": null,
+    "premiere_prise": "2026-08-15T13:39:42+02:00",
+    "derniere_prise": "2026-08-15T17:50:51+02:00",
+    "medias": {
+      "photo": 6,
+      "video": 0,
+      "total": 6
+    },
+    "couverture": "IMG20260815174506",
+    "bbox": [
+      5.213105555555556,
+      45.613483333333335,
+      6.886688888888888,
+      45.68517222222222
+    ],
+    "distance_trace_km": -0.0,
+    "modes": [],
+    "anomalies": [
+      "trou_candidat"
+    ]
+  }
+]

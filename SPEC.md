@@ -505,6 +505,16 @@ segments:
     points: [[12.9887, 47.5893], [12.9797, 47.5225], [12.9847, 47.4967]]
     note: "Königssee, Schönau vers St. Bartholomä puis Salet"
 
+# Corriger le mode de déplacement, à la journée ou à la tranche horaire
+modes:
+  - jour: 2026-08-06
+    mode: velo
+    de: "13:30"
+    a: "18:00"
+    note: "Tassenbach vers Lienz"
+  - jour: 2026-08-06
+    mode: route
+
 # Forcer le passage d’un itinéraire calculé
 itineraires:
   - jour: 2026-08-08
@@ -520,6 +530,10 @@ Attention à la portée du motif : les fichiers GoPro vont de `GOPR2699` à `GOP
 `repartir_sur_segment` répartit les médias d’un lot le long du segment manuel de la journée, au lieu de les empiler sur un point unique. L’ordre relatif vient de l’horodatage EXIF, faux en absolu mais cohérent en relatif, avec repli sur le numéro de fichier.
 
 `points_de_passage` impose au moteur d’itinéraire de passer par les points donnés, pour corriger un trajet plausible mais faux (D6).
+
+`modes` corrige le mode de déplacement inféré. L’inférence par la vitesse entre deux photos consécutives est une proposition, jamais un verdict : une voiture arrêtée pour déjeuner affiche la vitesse moyenne d’un vélo, et la première exécution du lot 2 a effectivement classé en `velo` plusieurs centaines de kilomètres parcourus en voiture. Une entrée sans `de` ni `a` couvre la journée entière ; la première règle qui couvre l’instant l’emporte, donc une tranche horaire déclarée avant la règle de journée prime sur elle.
+
+Corriger les modes n’est pas cosmétique : c’est ce qui décide quels tronçons partent au moteur d’itinéraire (D6), et donc si la trace suit les routes ou coupe à travers les massifs.
 
 ---
 

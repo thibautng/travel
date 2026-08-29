@@ -8,7 +8,7 @@
 //! et **échoue** sur une surcharge qui ne vise rien : une correction qui ne
 //! s'applique pas est une correction perdue.
 
-use chrono::{DateTime, FixedOffset, NaiveDate};
+use chrono::{DateTime, FixedOffset, NaiveDate, NaiveTime};
 use chrono_tz::Tz;
 use serde::Deserialize;
 use std::collections::{BTreeMap, BTreeSet};
@@ -98,6 +98,34 @@ pub struct Segment {
     pub note: Option<String>,
 }
 
+/// Mode imposé à une journée, ou à une tranche horaire de journée.
+///
+/// L'inférence par la vitesse est une proposition, pas un verdict : une
+/// voiture arrêtée pour déjeuner affiche la vitesse moyenne d'un vélo. C'est
+/// ici que la proposition se corrige.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct ForcageMode {
+    pub jour: NaiveDate,
+    pub mode: Mode,
+    /// Début de la tranche, en heure locale. À défaut, le début de journée.
+    #[serde(default)]
+    pub de: Option<NaiveTime>,
+    /// Fin de la tranche. À défaut, la fin de journée.
+    #[serde(default)]
+    pub a: Option<NaiveTime>,
+    #[serde(default)]
+    pub note: Option<String>,
+}
+
+impl ForcageMode {
+    fn couvre(&self, jour: NaiveDate, instant: NaiveTime) -> bool {
+        self.jour == jour
+            && self.de.map(|debut| instant >= debut).unwrap_or(true)
+            && self.a.map(|fin| instant <= fin).unwrap_or(true)
+    }
+}
+
 /// Points de passage imposés à un itinéraire calculé. Voir D6.
 #[derive(Debug, Clone, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -123,6 +151,21 @@ pub struct Overrides {
     pub segments: Vec<Segment>,
     #[serde(default)]
     pub itineraires: Vec<ForcageItineraire>,
+    #[serde(default)]
+    pub modes: Vec<ForcageMode>,
+}
+
+impl Overrides {
+    /// Mode imposé pour un instant donné, s'il y en a un.
+    ///
+    /// La première règle qui couvre l'instant gagne : une tranche horaire
+    /// déclarée avant la règle de journée l'emporte donc sur elle.
+    pub fn mode_force(&self, jour: NaiveDate, instant: NaiveTime) -> Option<Mode> {
+        self.modes
+            .iter()
+            .find(|f| f.couvre(jour, instant))
+            .map(|f| f.mode)
+    }
 }
 
 /// Médias d'un lot à répartir le long du segment manuel de leur journée.
@@ -500,6 +543,37 @@ medias:
         .expect("yaml lisible");
         let journal = overrides.appliquer(&mut medias, fuseau());
         assert_eq!(journal.inutilisees.len(), 3);
+    }
+
+    /// L'inférence par la vitesse est une proposition : c'est ici qu'elle se
+    /// corrige, à la journée ou à la tranche horaire.
+    #[test]
+    fn mode_force_par_journee_et_par_tranche() {
+        let overrides: Overrides = serde_norway::from_str(
+            r#"
+modes:
+  - jour: 2026-08-06
+    mode: velo
+    de: "13:30"
+    a: "18:00"
+    note: "Tassenbach vers Lienz"
+  - jour: 2026-08-06
+    mode: route
+  - jour: 2026-08-12
+    mode: route
+"#,
+        )
+        .expect("yaml lisible");
+        let jour = NaiveDate::from_ymd_opt(2026, 8, 6).expect("date");
+        let heure = |h, m| NaiveTime::from_hms_opt(h, m, 0).expect("heure");
+
+        // La tranche horaire est déclarée en premier, elle l'emporte.
+        assert_eq!(overrides.mode_force(jour, heure(14, 0)), Some(Mode::Velo));
+        // Hors tranche, la règle de journée s'applique.
+        assert_eq!(overrides.mode_force(jour, heure(9, 0)), Some(Mode::Route));
+        // Une journée sans règle laisse l'inférence décider.
+        let autre = NaiveDate::from_ymd_opt(2026, 8, 7).expect("date");
+        assert_eq!(overrides.mode_force(autre, heure(9, 0)), None);
     }
 
     #[test]

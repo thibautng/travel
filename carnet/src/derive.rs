@@ -10,6 +10,7 @@
 use fast_image_resize::images::Image;
 use fast_image_resize::{IntoImageView, ResizeOptions, Resizer};
 use image::{DynamicImage, ImageEncoder, ImageReader};
+use serde::Serialize;
 use std::path::{Path, PathBuf};
 
 use crate::scan::{Media, TypeMedia};
@@ -111,7 +112,7 @@ impl Reglages {
 }
 
 /// Chemins des dérivés, relatifs à `media/<voyage>/`.
-#[derive(Debug, Clone, serde::Serialize)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct Derives {
     pub vignette: String,
     pub moyen: String,
@@ -418,5 +419,112 @@ mod tests {
         assert_eq!(Format::depuis_nom("AVIF"), Some(Format::Avif));
         assert_eq!(Format::depuis_nom("jpg"), Some(Format::Jpeg));
         assert_eq!(Format::depuis_nom("png"), None);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Cache de build
+// ---------------------------------------------------------------------------
+
+use serde::Deserialize;
+use std::collections::BTreeMap;
+
+/// Ce qui identifie un fichier source sans le relire : taille et date de
+/// modification. Lire les 8,6 Go pour en calculer une empreinte couterait une
+/// lecture complete du disque a chaque build, pour un dossier declare en
+/// lecture seule.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct EntreeCache {
+    pub octets: u64,
+    pub mtime: i64,
+    pub derives: Derives,
+    pub lqip: String,
+}
+
+/// Cache de build, ecrit dans `data/<voyage>/.build-cache.json`.
+#[derive(Debug, Default, Serialize, Deserialize)]
+pub struct CacheBuild {
+    /// Empreinte des reglages d'encodage. Un changement invalide tout.
+    #[serde(default)]
+    pub empreinte: String,
+    #[serde(default)]
+    pub entrees: BTreeMap<String, EntreeCache>,
+    #[serde(skip)]
+    chemin: PathBuf,
+}
+
+/// Taille et date de modification d'un fichier source.
+pub fn signature(chemin: &Path) -> Option<(u64, i64)> {
+    let meta = std::fs::metadata(chemin).ok()?;
+    let mtime = meta
+        .modified()
+        .ok()?
+        .duration_since(std::time::UNIX_EPOCH)
+        .ok()?
+        .as_secs() as i64;
+    Some((meta.len(), mtime))
+}
+
+impl CacheBuild {
+    pub fn charger(depot: &Path, voyage_id: &str, reglages: &Reglages) -> Self {
+        let chemin = depot
+            .join("data")
+            .join(voyage_id)
+            .join(".build-cache.json");
+        let mut cache: CacheBuild = std::fs::read_to_string(&chemin)
+            .ok()
+            .and_then(|t| serde_json::from_str(&t).ok())
+            .unwrap_or_default();
+
+        // Un changement de reglage invalide les derives existants : ils ont
+        // ete produits avec d'autres parametres.
+        if cache.empreinte != reglages.empreinte() {
+            cache.entrees.clear();
+            cache.empreinte = reglages.empreinte();
+        }
+        cache.chemin = chemin;
+        cache
+    }
+
+    /// Entree valide pour ce media, si sa source n'a pas bouge et si ses
+    /// derives sont toujours sur le disque.
+    pub fn valide(&self, id: &str, signature: (u64, i64), dossier: &Path) -> Option<&EntreeCache> {
+        let entree = self.entrees.get(id)?;
+        if entree.octets != signature.0 || entree.mtime != signature.1 {
+            return None;
+        }
+        let presents = [
+            &entree.derives.vignette,
+            &entree.derives.moyen,
+            &entree.derives.grand,
+            &entree.derives.repli,
+        ]
+        .iter()
+        .all(|relatif| dossier.join(relatif).is_file());
+        if presents {
+            Some(entree)
+        } else {
+            None
+        }
+    }
+
+    pub fn inserer(&mut self, id: &str, entree: EntreeCache) {
+        self.entrees.insert(id.to_string(), entree);
+    }
+
+    pub fn enregistrer(&self) -> Result<(), ErreurDerive> {
+        if let Some(parent) = self.chemin.parent() {
+            std::fs::create_dir_all(parent).map_err(|source| ErreurDerive::Ecriture {
+                chemin: parent.to_path_buf(),
+                source,
+            })?;
+        }
+        let texte = serde_json::to_string_pretty(self).map_err(|_| ErreurDerive::Encodage {
+            chemin: self.chemin.clone(),
+        })?;
+        std::fs::write(&self.chemin, texte).map_err(|source| ErreurDerive::Ecriture {
+            chemin: self.chemin.clone(),
+            source,
+        })
     }
 }

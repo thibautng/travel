@@ -13,5 +13,6 @@ pub mod noms;
 pub mod overrides;
 pub mod quality;
 pub mod scan;
+pub mod selection;
 pub mod track;
 pub mod voyage;

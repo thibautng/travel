@@ -20,5 +20,13 @@ Thumbs.db
 desktop.ini
 .DS_Store
 
+# Cache de build : purement local. Il décrit l'état de media/, qui n'est pas
+# versionné ; le committer ferait croire à une machine fraîchement clonée que
+# les dérivés existent déjà. Le pipeline vérifie leur présence sur le disque,
+# donc rien ne casserait, mais le fichier ne sert à rien hors de la machine
+# qui l'a écrit.
+data/*/.build-cache.json
+
 # Note : /data/ EST versionné. C'est une sortie de carnet, mais légère et
 # nécessaire au build du site sur Cloudflare Pages, qui ne voit pas le disque P:.
+

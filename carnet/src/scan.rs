@@ -124,6 +124,15 @@ pub struct Media {
     pub origine_position: Option<OriginePosition>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub lieu: Option<String>,
+
+    /// Retenu pour le site. Voir D7. Un média écarté reste décrit ici, mais
+    /// ne reçoit aucun dérivé et ne monte pas sur R2.
+    pub publie: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub derives: Option<crate::derive::Derives>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub lqip: Option<String>,
+
     pub anomalies: Vec<Anomalie>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub largeur: Option<u32>,
@@ -361,6 +370,9 @@ fn construire(
         fiabilite: Fiabilite::Absente,
         origine_position: lecture.position.map(|_| OriginePosition::Exif),
         lieu: None,
+        publie: true,
+        derives: None,
+        lqip: None,
         anomalies,
         largeur: lecture.largeur,
         hauteur: lecture.hauteur,

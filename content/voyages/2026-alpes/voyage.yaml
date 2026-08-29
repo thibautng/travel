@@ -26,6 +26,12 @@ dossiers_ignores:
 
 notion: "https://app.notion.com/p/371ec81aae12810fa2e9dfbe7adbcff8"
 
+# Le voyage part de la maison et y revient. Sans ces deux références, la
+# trace commencerait à la première photo, en Moselle, et s'arrêterait à la
+# dernière, en Isère : plus de huit cents kilomètres manquants.
+depart: paris
+arrivee: paris
+
 # Les huit campings du voyage. Noms donnés de mémoire, dates et positions
 # vérifiées contre les photos du soir et du matin. Le total fait 22 nuits,
 # ce qui concorde avec l'annonce du voyage.
@@ -33,6 +39,17 @@ notion: "https://app.notion.com/p/371ec81aae12810fa2e9dfbe7adbcff8"
 # `du` est le jour d'arrivée, `au` le jour de départ. Le camping du 12 au
 # 15 août couvre donc les nuits des 12, 13 et 14.
 lieux:
+  # Point de départ et d'arrivée du voyage.
+  #
+  # La position est celle du centre de Paris, pas celle du domicile. Le dépôt
+  # est public et le site est destiné à être partagé : l'adresse exacte de la
+  # famille n'a pas à y figurer, et l'écart de quelques kilomètres est
+  # invisible à l'échelle d'un trajet de huit cents kilomètres.
+  - id: paris
+    nom: Paris
+    type: etape
+    position: { lat: 48.85660, lon: 2.35220 }
+
   - id: traiermuhle
     nom: Campingplatz Traiermühle
     type: camp

@@ -263,7 +263,7 @@ pub fn construire(
         }
     }
 
-    tracer_transits(medias, voyage, itineraires, &mut traces);
+    tracer_transits(medias, voyage, overrides, itineraires, &mut traces);
     heriter_des_lieux(voyage, journees, &mut traces);
 
     let traces_par_jour: BTreeMap<NaiveDate, ()> =
@@ -406,6 +406,7 @@ const METRES_TRANSIT_MINIMUM: f64 = 3_000.0;
 fn tracer_transits(
     medias: &[Media],
     voyage: &Voyage,
+    overrides: &Overrides,
     itineraires: &mut Itineraires,
     traces: &mut Traces,
 ) {
@@ -425,14 +426,34 @@ fn tracer_transits(
             }
         }
 
-        // Au premier et au dernier jour, un des deux bouts manque : on prend
-        // la position connue la plus extrême de la journée.
-        let depart = veille
-            .map(position_du_lieu)
-            .or_else(|| extremite_du_jour(medias, jour, true));
-        let arrivee = soir
-            .map(position_du_lieu)
-            .or_else(|| extremite_du_jour(medias, jour, false));
+        // Au premier et au dernier jour, un des deux bouts manque : c'est le
+        // domicile qui en tient lieu, à défaut la position connue la plus
+        // extrême de la journée.
+        let domicile = |reference: &Option<String>| -> Option<Position> {
+            reference.as_deref().and_then(|id| {
+                voyage
+                    .lieux
+                    .iter()
+                    .find(|l| l.id == id)
+                    .map(position_du_lieu)
+            })
+        };
+        let depart = veille.map(position_du_lieu).or_else(|| {
+            if jour == voyage.date_debut {
+                domicile(&voyage.depart)
+            } else {
+                None
+            }
+            .or_else(|| extremite_du_jour(medias, jour, true))
+        });
+        let arrivee = soir.map(position_du_lieu).or_else(|| {
+            if jour == voyage.date_fin {
+                domicile(&voyage.arrivee)
+            } else {
+                None
+            }
+            .or_else(|| extremite_du_jour(medias, jour, false))
+        });
 
         let (Some(depart), Some(arrivee)) = (depart, arrivee) else {
             jour = match jour.succ_opt() {
@@ -442,9 +463,19 @@ fn tracer_transits(
             continue;
         };
 
+        // Les points de passage du jour s'appliquent aussi au transit : c'est
+        // ainsi que l'on impose les nationales plutôt que l'autoroute, ou un
+        // col plutôt qu'un tunnel.
+        let passages: Vec<[f64; 2]> = overrides
+            .itineraires
+            .iter()
+            .filter(|f| f.jour == jour && f.mode.calculable())
+            .flat_map(|f| f.points_de_passage.clone())
+            .collect();
+
         if distance_m(&depart, &arrivee) >= METRES_TRANSIT_MINIMUM {
             if let Ok(Resolution::Cache(trajet)) | Ok(Resolution::Calcule(trajet)) =
-                itineraires.resoudre(Mode::Route, &depart, &arrivee, &[])
+                itineraires.resoudre(Mode::Route, &depart, &arrivee, &passages)
             {
                 // L'itinéraire du jour remplace les tronçons routiers déduits
                 // de la vitesse : c'est le même trajet, tracé en mieux.

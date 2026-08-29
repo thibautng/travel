@@ -107,6 +107,15 @@ pub struct Voyage {
     #[serde(default)]
     pub dossiers_ignores: Vec<String>,
 
+    /// Lieu d'où part le voyage, et où il revient. Références à `lieux`.
+    ///
+    /// Sans eux, la trace commence à la première photo et s'arrête à la
+    /// dernière, ce qui ampute les trajets d'approche et de retour.
+    #[serde(default)]
+    pub depart: Option<String>,
+    #[serde(default)]
+    pub arrivee: Option<String>,
+
     #[serde(default)]
     pub notion: Option<String>,
 

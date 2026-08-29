@@ -34,11 +34,12 @@ segments:
 
   - jour: 2026-08-06
     mode: velo
-    apres: IMG20260806133042
-    points: [[12.5320, 46.7575], [12.6100, 46.7900], [12.7690, 46.8290]]
-    note: "Seconde moitié de la sortie à vélo, vers Lienz, aucune photo prise.
-      La sortie est partie de San Candido, pas de Tassenbach : la première
-      moitié est documentée par les photos, ce segment ne couvre que la fin."
+    apres: IMG20260806161600
+    points: [[12.6326, 46.7773], [12.7690, 46.8290]]
+    note: "Derniers kilomètres vers Lienz, après la dernière photo de la sortie.
+      La sortie est partie de San Candido, pas de Tassenbach, et les photos la
+      documentent jusqu’à ce point : ce segment ne couvre que ce qui manque,
+      au lieu de doubler le trajet mesuré."
 
 # Modes de déplacement, quand l’inférence par la vitesse se trompe.
 # Une voiture arrêtée pour déjeuner affiche la vitesse moyenne d’un vélo.
@@ -128,9 +129,44 @@ modes:
     de: "17:55"
     a: "19:10"
 
+  # 6 août, sortie à vélo de San Candido à Lienz. Quelques sauts de position
+  # donnent des vitesses de 60 à 300 km/h, ce qui faisait passer des tronçons
+  # de la sortie pour de la voiture et les envoyait au routeur routier, qui
+  # les faisait zigzaguer d’une rive à l’autre de la vallée.
+  - jour: 2026-08-06
+    mode: velo
+    de: "11:00"
+    a: "11:40"
+  - jour: 2026-08-06
+    mode: velo
+    de: "15:45"
+    a: "15:55"
+
   # 11 août, descente vers le lac de Garde. Un seul tronçon de 89 km, que dix
   # heures d’écart entre deux photos faisaient passer pour du vélo.
   - jour: 2026-08-11
     mode: route
     de: "08:20"
     a: "08:30"
+
+# Points de passage imposés aux itinéraires calculés. Le moteur propose le
+# trajet le plus rapide, qui n’est pas celui qui a été pris.
+itineraires:
+  # 26 juillet, de la Forêt-Noire à Garmisch par les nationales, pas par
+  # l’autoroute au nord. Les deux points sont des lieux traversés ce jour-là,
+  # relevés par les photos de 12 h 19 et 13 h 05.
+  - jour: 2026-07-26
+    points_de_passage: [[8.95089, 48.33556], [9.11544, 48.28882]]
+    note: "Nationales par Burladingen, et non l’autoroute par Stuttgart et Ulm."
+
+  # 12 août, départ de Riva del Garda par la rive ouest du lac, via Gargnano
+  # et Salò. Le point est celui de la photo de la Piazza Feltrinelli.
+  - jour: 2026-08-12
+    points_de_passage: [[10.66375, 45.68815]]
+    note: "Rive ouest du lac de Garde, par Gargnano et Salò."
+
+  # 15 août, retour par le col du Petit-Saint-Bernard et non par le tunnel du
+  # Mont-Blanc. Le point est celui des photos prises au col à 13 h 39.
+  - jour: 2026-08-15
+    points_de_passage: [[6.88669, 45.68517]]
+    note: "Col du Petit-Saint-Bernard, et non le tunnel du Mont-Blanc."

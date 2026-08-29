@@ -4,6 +4,7 @@
 //! de `tests/contraintes.rs` puissent les exercer avec les fixtures. Le
 //! binaire `carnet` n'est qu'une fine couche de ligne de commande par-dessus.
 
+pub mod derive;
 pub mod emit;
 pub mod itineraire;
 pub mod jours;

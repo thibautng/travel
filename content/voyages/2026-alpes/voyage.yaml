@@ -26,4 +26,65 @@ dossiers_ignores:
 
 notion: "https://app.notion.com/p/371ec81aae12810fa2e9dfbe7adbcff8"
 
-lieux: []
+# Les huit campings du voyage. Noms donnés de mémoire, dates et positions
+# vérifiées contre les photos du soir et du matin. Le total fait 22 nuits,
+# ce qui concorde avec l'annonce du voyage.
+#
+# `du` est le jour d'arrivée, `au` le jour de départ. Le camping du 12 au
+# 15 août couvre donc les nuits des 12, 13 et 14.
+lieux:
+  - id: traiermuhle
+    nom: Campingplatz Traiermühle
+    type: camp
+    position: { lat: 48.42922, lon: 8.18106 }
+    du: 2026-07-24
+    au: 2026-07-26
+
+  - id: tennsee
+    nom: Camping Tennsee
+    type: camp
+    position: { lat: 47.49037, lon: 11.25546, alt: 953.5 }
+    du: 2026-07-26
+    au: 2026-07-29
+
+  - id: winkl-landthal
+    nom: Campingplatz Winkl-Landthal
+    type: camp
+    position: { lat: 47.60736, lon: 12.89263, alt: 719.7 }
+    du: 2026-07-29
+    au: 2026-08-01
+
+  - id: camp-rut
+    nom: Camp Rut, Kobarid
+    type: camp
+    position: { lat: 46.24450, lon: 13.56600 }
+    du: 2026-08-01
+    au: 2026-08-05
+
+  - id: alpen-natur
+    nom: Alpen Natur Camping
+    type: camp
+    position: { lat: 46.77540, lon: 12.03600 }
+    du: 2026-08-05
+    au: 2026-08-09
+
+  - id: seiser-alm
+    nom: Camping Seiser Alm
+    type: camp
+    position: { lat: 46.53240, lon: 11.53290 }
+    du: 2026-08-09
+    au: 2026-08-11
+
+  - id: bavaria
+    nom: Camping Bavaria
+    type: camp
+    position: { lat: 45.87950, lon: 10.85486 }
+    du: 2026-08-11
+    au: 2026-08-12
+
+  - id: lo-stambecco
+    nom: Campeggio Lo Stambecco
+    type: camp
+    position: { lat: 45.58830, lon: 7.34330 }
+    du: 2026-08-12
+    au: 2026-08-15

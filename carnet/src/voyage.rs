@@ -42,7 +42,7 @@ pub enum ErreurVoyage {
 pub struct Lieu {
     pub id: String,
     pub nom: String,
-    #[serde(default = "TypeLieu::etape")]
+    #[serde(rename = "type", default = "TypeLieu::etape")]
     pub type_lieu: TypeLieu,
     pub position: Position,
     #[serde(default)]

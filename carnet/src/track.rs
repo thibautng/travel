@@ -234,6 +234,7 @@ pub fn construire(
             &medias_du_jour,
             &passages,
             overrides,
+            voyage.fuseau,
             itineraires,
             &mut traces.bilan,
         );
@@ -292,6 +293,7 @@ fn tracer_journee(
     medias: &[&Media],
     passages: &[[f64; 2]],
     overrides: &Overrides,
+    fuseau: chrono_tz::Tz,
     itineraires: &mut Itineraires,
     bilan: &mut BilanTraces,
 ) -> Vec<Troncon> {
@@ -313,8 +315,11 @@ fn tracer_journee(
         // vitesse moyenne d'une voiture arrêtée pour déjeuner est celle d'un
         // vélo, et seul l'humain sait laquelle des deux c'était.
         let heures = (t1 - t0).num_seconds() as f64 / 3600.0;
+        // L'heure est ramenée au fuseau du voyage avant d'interroger les
+        // forçages : les vidéos portent leur horodatage en temps universel,
+        // et une plage écrite en heure locale les manquerait de deux heures.
         let mode = overrides
-            .mode_force(jour, t0.time())
+            .mode_force(jour, t0.with_timezone(&fuseau).time())
             .unwrap_or(if heures <= 0.0 {
                 Mode::Route
             } else {
@@ -616,6 +621,7 @@ mod tests {
             &refs,
             &[],
             &Overrides::default(),
+            chrono_tz::Europe::Paris,
             &mut itineraires_vides(),
             &mut bilan,
         );
@@ -638,6 +644,7 @@ mod tests {
             &refs,
             &[],
             &Overrides::default(),
+            chrono_tz::Europe::Paris,
             &mut itineraires_vides(),
             &mut bilan,
         );
@@ -658,6 +665,7 @@ mod tests {
             &refs,
             &[],
             &Overrides::default(),
+            chrono_tz::Europe::Paris,
             &mut itineraires_vides(),
             &mut bilan,
         );
@@ -688,6 +696,7 @@ mod tests {
             &refs,
             &[],
             &overrides,
+            chrono_tz::Europe::Paris,
             &mut itineraires_vides(),
             &mut bilan,
         );

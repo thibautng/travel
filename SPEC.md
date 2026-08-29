@@ -91,7 +91,7 @@ Les modes `marche`, `velo`, `bateau`, `train` et `telepherique` ne sont **jamais
 
 Quand le camp du soir diffère de celui de la veille, l’itinéraire routier de l’un à l’autre est donc calculé, et la trace produite est de source `heritee` : elle ne prétend pas dire par où l’on est passé, elle dit d’où l’on est parti et où l’on est arrivé. Elle remplace, ce jour-là, les tronçons routiers déduits de la vitesse, qui décrivent le même trajet en moins bien. Au premier et au dernier jour du voyage, où l’un des deux camps manque, la position connue la plus extrême de la journée en tient lieu.
 
-Le résultat porte le total de 888 à **2 760 km**, dont 2 159 hérités. L’écart restant tient aux excursions à la journée, parties et revenues au même camp, que l’inférence par la vitesse classe encore en `velo` : elles se corrigent dans `modes`.
+Le résultat porte le total de 888 à **2 691 km**, dont 2 159 hérités. Il ne s’agit pas d’empiler les deux lectures : sur une journée de transit, l’itinéraire entre camps remplace les tronçons routiers déduits de la vitesse, qui décrivaient le même trajet en moins bien. L’écart restant aux 4 400 km tient aux excursions parties et revenues au même camp dont le retour n’est pas photographié.
 
 Un itinéraire calculé est le trajet le plus rapide, pas nécessairement celui qui a été pris. Sur les cols alpins l’écart peut être franc, un tunnel au lieu d’un col. D’où deux exigences : `overrides.yaml` peut imposer des points de passage sur un segment `route`, et le rendu distingue visuellement le tracé mesuré du tracé calculé (section 9.2).
 

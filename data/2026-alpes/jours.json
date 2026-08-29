@@ -44,10 +44,10 @@
       8.274700000000001,
       48.59696666666667
     ],
-    "distance_trace_km": 49.4,
+    "distance_trace_km": 69.3,
     "modes": [
-      "marche",
-      "velo"
+      "route",
+      "marche"
     ],
     "anomalies": [
       "trou_candidat",
@@ -73,11 +73,10 @@
       11.255461111111112,
       48.33555833333334
     ],
-    "distance_trace_km": 440.5,
+    "distance_trace_km": 414.7,
     "modes": [
       "route",
-      "marche",
-      "velo"
+      "marche"
     ],
     "anomalies": [
       "trou_candidat"
@@ -101,7 +100,7 @@
       11.255994444444445,
       47.5027
     ],
-    "distance_trace_km": 39.5,
+    "distance_trace_km": 46.3,
     "modes": [
       "route",
       "marche",
@@ -187,7 +186,7 @@
       13.053844444444445,
       47.806799999999996
     ],
-    "distance_trace_km": 26.2,
+    "distance_trace_km": 30.3,
     "modes": [
       "route",
       "marche",
@@ -217,6 +216,7 @@
     ],
     "distance_trace_km": 24.6,
     "modes": [
+      "route",
       "marche",
       "velo",
       "bateau"
@@ -295,10 +295,10 @@
       13.7496,
       46.439024999999994
     ],
-    "distance_trace_km": 28.4,
+    "distance_trace_km": 41.0,
     "modes": [
-      "marche",
-      "velo"
+      "route",
+      "marche"
     ],
     "anomalies": [
       "trou_candidat",
@@ -431,11 +431,10 @@
       12.451783333333333,
       46.77536111111111
     ],
-    "distance_trace_km": 91.8,
+    "distance_trace_km": 114.8,
     "modes": [
       "route",
-      "marche",
-      "velo"
+      "marche"
     ],
     "anomalies": [
       "trou_candidat",
@@ -460,11 +459,10 @@
       11.560208333333334,
       46.567925
     ],
-    "distance_trace_km": 104.3,
+    "distance_trace_km": 85.1,
     "modes": [
       "route",
-      "marche",
-      "velo"
+      "marche"
     ],
     "anomalies": [
       "trou_candidat"
@@ -517,11 +515,10 @@
       11.534908333333334,
       46.53241944444444
     ],
-    "distance_trace_km": 212.0,
+    "distance_trace_km": 122.5,
     "modes": [
       "route",
-      "marche",
-      "velo"
+      "marche"
     ],
     "anomalies": [
       "trou_candidat"

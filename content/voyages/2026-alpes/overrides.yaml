@@ -1,17 +1,17 @@
 # Corrections manuelles du Tour des Alpes. Voir SPEC.md, section 7.
 #
-# Une surcharge écrase l'EXIF, toujours, sans avertissement. En contrepartie,
+# Une surcharge écrase l’EXIF, toujours, sans avertissement. En contrepartie,
 # `carnet check` liste ce qui a été appliqué et échoue sur une surcharge qui
 # ne vise rien.
 #
 # Ce qui ne figure pas ici, volontairement :
 #
 # - Les cinq fichiers repartagés de C3 (IMG_20260730_071148 et les autres)
-#   n'ont pas besoin de surcharge : leur EXIF porte déjà la bonne date, et le
-#   pipeline date par l'EXIF. L'exemple de la section 7 de la spec est une
+#   n’ont pas besoin de surcharge : leur EXIF porte déjà la bonne date, et le
+#   pipeline date par l’EXIF. L’exemple de la section 7 de la spec est une
 #   illustration du mécanisme, pas une correction nécessaire.
 # - Aucune exclusion : les 833 médias sont inventoriés. Le tri de ce qui est
-#   publié relève de selection.yaml (D7), pas d'ici.
+#   publié relève de selection.yaml (D7), pas d’ici.
 
 # Contrainte C4 : 14 fichiers GoPro HERO7, sans GPS, tous horodatés au
 # 3 janvier 2016. Le motif couvre GOPR2699 à GOPR2717 : « GOPR27* » raterait
@@ -21,8 +21,8 @@ lots:
     jour: 2026-08-02
     position: { lat: 46.2010, lon: 13.6480 }
     note: "GoPro sans GPS, horloge perdue. Canyoning du Sušec. Les quatorze
-      fichiers sont empilés sur un point unique, et c'est voulu : les photos
-      d'eau ont été prises au même endroit, il y avait peu de mouvement."
+      fichiers sont empilés sur un point unique, et c’est voulu : les photos
+      d’eau ont été prises au même endroit, il y avait peu de mouvement."
 
 # Contrainte C5 : deux journées ont un trou de trace assumé, que le GPS ne
 # peut pas combler. Ces tronçons sont tracés à la main.
@@ -36,10 +36,15 @@ segments:
     mode: velo
     apres: IMG20260806133042
     points: [[12.5320, 46.7575], [12.6100, 46.7900], [12.7690, 46.8290]]
-    note: "Seconde moitié Tassenbach vers Lienz, aucune photo prise."
+    note: "Seconde moitié de la sortie à vélo, vers Lienz, aucune photo prise.
+      La sortie est partie de San Candido, pas de Tassenbach : la première
+      moitié est documentée par les photos, ce segment ne couvre que la fin."
 
 # Modes de déplacement, quand l’inférence par la vitesse se trompe.
 # Une voiture arrêtée pour déjeuner affiche la vitesse moyenne d’un vélo.
+#
+# Les plages horaires encadrent les seuls tronçons à corriger, et jamais une
+# marche : forcer une journée entière convertirait aussi les randonnées.
 modes:
   # Journée de transit : Kobarid, halte du midi au Faaker See en Autriche,
   # puis le Sud-Tyrol. Aucune photo pendant les trajets, seulement aux
@@ -47,3 +52,85 @@ modes:
   - jour: 2026-08-05
     mode: route
     note: "Kobarid vers le Sud-Tyrol par l’Autriche, halte au Faaker See."
+
+  # 25 juillet, deux trajets en voiture dans la Forêt-Noire.
+  - jour: 2026-07-25
+    mode: route
+    de: "12:15"
+    a: "12:25"
+  - jour: 2026-07-25
+    mode: route
+    de: "16:45"
+    a: "19:05"
+
+  # 26 juillet, route de la Forêt-Noire vers Garmisch, de part et d’autre du
+  # long tronçon que la vitesse avait déjà reconnu.
+  - jour: 2026-07-26
+    mode: route
+    de: "12:15"
+    a: "12:25"
+  - jour: 2026-07-26
+    mode: route
+    de: "19:35"
+    a: "19:45"
+
+  # 27 juillet, déplacements en voiture autour de Garmisch.
+  - jour: 2026-07-27
+    mode: route
+    de: "15:38"
+    a: "15:44"
+  - jour: 2026-07-27
+    mode: route
+    de: "19:05"
+    a: "20:22"
+
+  # 30 juillet, route vers Salzbourg.
+  - jour: 2026-07-30
+    mode: route
+    de: "10:45"
+    a: "10:55"
+
+  # 31 juillet, route vers le Königssee en voiture, puis bateau. Le bateau est
+  # aussi tracé à la main plus haut, là où le GPS avait décroché.
+  - jour: 2026-07-31
+    mode: route
+    de: "08:45"
+    a: "09:25"
+  - jour: 2026-07-31
+    mode: bateau
+    de: "11:44"
+    a: "12:00"
+  - jour: 2026-07-31
+    mode: bateau
+    de: "12:15"
+    a: "12:55"
+
+  # 3 août, route vers le col de Vršič.
+  - jour: 2026-08-03
+    mode: route
+    de: "12:20"
+    a: "12:25"
+
+  # 8 août, montée et descente des Tre Cime en bus. La randonnée entre les
+  # deux, de 12 h 40 à 16 h 01, reste de la marche.
+  - jour: 2026-08-08
+    mode: route
+    de: "09:35"
+    a: "12:39"
+  - jour: 2026-08-08
+    mode: route
+    de: "16:02"
+    a: "16:10"
+
+  # 9 août, route du Sud-Tyrol vers le Seiser Alm.
+  - jour: 2026-08-09
+    mode: route
+    de: "17:55"
+    a: "19:10"
+
+  # 11 août, descente vers le lac de Garde. Un seul tronçon de 89 km, que dix
+  # heures d’écart entre deux photos faisaient passer pour du vélo.
+  - jour: 2026-08-11
+    mode: route
+    de: "08:20"
+    a: "08:30"

@@ -47,25 +47,52 @@ Outils externes attendus, par lot :
 
 Consignées ici comme le demande le critère de fin du lot 3.
 
-| Passage | Machine | Format | Temps | Résultat |
+| Passage | Disque | Format | Temps | Résultat |
 |---|---|---|---|---|
-| Inventaire seul (`carnet scan`) | i7-2600K | | 13 s | 833 médias |
-| Build sans dérivés | i7-2600K | | 16 s | `data/` complet |
-| Premier build | i7-2600K | JPEG | 351 s d’encodage | 705 photos, 882 Mo |
-| Second build | i7-2600K | JPEG | 0 s d’encodage, 18 s au total | 705 repris du cache |
+| Inventaire seul (`carnet scan`) | pCloud | | 13 s | 833 médias |
+| Premier build | pCloud | JPEG | 351 s d’encodage | 705 photos, 882 Mo |
+| Second build | pCloud | JPEG | 0 s d’encodage, 18 s au total | 705 repris du cache |
+| Premier build | NTFS local | JPEG | **217 s** d’encodage | 705 photos, 879 Mo |
+| Second build | NTFS local | JPEG | 0 s d’encodage, **3 s** au total | 705 repris du cache |
 | Premier build | machine cible | AVIF | à mesurer | |
+
+Le passage de pCloud à un disque local fait tomber l’encodage de 351 à 217
+secondes et le build à vide de 18 à 3. Un bon tiers de ce que je prenais pour
+du temps d’encodage était de l’attente disque.
+
+Calibrage de l’encodage, mesuré sur une photo de 4 624 x 2 608 pixels en
+monofil (`cargo test --release calibrage -- --ignored --nocapture`) :
+
+| Format | Trois tailles | Poids |
+|---|---|---|
+| JPEG | 0,35 s | 779 Ko |
+| AVIF | 8,21 s | 527 Ko |
+
+L’AVIF coûte donc vingt-trois fois plus cher sur ce processeur, dépourvu
+d’AVX2, et rend 32 % de poids en moins. Un build complet en AVIF y prendrait
+une vingtaine de minutes.
 
 Le poids dépasse largement l’estimation de 200 Mo de la section 8 : le JPEG
 en trois tailles coûte environ 1,2 Mo par photo. L’AVIF devrait ramener le
 total autour de 400 à 450 Mo, ce qui reste très en deçà des 10 Go gratuits
 de R2, mais l’estimation de la spec est à corriger une fois la mesure faite.
 
-## Un piquet sur ce poste
+## Ne pas travailler sur un lecteur pCloud
 
-Le disque `P:` ne supporte pas les liens durs, dont le cache de compilation
-incrémentale de cargo a besoin. Les builds finissent par échouer sur un
-`stream did not contain valid UTF-8` qui n’a rien à voir avec le code.
-Remède : `CARGO_INCREMENTAL=0`.
+Le dépôt a d’abord vécu sur `P:`, qui n’est pas un disque mais un montage
+pCloud. Trois symptômes s’y sont manifestés, dans cet ordre : l’absence de
+liens durs, dont le cache de compilation incrémentale de cargo a besoin, des
+refus d’écriture intermittents, puis une **corruption silencieuse** de
+`data/2026-alpes/itineraires.json`, un nombre remplacé par des espaces au
+milieu d’un fichier de 5,9 Mo.
+
+La preuve a été faite en écrivant le même contenu, extrait de git, sur les
+deux volumes : valide sur `C:`, corrompu sur `P:`, empreintes différentes.
+Les disques physiques de la machine sont sains et leur SMART ne prédit
+aucune panne.
+
+Le dépôt vit donc sur `D:`, en NTFS. Les photos sources, elles, restent sur
+pCloud : elles se lisent de façon stable et le pipeline n’y écrit jamais.
 
 ## État
 

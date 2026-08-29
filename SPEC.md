@@ -736,13 +736,17 @@ Critère de fin : `trace.geojson` visuellement correct dans [geojson.io](https:/
 
 Critère de fin : `carnet build` idempotent, un second passage ne produisant aucun travail, et temps du premier passage mesuré et consigné dans le README. Objectif indicatif : moins de 3 minutes pour les 705 photos.
 
+**Import du carnet, avant le lot 4.** L’import des 23 journées depuis Notion, initialement placé au lot 6, est avancé avant le site. Motif : construire des pages sans texte revient à dessiner des gabarits à l’aveugle, et le critère de fin du lot 4, « le voyage est lisible de bout en bout », serait invérifiable sur un site vide.
+
+L’import reste **unique**. Après conversion, le Markdown de `content/` est la seule source de vérité et la page Notion est conservée comme archive figée. Les champs chiffrés du frontmatter absents de Notion restent vides plutôt qu’inventés.
+
 **Lot 4 | Site, sans carte.** Astro, routes, rendu des journées depuis le Markdown, galeries, mode sombre, responsive. Critère de fin : le voyage est lisible de bout en bout sur téléphone.
 
 **Lot 5 | Carte.** MapLibre, PMTiles, les trois modes de la section 9.2, les quatre styles de trace, la synchronisation défilement et carte. Critère de fin : le lecteur jour par jour fonctionne au doigt sur téléphone.
 
-**Lot 6 | Contenu et mise en ligne.** Import des 23 journées depuis le carnet Notion, placement des photos dans le récit, déploiement, R2, extrait PMTiles des Alpes.
+**Lot 6 | Mise en ligne.** Placement des photos dans le récit, déploiement, R2, extrait PMTiles des Alpes. L’import du carnet, lui, a été avancé avant le lot 4.
 
-L’import est **unique**. Après conversion, le Markdown de `content/` est la seule source de vérité, et la page Notion est conservée comme archive figée. Deux sources pour le même texte reproduiraient l’erreur que la section 4 interdit. Les champs chiffrés du frontmatter absents de Notion restent vides plutôt qu’inventés. La relecture et l’amélioration des textes se font ensuite dans le dépôt, au fil de l’eau.
+La relecture et l’amélioration des textes se font dans le dépôt, au fil de l’eau, et n’attendent aucun lot.
 
 **Lot 7 | Voyages antérieurs.** L’audit du 27 août 2026 a levé l’incertitude qui pesait sur ce lot, et l’a coupé en deux.
 

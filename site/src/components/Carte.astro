@@ -163,6 +163,14 @@ const titres = Object.fromEntries(
     ];
   }
 
+  /**
+   * Les pastilles de medias. Aucune de ces deux teintes n’est une couleur de
+   * mode : la pastille ne doit pas se confondre avec le trace qui la porte.
+   * La legende reprend les memes valeurs.
+   */
+  const COULEUR_PHOTO = "#ffffff";
+  const COULEUR_VIDEO = "#8c4a6b";
+
   /** Les camps de base, en marqueurs distincts. Section 9.2. */
   function poserCamps(carte: any, conteneur: HTMLElement) {
     const camps = JSON.parse(conteneur.dataset.camps ?? "[]");
@@ -220,7 +228,7 @@ const titres = Object.fromEntries(
     const voyage = conteneur.dataset.voyage!;
     const titres: Record<string, string> = JSON.parse(conteneur.dataset.titres ?? "{}");
 
-    for (const couche of ["trace", "photos"]) {
+    for (const couche of ["trace", "photos", "videos"]) {
       carte.on("click", couche, (e: any) => {
         const jour = e.features?.[0]?.properties?.jour;
         if (jour) window.location.href = `/voyages/${voyage}/jours/${jour}/`;
@@ -232,7 +240,7 @@ const titres = Object.fromEntries(
     // gestionnaire par couche, celui de la trace ecrasait celui de la
     // pastille et la vignette n'apparaissait jamais. Ici l'ordre des couches
     // interrogees fait la priorite.
-    const COUCHES = ["photos", "camps", "trace"];
+    const COUCHES = ["photos", "videos", "camps", "trace"];
     carte.on("mousemove", (e: any) => {
       const trouvees = carte.queryRenderedFeatures(e.point, { layers: COUCHES });
       if (trouvees.length === 0) {
@@ -249,7 +257,9 @@ const titres = Object.fromEntries(
       if (p.nom) {
         montrerEtiquette(conteneur, p.nom);
       } else if (p.jour) {
-        montrerEtiquette(conteneur, titres[p.jour] ?? p.jour, p.vignette);
+        const titre = titres[p.jour] ?? p.jour;
+        const texte = p.type === "video" ? `${titre} · vidéo` : titre;
+        montrerEtiquette(conteneur, texte, p.vignette);
       }
     });
   }
@@ -332,22 +342,39 @@ const titres = Object.fromEntries(
     });
 
     // Section 9.2 : les positions suspectes ne sont pas affichees par defaut.
+    // Deux couches et non une : la photo porte une vignette au survol, la
+    // video n'en a pas. Une seule couleur pour les deux faisait passer les
+    // videos pour des photos dont la vignette manquait.
+    const pastille = (couleur: string) => ({
+      "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 2.5, 10, 4, 14, 6],
+      "circle-color": couleur,
+      // Un cercle blanc cercle de sombre : aucune couleur de mode ne lui
+      // ressemble, la pastille se lit sur un trace de marche comme sur une
+      // route.
+      "circle-stroke-width": 1.4,
+      "circle-stroke-color": "#2b2723",
+      "circle-opacity": 0.95,
+    });
+    const point = (type: string) => [
+      "all",
+      ["==", ["geometry-type"], "Point"],
+      ["==", ["get", "fiabilite"], "haute"],
+      ["==", ["get", "type"], type],
+    ];
+
+    carte.addLayer({
+      id: "videos",
+      type: "circle",
+      source: "trace",
+      filter: point("video"),
+      paint: pastille(COULEUR_VIDEO) as any,
+    });
     carte.addLayer({
       id: "photos",
       type: "circle",
       source: "trace",
-      filter: [
-        "all",
-        ["==", ["geometry-type"], "Point"],
-        ["==", ["get", "fiabilite"], "haute"],
-      ],
-      paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 2.5, 10, 4, 14, 6],
-        "circle-color": "#c0562a",
-        "circle-stroke-width": 1,
-        "circle-stroke-color": "#ffffff",
-        "circle-opacity": 0.9,
-      },
+      filter: point("photo"),
+      paint: pastille(COULEUR_PHOTO) as any,
     });
 
     const [[ouest, sud], [est, nord]] = emprise(trace);
@@ -422,12 +449,18 @@ const titres = Object.fromEntries(
     font-family: ui-sans-serif, system-ui, sans-serif;
     font-size: 0.82rem;
     pointer-events: none;
-    max-width: calc(100% - 6rem);
+    max-width: calc(100% - 1.2rem);
+  }
+  @media (max-width: 30rem) {
+    .carte-etiquette img {
+      width: 112px;
+      height: 75px;
+    }
   }
   .carte-etiquette img {
     display: block;
-    width: 84px;
-    height: 56px;
+    width: 176px;
+    height: 117px;
     object-fit: cover;
     border-radius: 2px;
   }

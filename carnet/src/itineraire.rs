@@ -26,6 +26,11 @@ fn url_ors(profil: &str) -> String {
 /// plafonne à 40 requêtes par minute ; une seconde et demie laisse de la marge.
 const PAUSE_ENTRE_APPELS: std::time::Duration = std::time::Duration::from_millis(1500);
 
+/// Attente après un premier refus 429. Le palier gratuit refuse pour deux
+/// raisons : la minute est pleine, ou la journée l’est. Une minute d’attente
+/// tranche entre les deux ; si le refus se répète, le quota du jour est épuisé.
+const PAUSE_APRES_REFUS: std::time::Duration = std::time::Duration::from_secs(60);
+
 #[derive(Debug, thiserror::Error)]
 pub enum ErreurItineraire {
     #[error("lecture de {chemin} impossible")]
@@ -102,6 +107,14 @@ pub struct Itineraires {
     modifie: bool,
     pub appels: usize,
     pub manques: usize,
+    /// Appels refusés par le moteur. Les appelants retombent sur le trait
+    /// droit sans lever d’erreur : sans ce compteur, cent refus passaient
+    /// pour cent tronçons qu’on n’avait pas cherché à calculer.
+    pub refus: usize,
+    /// Vrai dès que le moteur a refusé deux fois de suite pour cause de quota.
+    /// Les appels suivants ne partent plus : ils seraient refusés aussi, et
+    /// chacun coûte une seconde et demie de pause.
+    pub quota_epuise: bool,
 }
 
 /// Clé de cache : mode, extrémités et points de passage, arrondis à la
@@ -152,6 +165,8 @@ impl Itineraires {
             modifie: false,
             appels: 0,
             manques: 0,
+            refus: 0,
+            quota_epuise: false,
         })
     }
 
@@ -186,11 +201,32 @@ impl Itineraires {
             return Ok(Resolution::Indisponible);
         };
 
+        if self.quota_epuise {
+            self.refus += 1;
+            return Ok(Resolution::Indisponible);
+        }
+
         if self.appels > 0 {
             std::thread::sleep(PAUSE_ENTRE_APPELS);
         }
         let profil = mode.profil().ok_or(ErreurItineraire::ModeNonCalculable(mode.nom()))?;
-        let trajet = self.appeler(profil, &cle_api, depart, arrivee, passages)?;
+        let trajet = match self.appeler(profil, &cle_api, depart, arrivee, passages) {
+            Ok(trajet) => trajet,
+            // Un refus de débit se rattrape ; un quota épuisé, non. On attend
+            // une minute, on retente une fois, puis on abandonne pour ce build.
+            Err(ErreurItineraire::Refus { code: 429 }) => {
+                std::thread::sleep(PAUSE_APRES_REFUS);
+                match self.appeler(profil, &cle_api, depart, arrivee, passages) {
+                    Ok(trajet) => trajet,
+                    Err(_) => {
+                        self.quota_epuise = true;
+                        self.refus += 1;
+                        return Ok(Resolution::Indisponible);
+                    }
+                }
+            }
+            Err(autre) => return Err(autre),
+        };
         self.appels += 1;
         self.contenu.entrees.insert(cle, trajet.clone());
         self.modifie = true;
@@ -292,9 +328,9 @@ mod tests {
         Position { lat, lon, alt: None }
     }
 
-    /// La garde de D6 : aucun mode autre que la route ne part au calcul.
+    /// La garde de D6 : un mode sans reseau ne part jamais au calcul.
     #[test]
-    fn refuse_tout_mode_non_routier() {
+    fn refuse_les_modes_sans_reseau() {
         let mut itineraires = Itineraires {
             chemin: PathBuf::from("inexistant.json"),
             contenu: Contenu::default(),
@@ -302,8 +338,10 @@ mod tests {
             modifie: false,
             appels: 0,
             manques: 0,
+            refus: 0,
+            quota_epuise: false,
         };
-        for mode in [Mode::Marche, Mode::Bateau, Mode::Train, Mode::Telepherique] {
+        for mode in [Mode::Bateau, Mode::Train, Mode::Telepherique] {
             let erreur = itineraires
                 .resoudre(mode, &position(45.0, 7.0), &position(45.1, 7.1), &[])
                 .expect_err("le mode doit être refusé");
@@ -335,6 +373,8 @@ mod tests {
             modifie: false,
             appels: 0,
             manques: 0,
+            refus: 0,
+            quota_epuise: false,
         };
         let resolution = itineraires
             .resoudre(Mode::Route, &position(45.0, 7.0), &position(45.1, 7.1), &[])
@@ -352,6 +392,8 @@ mod tests {
             modifie: false,
             appels: 0,
             manques: 0,
+            refus: 0,
+            quota_epuise: false,
         };
         let resolution = itineraires
             .resoudre(Mode::Route, &position(45.0, 7.0), &position(45.1, 7.1), &[])

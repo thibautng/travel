@@ -48,21 +48,22 @@ impl Mode {
 
     /// Profil de routage d'OpenRouteService, quand ce mode en a un.
     ///
-    /// La route va sur le réseau routier, le vélo sur le réseau cyclable.
-    /// Les autres modes n'en ont pas : c'est la garde de D6.
+    /// Chaque mode va sur son réseau : la route sur la chaussée, le vélo sur
+    /// les pistes cyclables, la marche sur les sentiers. Le bateau, le train
+    /// et le téléphérique n'en ont aucun : c'est la garde de D6.
     pub fn profil(self) -> Option<&'static str> {
         match self {
             Mode::Route => Some("driving-car"),
             Mode::Velo => Some("cycling-regular"),
-            Mode::Marche | Mode::Bateau | Mode::Train | Mode::Telepherique => None,
+            Mode::Marche => Some("foot-walking"),
+            Mode::Bateau | Mode::Train | Mode::Telepherique => None,
         }
     }
 
     /// Vrai si ce mode peut partir au moteur d'itinéraire.
     ///
-    /// C'est la garde de D6 : map-matcher une randonnée la ferait suivre les
-    /// départementales, et un bateau n'a pas d'itinéraire. Un test vérifie
-    /// qu'aucun mode sans réseau ne passe.
+    /// C'est la garde de D6 : un bateau n'a pas d'itinéraire, un train ne
+    /// suit pas la route. Un test vérifie qu'aucun mode sans réseau ne passe.
     pub fn calculable(self) -> bool {
         self.profil().is_some()
     }
@@ -92,6 +93,25 @@ impl Mode {
             Mode::Velo
         } else {
             Mode::Route
+        }
+    }
+
+    /// La vitesse seule ne suffit pas. Entre deux photos espacées de plusieurs
+    /// heures, une voiture qui s’arrête pour déjeuner a la vitesse moyenne d’un
+    /// marcheur ; l’inférence rendait alors une marche. Tant que le tronçon
+    /// restait une droite, l’erreur était discrète ; routée sur les sentiers,
+    /// elle produit une randonnée de trente kilomètres à travers un massif.
+    ///
+    /// La distance donne un second signal, indépendant du temps écoulé : on ne
+    /// marche pas d’une photo à la suivante en s’éloignant de plus de quelques
+    /// kilomètres à vol d’oiseau, parce qu’on photographie en chemin. Au-delà
+    /// du seuil, le tronçon redevient de la route. Un mode déclaré dans
+    /// `overrides.yaml` n’est jamais soumis à cette correction : seul l’humain
+    /// sait ce qu’il a fait.
+    pub fn corrige_par_distance(self, metres: f64) -> Mode {
+        match self {
+            Mode::Marche if metres > METRES_MARCHE_MAXIMUM => Mode::Route,
+            autre => autre,
         }
     }
 }
@@ -191,6 +211,12 @@ pub struct Traces {
 
 /// Distance en deçà de laquelle deux positions consécutives ne méritent pas
 /// un tronçon : c'est le bruit GPS d'un appareil immobile.
+/// Au-delà de cet écart à vol d’oiseau, deux photos consécutives ne sont pas
+/// reliées par une marche. Cinq kilomètres laissent passer les longues boucles
+/// de randonnée du 14 août, et écartent les transferts en voiture des journées
+/// à plusieurs sites, où l’écart dépasse partout huit kilomètres.
+const METRES_MARCHE_MAXIMUM: f64 = 5_000.0;
+
 const METRES_MINIMUM: f64 = 25.0;
 
 /// Construit les traces du voyage.
@@ -354,7 +380,7 @@ fn tracer_journee(
             .unwrap_or(if heures <= 0.0 {
                 Mode::Route
             } else {
-                Mode::depuis_vitesse(metres / 1000.0 / heures)
+                Mode::depuis_vitesse(metres / 1000.0 / heures).corrige_par_distance(metres)
             });
 
         // Un tronçon routier part au moteur d'itinéraire et forme sa propre
@@ -606,14 +632,14 @@ mod tests {
     use crate::scan::{OrigineDate, TypeMedia};
     use chrono::DateTime;
 
-    /// D6 amendé : la route et le vélo ont chacun leur réseau, les autres
-    /// modes n'en ont pas. Router une randonnée la ferait suivre les
-    /// départementales, et un bateau n'a pas d'itinéraire.
+    /// D6 amendé : chaque mode terrestre a son réseau, les autres n'en ont
+    /// aucun. Un bateau n'a pas d'itinéraire, un train ne suit pas la route.
     #[test]
-    fn seuls_la_route_et_le_velo_partent_au_calcul() {
+    fn seuls_les_modes_terrestres_partent_au_calcul() {
         assert_eq!(Mode::Route.profil(), Some("driving-car"));
         assert_eq!(Mode::Velo.profil(), Some("cycling-regular"));
-        for mode in [Mode::Marche, Mode::Bateau, Mode::Train, Mode::Telepherique] {
+        assert_eq!(Mode::Marche.profil(), Some("foot-walking"));
+        for mode in [Mode::Bateau, Mode::Train, Mode::Telepherique] {
             assert!(
                 !mode.calculable(),
                 "{} ne doit jamais être calculé",
@@ -632,6 +658,18 @@ mod tests {
         assert_eq!(Mode::depuis_vitesse(3.5), Mode::Marche);
         assert_eq!(Mode::depuis_vitesse(15.0), Mode::Velo);
         assert_eq!(Mode::depuis_vitesse(70.0), Mode::Route);
+    }
+
+    /// Le piège du 3 août : neuf kilomètres à vol d’oiseau entre deux photos
+    /// espacées de quatre heures, soit 2 km/h. La vitesse dit la marche, la
+    /// distance dit la voiture, et c’était le col du Vršič.
+    #[test]
+    fn la_distance_corrige_les_marches_trop_longues() {
+        assert_eq!(Mode::Marche.corrige_par_distance(9_400.0), Mode::Route);
+        assert_eq!(Mode::Marche.corrige_par_distance(3_800.0), Mode::Marche);
+        // Le vélo et la route ne sont pas concernés : quarante kilomètres à
+        // vélo dans la journée du 6 août sont parfaitement ordinaires.
+        assert_eq!(Mode::Velo.corrige_par_distance(40_000.0), Mode::Velo);
     }
 
     #[test]

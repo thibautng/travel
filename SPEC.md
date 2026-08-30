@@ -83,11 +83,15 @@ Inspiration assumée : la relation lieu / date / visite d’AdventureLog, citée
 
 Il n’existe aucun enregistrement GPS continu du voyage, seulement les positions EXIF des photos. Relier ces positions par des segments droits produirait des lignes qui traversent les massifs.
 
-Pour le seul mode `route`, `carnet` interroge donc un moteur d’itinéraire entre deux positions fiables consécutives, et **fige le résultat dans un cache versionné**. Le build reste reproductible hors ligne et sans dépendance permanente à un service tiers.
+Pour tout mode qui dispose d’un réseau, `carnet` interroge donc un moteur d’itinéraire entre deux positions fiables consécutives, et **fige le résultat dans un cache versionné**. Le build reste reproductible hors ligne et sans dépendance permanente à un service tiers.
 
-**Chaque mode calculable va sur son propre réseau.** La route emprunte le profil `driving-car`, le vélo le profil `cycling-regular`, qui suit les pistes cyclables et non la chaussée. Les modes `marche`, `bateau`, `train` et `telepherique` ne sont **jamais** calculés : segments droits, ou tracé manuel via `segments`.
+**Chaque mode calculable va sur son propre réseau.** La route emprunte le profil `driving-car`, le vélo le profil `cycling-regular`, qui suit les pistes cyclables et non la chaussée, la marche le profil `foot-walking`, qui suit les sentiers. Les modes `bateau`, `train` et `telepherique` ne sont **jamais** calculés : segments droits, ou tracé manuel via `segments`.
 
-La règle n’est donc pas « seule la route est calculée » mais « on ne calcule un mode que sur un réseau qui lui correspond ». Une randonnée envoyée au moteur suivrait les départementales, un bateau n’a pas d’itinéraire, et un train ne suit pas la route. Le vélo, lui, a un réseau à lui. La garde reste un refus et non une convention : `resoudre()` renvoie une erreur pour tout mode dépourvu de profil, et un test le vérifie sur les quatre.
+La règle n’est donc pas « seule la route est calculée » mais « on ne calcule un mode que sur un réseau qui lui correspond ». Un bateau n’a pas d’itinéraire, et un train ne suit pas la route. La garde reste un refus et non une convention : `resoudre()` renvoie une erreur pour tout mode dépourvu de profil, et un test le vérifie sur les trois.
+
+*Amendement du 30 août 2026.* La marche était exclue du calcul, au motif qu’une randonnée envoyée au moteur suivrait les départementales. C’est vrai de `driving-car`, faux de `foot-walking`, qui connaît les sentiers. Le tour de l’Eibsee, le 27 juillet, coupait le lac en droite entre deux photos alors que le chemin en fait le tour. La marche rejoint donc le vélo parmi les modes calculables. La contrepartie est un volume d’appels sensiblement plus élevé, les journées à pied étant les mieux photographiées : le premier build après ce changement a épuisé le quota journalier du palier gratuit.
+
+**Le moteur peut refuser, et son refus se voit.** Un appel refusé retombait sur le segment droit sans rien dire, indistinguable d’un tronçon qu’on n’avait pas cherché à calculer. Un refus 429 déclenche désormais une attente d’une minute puis une seule nouvelle tentative — la minute peut être pleine sans que la journée le soit ; si elle échoue, le build cesse d’appeler et le rapport annonce le quota épuisé avec le nombre de tronçons restés droits. Le cache étant conservé, un build relancé le lendemain ne recalcule que ce qui manque.
 
 **Les journées de déplacement se tracent d’un camp à l’autre.** Les photos ne documentent pas les trajets : sur les 4 400 km annoncés, elles n’en dessinaient que 888, et les jours de transit sont précisément ceux où l’on photographie le moins. Le 24 juillet, jour du départ, porte cinq médias et ne produisait aucune trace.
 

@@ -411,11 +411,21 @@ pub fn ecrire_trace_geojson(
     // par convention cote site marcherait tant que le format ne change pas,
     // ce qui est exactement le genre de dette que la section 5.2 evite en
     // faisant venir toute metadonnee de media.json.
+    let types: BTreeMap<&str, TypeMedia> =
+        medias.iter().map(|m| (m.id.as_str(), m.type_media)).collect();
     let vignettes: BTreeMap<&str, &str> = medias
         .iter()
         .filter_map(|m| m.derives.as_ref().map(|d| (m.id.as_str(), d.vignette.as_str())))
         .collect();
     let mut features: Vec<geojson::Feature> = Vec::new();
+
+    /// Le moteur d’itinéraire rend ses coordonnées en flottants complets, que
+    /// serde écrit sur seize décimales. La cinquième vaut déjà le mètre : le
+    /// reste ne dit rien de plus à une carte et pèse le tiers du fichier, que
+    /// chaque visiteur télécharge.
+    fn au_metre(valeur: f64) -> f64 {
+        (valeur * 1e5).round() / 1e5
+    }
 
     for troncon in &traces.troncons {
         let mut proprietes = geojson::JsonObject::new();
@@ -426,7 +436,10 @@ pub fn ecrire_trace_geojson(
         features.push(geojson::Feature {
             bbox: None,
             geometry: Some(geojson::Geometry::new(geojson::Value::LineString(
-                troncon.points.iter().map(|p| vec![p[0], p[1]]).collect(),
+                troncon.points
+                    .iter()
+                    .map(|p| vec![au_metre(p[0]), au_metre(p[1])])
+                    .collect(),
             ))),
             id: None,
             properties: Some(proprietes),
@@ -438,6 +451,15 @@ pub fn ecrire_trace_geojson(
         let mut proprietes = geojson::JsonObject::new();
         proprietes.insert("id".to_string(), point.id.clone().into());
         proprietes.insert("jour".to_string(), point.jour.to_string().into());
+        proprietes.insert(
+            "type".to_string(),
+            if types.get(point.id.as_str()) == Some(&TypeMedia::Video) {
+                "video"
+            } else {
+                "photo"
+            }
+            .into(),
+        );
         proprietes.insert(
             "fiabilite".to_string(),
             match point.fiabilite {
@@ -460,8 +482,8 @@ pub fn ecrire_trace_geojson(
         features.push(geojson::Feature {
             bbox: None,
             geometry: Some(geojson::Geometry::new(geojson::Value::Point(vec![
-                point.position.lon,
-                point.position.lat,
+                au_metre(point.position.lon),
+                au_metre(point.position.lat),
             ]))),
             id: None,
             properties: Some(proprietes),
@@ -556,6 +578,13 @@ pub fn rapport_traces(
         "  tronçons routiers : {} calculés, {} restés droits",
         traces.bilan.troncons_calcules, traces.bilan.troncons_droits
     );
+    if itineraires.quota_epuise {
+        println!(
+            "  QUOTA ÉPUISÉ : le moteur a refusé {} appels. Les tronçons concernés",
+            itineraires.refus
+        );
+        println!("  restent droits ; relancer le build demain les calculera.");
+    }
     println!(
         "  transits entre camps : {} calculés, {} en échec",
         traces.bilan.transits,

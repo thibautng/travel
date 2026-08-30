@@ -41,6 +41,15 @@ segments:
     points: [[12.9887, 47.5893], [12.9797, 47.5225], [12.9847, 47.4967]]
     note: "Königssee, Schönau vers St. Bartholomä puis Salet. Décrochage GPS en vallée encaissée."
 
+  # 28 juillet : le retour du Hoellentalklamm n’est pas photographié. La
+  # dernière photo est prise à mi-descente ; sans ce tronçon, la journée ne
+  # compte que l’aller, alors que la marche est un aller-retour.
+  - jour: 2026-07-28
+    mode: marche
+    calculer: true
+    points: [[11.0338, 47.4409], [11.0375, 47.4696]]
+    note: "Descente de la Hoellentalangerhuette au parking de Hammersbach."
+
   # Le train part de Lienz, la ou la sortie s’arrete, et rejoint la derniere
   # position relevee du retour. Sans ce tronçon, la ligne du train commencait
   # sept kilomètres avant Lienz, la ou se trouve la derniere photo.
@@ -92,15 +101,29 @@ modes:
     de: "19:35"
     a: "19:45"
 
-  # 27 juillet, déplacements en voiture autour de Garmisch.
+  # 27 juillet. La journée est en voiture, sauf le tour de l’Eibsee à pied,
+  # de 16 h 40 à 19 h. Le trajet du Tennsee à Garmisch, onze kilomètres avec
+  # quatre heures entre deux photos, passait pour de la marche à 2 km/h : le
+  # temps est celui de l’installation du camp et des courses, pas du trajet.
+  - jour: 2026-07-27
+    mode: marche
+    de: "16:40"
+    a: "19:00"
+    note: "Tour complet de l’Eibsee à pied."
   - jour: 2026-07-27
     mode: route
-    de: "15:38"
-    a: "15:44"
-  - jour: 2026-07-27
+
+  # 29 juillet. Route du camp à l’Hintersee, puis à l’église de Ramsau, puis
+  # retour. La seule marche est la demi-boucle de l’Hintersee. Les trajets,
+  # espacés de plusieurs heures entre deux photos, passaient pour de la
+  # marche et du vélo.
+  - jour: 2026-07-29
+    mode: marche
+    de: "18:02"
+    a: "18:40"
+    note: "Demi-boucle de l’Hintersee."
+  - jour: 2026-07-29
     mode: route
-    de: "19:05"
-    a: "20:22"
 
   # 30 juillet, route vers Salzbourg.
   - jour: 2026-07-30

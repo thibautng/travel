@@ -10,6 +10,9 @@
  * Le fond est OpenFreeMap, comme le prévoit D4 pour le développement. Le
  * PMTiles auto-hébergé sur R2 arrive au lot 6.
  */
+import { camps as campsDuVoyage, voyage as lireVoyage } from "../voyages";
+import { getCollection } from "astro:content";
+
 interface Props {
   voyage: string;
   /** `ensemble` pour tout le voyage, `jour` pour une seule journée. */
@@ -18,6 +21,24 @@ interface Props {
   hauteur?: string;
 }
 const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
+
+// Les camps et les titres de journées sont passés au script en attributs de
+// données plutôt que par un appel réseau : neuf lieux et vingt-trois titres
+// pesent moins qu'une requête.
+const v = lireVoyage(voyage);
+const camps = campsDuVoyage(v).map((c) => ({
+  nom: c.nom,
+  lon: c.position.lon,
+  lat: c.position.lat,
+  du: c.du,
+  au: c.au,
+}));
+const titres = Object.fromEntries(
+  (await getCollection("journees", (e) => e.id.startsWith(`${voyage}/`))).map((e) => [
+    e.data.date.toISOString().slice(0, 10),
+    e.data.titre,
+  ]),
+);
 ---
 
 <div
@@ -25,6 +46,8 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
   data-voyage={voyage}
   data-vue={vue}
   data-jour={jour}
+  data-camps={JSON.stringify(camps)}
+  data-titres={JSON.stringify(titres)}
   style={`--hauteur:${hauteur}`}
 >
   <p class="carte-temoin">Chargement de la carte…</p>
@@ -139,6 +162,108 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     ];
   }
 
+  /** Les camps de base, en marqueurs distincts. Section 9.2. */
+  function poserCamps(carte: any, conteneur: HTMLElement) {
+    const camps = JSON.parse(conteneur.dataset.camps ?? "[]");
+    if (camps.length === 0) return;
+
+    carte.addSource("camps", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: camps.map((c: any) => ({
+          type: "Feature",
+          geometry: { type: "Point", coordinates: [c.lon, c.lat] },
+          properties: { nom: c.nom, du: c.du, au: c.au },
+        })),
+      },
+    });
+
+    carte.addLayer({
+      id: "camps",
+      type: "circle",
+      source: "camps",
+      paint: {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 5, 12, 8],
+        "circle-color": "#2b2723",
+        "circle-stroke-width": 2.5,
+        "circle-stroke-color": "#ffffff",
+      },
+    });
+
+    carte.addLayer({
+      id: "camps-nom",
+      type: "symbol",
+      source: "camps",
+      // Les noms n'apparaissent qu'une fois la carte assez zoomee : a
+      // l'echelle du voyage entier, huit etiquettes se chevauchent.
+      minzoom: 7,
+      layout: {
+        "text-field": ["get", "nom"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 12,
+        "text-offset": [0, 1.2],
+        "text-anchor": "top",
+        "text-allow-overlap": false,
+      },
+      paint: {
+        "text-color": "#2b2723",
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.6,
+      },
+    });
+  }
+
+  /**
+   * Un clic sur une trace ou sur une pastille mene a la journee.
+   * Section 9.2 : les journees sont cliquables.
+   */
+  function rendreCliquable(carte: any, conteneur: HTMLElement) {
+    const voyage = conteneur.dataset.voyage!;
+    const titres: Record<string, string> = JSON.parse(conteneur.dataset.titres ?? "{}");
+
+    for (const couche of ["trace", "photos"]) {
+      carte.on("click", couche, (e: any) => {
+        const jour = e.features?.[0]?.properties?.jour;
+        if (jour) window.location.href = `/voyages/${voyage}/jours/${jour}/`;
+      });
+      carte.on("mouseenter", couche, (e: any) => {
+        carte.getCanvas().style.cursor = "pointer";
+        const jour = e.features?.[0]?.properties?.jour;
+        if (jour) montrerEtiquette(conteneur, titres[jour] ?? jour);
+      });
+      carte.on("mouseleave", couche, () => {
+        carte.getCanvas().style.cursor = "";
+        montrerEtiquette(conteneur, null);
+      });
+    }
+
+    carte.on("mouseenter", "camps", (e: any) => {
+      carte.getCanvas().style.cursor = "pointer";
+      const p = e.features?.[0]?.properties;
+      if (p) montrerEtiquette(conteneur, p.nom);
+    });
+    carte.on("mouseleave", "camps", () => {
+      carte.getCanvas().style.cursor = "";
+      montrerEtiquette(conteneur, null);
+    });
+  }
+
+  /** Etiquette discrete en bas de carte, plutot qu'une bulle qui masque. */
+  function montrerEtiquette(conteneur: HTMLElement, texte: string | null) {
+    let bloc = conteneur.querySelector<HTMLElement>(".carte-etiquette");
+    if (!texte) {
+      bloc?.remove();
+      return;
+    }
+    if (!bloc) {
+      bloc = document.createElement("p");
+      bloc.className = "carte-etiquette";
+      conteneur.append(bloc);
+    }
+    bloc.textContent = texte;
+  }
+
   async function dessiner(carte: any, voyage: string): Promise<number> {
     const reponse = await fetch(`/donnees/${voyage}/trace.geojson`);
     if (!reponse.ok) {
@@ -206,6 +331,9 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     if (ouest > est || sud > nord) {
       throw new Error("trace sans geometrie exploitable");
     }
+    poserCamps(carte, conteneur);
+    rendreCliquable(carte, conteneur);
+
     carte.fitBounds(
       [
         [ouest, sud],
@@ -255,6 +383,22 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     background: var(--trait);
     position: relative;
   }
+  .carte-etiquette {
+    position: absolute;
+    left: 0.6rem;
+    bottom: 0.6rem;
+    z-index: 2;
+    margin: 0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.92);
+    color: #2b2723;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.82rem;
+    pointer-events: none;
+    max-width: calc(100% - 6rem);
+  }
+
   .carte-temoin,
   .carte-erreur,
   .carte noscript {

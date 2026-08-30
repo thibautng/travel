@@ -42,6 +42,9 @@ const enFrancais = (d: Date) =>
   </dl>
 
   <Carte voyage={v.id} vue="ensemble" hauteur="55vh" />
+  <p class="sous-carte discret">
+    <a href={`/voyages/${v.id}/carte/`}>Lire la carte jour par jour</a>
+  </p>
   <LegendeCarte voyage={v.id} />
 
   <h2>Jour par jour</h2>
@@ -70,6 +73,11 @@ const enFrancais = (d: Date) =>
 </Page>
 
 <style>
+  .sous-carte {
+    margin: 0.5rem 0 0;
+    text-align: right;
+    font-size: 0.82rem;
+  }
   .chiffres {
     display: flex;
     flex-wrap: wrap;

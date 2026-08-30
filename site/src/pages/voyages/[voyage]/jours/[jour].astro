@@ -1,10 +1,11 @@
 ---
 /**
- * Une journée : le récit et sa galerie. Voir SPEC.md, section 9.1.
- * La mini-carte arrive au lot 5, les directives au commit suivant.
+ * Une journée : le récit, sa mini-carte et sa galerie. Voir SPEC.md,
+ * sections 9.1 et 9.2, troisième mode.
  */
 import Page from "../../../../layouts/Page.astro";
 import Visionneuse from "../../../../components/Visionneuse.astro";
+import Carte from "../../../../components/Carte.astro";
 import { tousLesVoyages, lieu, type Voyage } from "../../../../voyages";
 import { mediasDuJour, urlMedia, type Media } from "../../../../donnees";
 import { getCollection, render, type CollectionEntry } from "astro:content";
@@ -58,6 +59,11 @@ const lien = (e: CollectionEntry<"journees">) =>
     {camp && ` · ${camp.nom}`}
   </p>
 
+  <Carte voyage={v.id} vue="jour" jour={jour} hauteur="38vh" />
+  <p class="sous-carte discret">
+    <a href={`/voyages/${v.id}/carte/?jour=${jour}`}>Voir cette journée dans le lecteur</a>
+  </p>
+
   <article>
     <Content />
   </article>
@@ -94,6 +100,11 @@ const lien = (e: CollectionEntry<"journees">) =>
 </Page>
 
 <style>
+  .sous-carte {
+    margin: 0.5rem 0 1.6rem;
+    text-align: right;
+    font-size: 0.82rem;
+  }
   article :global(p) {
     margin: 1.1rem 0;
   }

@@ -142,8 +142,11 @@ const titres = Object.fromEntries(
     return carte;
   }
 
-  /** Emprise de toutes les geometries, pour le cadrage initial. */
-  function emprise(trace: any): [[number, number], [number, number]] {
+  /**
+   * Emprise des geometries, pour le cadrage. Restreinte a une journee quand
+   * `jour` est donne : c'est ce qui permet de recentrer au fil de la lecture.
+   */
+  function emprise(trace: any, jour?: string | null): [[number, number], [number, number]] {
     let ouest = 180, sud = 90, est = -180, nord = -90;
     const point = ([x, y]: number[]) => {
       if (x < ouest) ouest = x;
@@ -154,6 +157,7 @@ const titres = Object.fromEntries(
     for (const entite of trace.features ?? []) {
       const g = entite.geometry;
       if (!g) continue;
+      if (jour && entite.properties?.jour !== jour) continue;
       if (g.type === "Point") point(g.coordinates);
       else if (g.type === "LineString") g.coordinates.forEach(point);
     }
@@ -311,6 +315,22 @@ const titres = Object.fromEntries(
     ];
     const epaisseur = ["interpolate", ["linear"], ["zoom"], 5, 3, 10, 5, 14, 7];
 
+    // La trace des autres journees, sous le reste et en gris clair. Elle
+    // reste visible : le lecteur d'une journee veut voir ou elle se situe
+    // dans le voyage. Sans jour actif, cette couche ne montre rien.
+    carte.addLayer({
+      id: "trace-fond",
+      type: "line",
+      source: "trace",
+      filter: ["all", ...lignes.slice(1), ["==", "1", "0"]],
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#b4aca2",
+        "line-opacity": 0.75,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 5, 1.5, 10, 2.5, 14, 3.5],
+      },
+    });
+
     // Un contour clair sous la trace. Le fond Positron est fait de traits
     // gris fins, frontieres et cours d'eau, dans lesquels une ligne coloree
     // se perd : ce halo lui degage sa place.
@@ -379,34 +399,16 @@ const titres = Object.fromEntries(
 
     // Les creuses d’abord : une pastille mesurée prime au survol comme au
     // rendu, l’ordre d’ajout faisant la superposition.
-    carte.addLayer({
-      id: "videos-posees",
-      type: "circle",
-      source: "trace",
-      filter: point("video", false),
-      paint: creuse(COULEUR_VIDEO) as any,
-    });
-    carte.addLayer({
-      id: "photos-posees",
-      type: "circle",
-      source: "trace",
-      filter: point("photo", false),
-      paint: creuse(COULEUR_PHOTO) as any,
-    });
-    carte.addLayer({
-      id: "videos",
-      type: "circle",
-      source: "trace",
-      filter: point("video", true),
-      paint: pastille(COULEUR_VIDEO) as any,
-    });
-    carte.addLayer({
-      id: "photos",
-      type: "circle",
-      source: "trace",
-      filter: point("photo", true),
-      paint: pastille(COULEUR_PHOTO) as any,
-    });
+    const pastilles: [string, any[], any][] = [
+      ["videos-posees", point("video", false), creuse(COULEUR_VIDEO)],
+      ["photos-posees", point("photo", false), creuse(COULEUR_PHOTO)],
+      ["videos", point("video", true), pastille(COULEUR_VIDEO)],
+      ["photos", point("photo", true), pastille(COULEUR_PHOTO)],
+    ];
+    for (const [id, filtre, peinture] of pastilles) {
+      FILTRES.set(id, filtre);
+      carte.addLayer({ id, type: "circle", source: "trace", filter: filtre, paint: peinture });
+    }
 
     const [[ouest, sud], [est, nord]] = emprise(trace);
     if (ouest > est || sud > nord) {
@@ -415,15 +417,69 @@ const titres = Object.fromEntries(
     poserCamps(carte, conteneur);
     rendreCliquable(carte, conteneur);
 
+    // Une journee demandee des le depart : page de journee, ou lecteur ouvert
+    // sur une date. Le cadrage initial ne s'anime pas, il n'y a rien a suivre.
+    const initial = conteneur.dataset.vue === "jour" ? conteneur.dataset.jour : null;
+    montrerJour(carte, conteneur, trace, initial ?? null, false);
+
+    // Le pilotage vient du dehors : le lecteur jour par jour et la page de
+    // journee poussent une date, la carte ne sait rien de leurs commandes.
+    conteneur.addEventListener("carte:jour", (evenement) => {
+      const demande = (evenement as CustomEvent).detail?.jour ?? null;
+      montrerJour(carte, conteneur, trace, demande, true);
+    });
+
+    return trace.features?.length ?? 0;
+  }
+
+  /**
+   * Met une journee en avant, ou la releve quand `jour` est nul.
+   *
+   * Les couches ne sont pas reconstruites, seuls leurs filtres changent :
+   * MapLibre reevalue une expression sans retoucher a la source, ce qui rend
+   * le defilement des vingt-trois journees instantane.
+   */
+  function montrerJour(
+    carte: any,
+    conteneur: HTMLElement,
+    trace: any,
+    jour: string | null,
+    anime: boolean,
+  ) {
+    const estLigne = ["==", ["geometry-type"], "LineString"];
+    const duJour = jour ? ["==", ["get", "jour"], jour] : ["literal", true];
+    const desAutres = jour ? ["!=", ["get", "jour"], jour] : ["literal", false];
+
+    for (const couche of ["trace", "trace-contour"]) {
+      carte.setFilter(couche, ["all", estLigne, duJour]);
+    }
+    carte.setFilter("trace-fond", ["all", estLigne, desAutres]);
+
+    // Les pastilles suivent : montrer les photos des vingt-deux autres
+    // journees pendant qu'on en lit une seule brouille la lecture.
+    for (const [couche, origine] of FILTRES) {
+      carte.setFilter(couche, ["all", ...origine.slice(1), duJour]);
+    }
+
+    conteneur.dataset.jourActif = jour ?? "";
+    const [[ouest, sud], [est, nord]] = emprise(trace, jour);
+    if (ouest > est || sud > nord) return;
     carte.fitBounds(
       [
         [ouest, sud],
         [est, nord],
       ],
-      { padding: 36, animate: false },
+      { padding: 36, animate: anime, duration: 700, maxZoom: 14 },
     );
-    return trace.features?.length ?? 0;
   }
+
+  /**
+   * Filtres des couches de pastilles tels que posees, avant restriction a une
+   * journee. Retenus a la creation : les relire dans MapLibre rendrait le
+   * filtre deja restreint, et la restriction s'empilerait a chaque changement
+   * de jour.
+   */
+  const FILTRES = new Map<string, any[]>();
 
   /** Affiche l'echec dans le conteneur, plutot que dans la seule console. */
   function signaler(conteneur: HTMLElement, message: string) {

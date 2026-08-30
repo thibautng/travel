@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "astro": "^5",
+    "maplibre-gl": "^6.6.0",
     "remark-directive": "^4.0.0",
     "unist-util-visit": "^5.1.0",
     "yaml": "^2.9.0"

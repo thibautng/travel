@@ -4,6 +4,7 @@
  * Voir SPEC.md, section 9.1. La carte arrive au lot 5.
  */
 import Page from "../../../layouts/Page.astro";
+import Carte from "../../../components/Carte.astro";
 import { tousLesVoyages, camps, type Voyage } from "../../../voyages";
 import { jours, type JourAgrege } from "../../../donnees";
 import { getCollection } from "astro:content";
@@ -38,6 +39,8 @@ const enFrancais = (d: Date) =>
     {v.nuits && <div><dt>Nuits</dt><dd>{v.nuits}</dd></div>}
     <div><dt>Campings</dt><dd>{camps(v).length}</dd></div>
   </dl>
+
+  <Carte voyage={v.id} vue="ensemble" hauteur="55vh" />
 
   <h2>Jour par jour</h2>
   <ol class="frise">

@@ -1,0 +1,97 @@
+---
+/**
+ * Carte MapLibre. Voir SPEC.md, D3 et section 9.2.
+ *
+ * MapLibre n'est chargé qu'à la demande : le script observe le conteneur et
+ * ne fait l'import dynamique qu'une fois la carte proche de l'écran. La
+ * bibliothèque pèse à elle seule deux cents fois le reste du JavaScript du
+ * site, et une page de journée peut être lue sans jamais la faire venir.
+ *
+ * Le fond est OpenFreeMap, comme le prévoit D4 pour le développement. Le
+ * PMTiles auto-hébergé sur R2 arrive au lot 6.
+ */
+interface Props {
+  voyage: string;
+  /** `ensemble` pour tout le voyage, `jour` pour une seule journée. */
+  vue?: "ensemble" | "jour";
+  jour?: string;
+  hauteur?: string;
+}
+const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
+---
+
+<div
+  class="carte"
+  data-voyage={voyage}
+  data-vue={vue}
+  data-jour={jour}
+  style={`--hauteur:${hauteur}`}
+>
+  <noscript>La carte demande JavaScript. Le récit, lui, se lit sans.</noscript>
+</div>
+
+<script>
+  const STYLE_FOND = "https://tiles.openfreemap.org/styles/positron";
+
+  async function afficher(conteneur: HTMLElement) {
+    const [{ Map }] = await Promise.all([
+      import("maplibre-gl"),
+      import("maplibre-gl/dist/maplibre-gl.css"),
+    ]);
+
+    const carte = new Map({
+      container: conteneur,
+      style: STYLE_FOND,
+      center: [11, 46.5],
+      zoom: 5,
+      attributionControl: { compact: true },
+      // Le site se lit d'abord au doigt : la rotation gêne plus qu'elle ne sert.
+      pitchWithRotate: false,
+      dragRotate: false,
+    });
+    carte.touchZoomRotate.disableRotation();
+    conteneur.dataset.pret = "oui";
+    return carte;
+  }
+
+  const conteneurs = Array.from(document.querySelectorAll<HTMLElement>(".carte"));
+  if (conteneurs.length > 0) {
+    const observateur = new IntersectionObserver(
+      (entrees) => {
+        for (const entree of entrees) {
+          if (!entree.isIntersecting) continue;
+          observateur.unobserve(entree.target);
+          afficher(entree.target as HTMLElement);
+        }
+      },
+      // Un peu d'avance, pour que la carte soit prête à l'arrivée du regard.
+      { rootMargin: "300px" },
+    );
+    conteneurs.forEach((c) => observateur.observe(c));
+  }
+</script>
+
+<style is:global>
+  .carte {
+    height: var(--hauteur, 60vh);
+    width: 100%;
+    border-radius: 3px;
+    background: var(--trait);
+    position: relative;
+  }
+  .carte noscript {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    text-align: center;
+    color: var(--discret);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.9rem;
+  }
+  .maplibregl-ctrl-attrib {
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.7rem;
+  }
+</style>

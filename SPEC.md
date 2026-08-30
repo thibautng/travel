@@ -678,7 +678,9 @@ La photo et la vidéo ne partagent pas la même teinte : la vidéo n’a pas de 
 
 ### 9.3 Responsive
 
-**Ordinateur, à partir de 1024 pixels.** Deux colonnes. Carte fixe à droite sur 45 % de la largeur, récit défilant à gauche. Le défilement du récit pilote la carte : arriver sur la section du 8 août recentre la carte sur les Tre Cime.
+**Ordinateur, à partir de 1024 pixels.** Deux colonnes. Carte fixe à droite sur 45 % de la largeur, récit défilant à gauche. Le défilement du récit pilote la carte.
+
+Le site ayant une page par journée, et non une seule page qui déroule le voyage, le pilotage joue à l’échelle de la photo et non de la journée : la photo qui occupe le centre de l’écran s’entoure d’un anneau sur la carte, et cliquer une pastille fait défiler le récit jusqu’à la photo. Le seuil est écrit en `rem` plutôt qu’en pixels : 64rem valent bien 1024 pixels, et suivent le lecteur qui grossit sa police.
 
 **Téléphone, en dessous de 768 pixels.** Une colonne. La carte devient un bandeau réduit et collant en haut de l’écran, sur environ 30 % de la hauteur, dépliable en plein écran par un bouton. Le récit occupe le reste. Le pilotage par défilement reste actif sur le bandeau.
 
@@ -765,7 +767,7 @@ L’import reste **unique**. Après conversion, le Markdown de `content/` est la
 
 **Lot 4 | Site, sans carte.** Astro, routes, rendu des journées depuis le Markdown, galeries, mode sombre, responsive. Critère de fin : le voyage est lisible de bout en bout sur téléphone.
 
-**Lot 5 | Carte.** MapLibre, PMTiles, les trois modes de la section 9.2, les quatre styles de trace, la synchronisation défilement et carte. Critère de fin : le lecteur jour par jour fonctionne au doigt sur téléphone.
+**Lot 5 | Carte.** MapLibre, les trois modes de la section 9.2, la mise en page à deux colonnes de la section 9.3, la synchronisation défilement et carte. Critère de fin : le lecteur jour par jour fonctionne au doigt sur téléphone. PMTiles est passé au lot 6, avec le reste de la mise en ligne, et les quatre styles de trace ont été retirés (9.2).
 
 **Lot 6 | Mise en ligne.** Placement des photos dans le récit, déploiement, R2, extrait PMTiles des Alpes. L’import du carnet, lui, a été avancé avant le lot 4.
 

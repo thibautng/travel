@@ -7,8 +7,10 @@
 interface Props {
   titre: string;
   description?: string;
+  /** `large` élargit la colonne pour la mise en page à deux colonnes (9.3). */
+  gabarit?: "texte" | "large";
 }
-const { titre, description } = Astro.props;
+const { titre, description, gabarit = "texte" } = Astro.props;
 ---
 
 <!doctype html>
@@ -50,6 +52,9 @@ const { titre, description } = Astro.props;
         margin: 0 auto;
         padding: 2rem 1.25rem 6rem;
       }
+      main[data-gabarit="large"] {
+        max-width: 76rem;
+      }
       a {
         color: var(--accent);
       }
@@ -79,12 +84,72 @@ const { titre, description } = Astro.props;
         text-decoration: none;
       }
 
-      /* Section 9.3 : une colonne en dessous de 1024 pixels, et la lecture
-         reste le sujet. La mise en page à deux colonnes arrive avec la carte,
-         au lot 5 : une colonne vide en attendant donnerait une page cassée. */
       @media (min-width: 48rem) {
         main {
           padding: 3rem 2rem 8rem;
+        }
+      }
+
+      /* Section 9.3, mise en page à deux colonnes.
+         Une colonne jusqu’à 1024 pixels, où la carte est un bandeau collant en
+         haut de l’écran ; deux colonnes au-delà, carte fixe à droite. Le seuil
+         est celui de la spec, exprimé en rem : 64rem valent 1024 pixels à la
+         taille de police par défaut, et suivent l’utilisateur qui l’augmente. */
+      .deux-colonnes {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem 2.5rem;
+      }
+      /* Le récit passe avant la carte dans le document : c’est lui qu’on lit,
+         et un lecteur d’écran doit le rencontrer d’abord. En une colonne, la
+         grille remet la carte en tête pour qu’elle soit le bandeau collant du
+         haut, et non un bandeau collant au bas de la page. */
+      .deux-colonnes > .colonne-carte {
+        grid-row: 1;
+      }
+      /* Sur téléphone la carte passe devant le récit et s’y colle : c’est le
+         bandeau de la section 9.3, dont le récit défile dessous. */
+      .deux-colonnes > .colonne-carte {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        /* Le fond évite que le texte transparaisse derrière le bandeau au
+           moment où il glisse dessous. */
+        background: var(--fond);
+        padding-bottom: 0.5rem;
+        margin-inline: -1.25rem;
+        padding-inline: 1.25rem;
+      }
+      .deux-colonnes > .colonne-carte .carte {
+        --hauteur: 30vh;
+      }
+      @media (min-width: 48rem) {
+        .deux-colonnes > .colonne-carte .carte {
+          --hauteur: 38vh;
+        }
+      }
+      @media (min-width: 64rem) {
+        .deux-colonnes {
+          /* 45 % à la carte, le reste au récit (9.3). */
+          grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+          align-items: start;
+        }
+        .deux-colonnes > .colonne-recit {
+          grid-column: 1;
+          grid-row: 1;
+        }
+        .deux-colonnes > .colonne-carte {
+          /* Deux colonnes : la carte reprend sa place à droite, sur la
+             première ligne comme le récit. */
+          grid-column: 2;
+          grid-row: 1;
+          top: 1.5rem;
+          margin-inline: 0;
+          padding-inline: 0;
+          padding-bottom: 0;
+        }
+        .deux-colonnes > .colonne-carte .carte {
+          --hauteur: calc(100vh - 3rem);
         }
       }
 
@@ -130,7 +195,7 @@ const { titre, description } = Astro.props;
   </head>
   <body>
     <nav class="fil"><a href="/">Voyages</a></nav>
-    <main>
+    <main data-gabarit={gabarit}>
       <slot />
     </main>
     <footer>Journal de voyage de la famille. Lien privé, page non indexée.</footer>

@@ -227,15 +227,32 @@ const titres = Object.fromEntries(
   /**
    * Un clic sur une trace ou sur une pastille mene a la journee.
    * Section 9.2 : les journees sont cliquables.
+   *
+   * Sauf sur la page d'une journee, ou l'on y est deja : le clic sur une
+   * pastille y designe le media, et la page va le chercher dans le recit.
    */
   function rendreCliquable(carte: any, conteneur: HTMLElement) {
     const voyage = conteneur.dataset.voyage!;
     const titres: Record<string, string> = JSON.parse(conteneur.dataset.titres ?? "{}");
+    const surPlace = conteneur.dataset.vue === "jour";
 
     for (const couche of ["trace", "photos", "videos", "photos-posees", "videos-posees"]) {
       carte.on("click", couche, (e: any) => {
-        const jour = e.features?.[0]?.properties?.jour;
-        if (jour) window.location.href = `/voyages/${voyage}/jours/${jour}/`;
+        const proprietes = e.features?.[0]?.properties ?? {};
+        if (surPlace) {
+          if (proprietes.id) {
+            conteneur.dispatchEvent(
+              new CustomEvent("carte:media", {
+                bubbles: true,
+                detail: { id: proprietes.id },
+              }),
+            );
+          }
+          return;
+        }
+        if (proprietes.jour) {
+          window.location.href = `/voyages/${voyage}/jours/${proprietes.jour}/`;
+        }
       });
     }
 
@@ -409,6 +426,26 @@ const titres = Object.fromEntries(
       FILTRES.set(id, filtre);
       carte.addLayer({ id, type: "circle", source: "trace", filter: filtre, paint: peinture });
     }
+
+    // Le media que le recit est en train de montrer, cercle d'un anneau.
+    // Filtre vide au depart : la couche existe, elle ne montre rien.
+    carte.addLayer({
+      id: "media-actif",
+      type: "circle",
+      source: "trace",
+      filter: ["==", ["get", "id"], ""],
+      paint: {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 6, 10, 9, 14, 12],
+        "circle-color": "rgba(255, 255, 255, 0)",
+        "circle-stroke-width": 3,
+        "circle-stroke-color": "#c0562a",
+      },
+    });
+
+    conteneur.addEventListener("carte:media-actif", (evenement) => {
+      const id = (evenement as CustomEvent).detail?.id ?? "";
+      carte.setFilter("media-actif", ["==", ["get", "id"], id]);
+    });
 
     const [[ouest, sud], [est, nord]] = emprise(trace);
     if (ouest > est || sud > nord) {

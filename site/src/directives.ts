@@ -48,10 +48,12 @@ function image(media: Media, voyage: string, tailles: string, apercu: boolean): 
   const style = apercu && media.lqip
     ? ` style="background-image:url(${media.lqip});background-size:cover"`
     : "";
+  // `data-media` porte l’identifiant du média : c’est par lui que la carte
+  // d’une journée et le récit se retrouvent, dans les deux sens (section 9.2).
   return (
     `<img src="${urlMedia(d.repli, voyage)}" srcset="${srcset}" sizes="${tailles}"` +
     ` width="${media.largeur ?? ""}" height="${media.hauteur ?? ""}"` +
-    ` data-grand="${urlMedia(d.grand, voyage)}"` +
+    ` data-grand="${urlMedia(d.grand, voyage)}" data-media="${echapper(media.id)}"` +
     ` loading="lazy" decoding="async" alt=""${style}>`
   );
 }

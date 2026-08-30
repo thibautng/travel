@@ -49,57 +49,155 @@ const lien = (e: CollectionEntry<"journees">) =>
   `/voyages/${v.id}/jours/${e.data.date.toISOString().slice(0, 10)}/`;
 ---
 
-<Page titre={`${journee.data.titre} — ${v.titre}`}>
-  <p class="discret">
-    <a href={`/voyages/${v.id}/`}>{v.titre}</a>
-  </p>
-  <h1>{journee.data.titre}</h1>
-  <p class="discret">
-    {enFrancais(journee.data.date)}
-    {camp && ` · ${camp.nom}`}
-  </p>
+<Page titre={`${journee.data.titre} — ${v.titre}`} gabarit="large">
+  <div class="deux-colonnes" data-journee={jour}>
+    <div class="colonne-recit">
+      <p class="discret">
+        <a href={`/voyages/${v.id}/`}>{v.titre}</a>
+      </p>
+      <h1>{journee.data.titre}</h1>
+      <p class="discret">
+        {enFrancais(journee.data.date)}
+        {camp && ` · ${camp.nom}`}
+      </p>
 
-  <Carte voyage={v.id} vue="jour" jour={jour} hauteur="38vh" />
-  <p class="sous-carte discret">
-    <a href={`/voyages/${v.id}/carte/?jour=${jour}`}>Voir cette journée dans le lecteur</a>
-  </p>
+      <article>
+        <Content />
+      </article>
 
-  <article>
-    <Content />
-  </article>
+      {
+        photos.length > 0 && (
+          <section class="galerie">
+            <h2>Les photos du jour</h2>
+            <div class="grille">
+              {photos.map((photo) => (
+                <img
+                  src={urlMedia(photo.derives!.moyen, v.id)}
+                  srcset={`${urlMedia(photo.derives!.vignette, v.id)} 320w, ${urlMedia(photo.derives!.moyen, v.id)} 1024w, ${urlMedia(photo.derives!.grand, v.id)} 2048w`}
+                  sizes="(min-width: 64rem) 16rem, (min-width: 48rem) 22rem, 45vw"
+                  width={photo.largeur}
+                  height={photo.hauteur}
+                  data-grand={urlMedia(photo.derives!.grand, v.id)}
+                  data-media={photo.id}
+                  loading="lazy"
+                  decoding="async"
+                  alt=""
+                  style={photo.lqip ? `background-image:url(${photo.lqip});background-size:cover` : undefined}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
 
-  {
-    photos.length > 0 && (
-      <section class="galerie">
-        <h2>Les photos du jour</h2>
-        <div class="grille">
-          {photos.map((photo) => (
-            <img
-              src={urlMedia(photo.derives!.moyen, v.id)}
-              srcset={`${urlMedia(photo.derives!.vignette, v.id)} 320w, ${urlMedia(photo.derives!.moyen, v.id)} 1024w, ${urlMedia(photo.derives!.grand, v.id)} 2048w`}
-              sizes="(min-width: 48rem) 22rem, 45vw"
-              width={photo.largeur}
-              height={photo.hauteur}
-              data-grand={urlMedia(photo.derives!.grand, v.id)}
-              loading="lazy"
-              decoding="async"
-              alt=""
-              style={photo.lqip ? `background-image:url(${photo.lqip});background-size:cover` : undefined}
-            />
-          ))}
-        </div>
-      </section>
-    )
-  }
+      <nav class="voisines">
+        {precedente ? <a href={lien(precedente)}>← {precedente.data.titre}</a> : <span />}
+        {suivante ? <a href={lien(suivante)}>{suivante.data.titre} →</a> : <span />}
+      </nav>
+    </div>
 
-  <nav class="voisines">
-    {precedente ? <a href={lien(precedente)}>← {precedente.data.titre}</a> : <span />}
-    {suivante ? <a href={lien(suivante)}>{suivante.data.titre} →</a> : <span />}
-  </nav>
+    <div class="colonne-carte">
+      <Carte voyage={v.id} vue="jour" jour={jour} />
+      <p class="sous-carte discret">
+        <a href={`/voyages/${v.id}/carte/?jour=${jour}`}>Voir cette journée dans le lecteur</a>
+      </p>
+    </div>
+  </div>
   <Visionneuse />
 </Page>
 
+<script>
+  /**
+   * Section 9.2, troisième mode : le récit et la carte se suivent.
+   *
+   * Dans un sens, cliquer une pastille amène à la photo. Dans l’autre, la
+   * photo que l’on est en train de lire s’entoure d’un anneau sur la carte.
+   */
+  function synchroniser(bloc: HTMLElement) {
+    const carte = bloc.querySelector<HTMLElement>(".carte");
+    const images = Array.from(bloc.querySelectorAll<HTMLElement>("[data-media]"));
+    if (!carte || images.length === 0) return;
+
+    const parIdentifiant = new Map(images.map((i) => [i.dataset.media!, i]));
+
+    // Carte vers récit.
+    carte.addEventListener("carte:media", (evenement) => {
+      const cible = parIdentifiant.get((evenement as CustomEvent).detail?.id);
+      if (!cible) return;
+      cible.scrollIntoView({ behavior: "smooth", block: "center" });
+      cible.classList.add("designee");
+      window.setTimeout(() => cible.classList.remove("designee"), 1600);
+    });
+
+    // Récit vers carte. Un observateur plutôt qu’un écouteur de défilement :
+    // le navigateur ne réveille le script que lorsqu’une image entre ou sort,
+    // et la page ne calcule rien pendant qu’on lit.
+    let visibles = new Set<HTMLElement>();
+    let actif = "";
+
+    const designerLaPlusCentree = () => {
+      if (visibles.size === 0) return;
+      const milieu = window.innerHeight / 2;
+      let meilleure: HTMLElement | null = null;
+      let ecartMinimal = Infinity;
+      for (const image of visibles) {
+        const boite = image.getBoundingClientRect();
+        const ecart = Math.abs(boite.top + boite.height / 2 - milieu);
+        if (ecart < ecartMinimal) {
+          ecartMinimal = ecart;
+          meilleure = image;
+        }
+      }
+      const identifiant = meilleure?.dataset.media ?? "";
+      if (identifiant === actif) return;
+      actif = identifiant;
+      carte.dispatchEvent(
+        new CustomEvent("carte:media-actif", { detail: { id: identifiant } }),
+      );
+    };
+
+    const observateur = new IntersectionObserver(
+      (entrees) => {
+        for (const entree of entrees) {
+          const image = entree.target as HTMLElement;
+          if (entree.isIntersecting) visibles.add(image);
+          else visibles.delete(image);
+        }
+        designerLaPlusCentree();
+      },
+      // La bande centrale de l’écran : une image qui pointe en bas de page
+      // n’est pas celle qu’on lit.
+      { rootMargin: "-30% 0px -30% 0px" },
+    );
+    for (const image of images) observateur.observe(image);
+
+    // Le défilement continu ne déclenche pas l’observateur : sans cela,
+    // l’anneau resterait sur la première image tant qu’aucune autre n’entre.
+    let attente = 0;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (attente) return;
+        attente = window.requestAnimationFrame(() => {
+          attente = 0;
+          designerLaPlusCentree();
+        });
+      },
+      { passive: true },
+    );
+  }
+
+  for (const bloc of document.querySelectorAll<HTMLElement>(".deux-colonnes")) {
+    synchroniser(bloc);
+  }
+</script>
+
 <style>
+  /* L’image que la carte vient de désigner, le temps qu’on la retrouve. */
+  .colonne-recit :global([data-media].designee) {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
   .sous-carte {
     margin: 0.5rem 0 1.6rem;
     text-align: right;

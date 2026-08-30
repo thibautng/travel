@@ -128,6 +128,16 @@ export function traceBrute(voyage: string): string {
   );
 }
 
+/**
+ * Trace analysée, pour les découpages faits à la construction.
+ *
+ * Séparée de `traceBrute` à dessein : la version brute sert le fichier
+ * complet sans le relire, celle-ci ne sert qu’à en extraire une journée.
+ */
+export function trace(voyage: string): { features?: any[] } {
+  return memoise(`trace-lue:${voyage}`, () => JSON.parse(traceBrute(voyage)));
+}
+
 export interface EntreeLegende {
   cle: string;
   couleur: string;

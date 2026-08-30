@@ -319,7 +319,13 @@ const titres = Object.fromEntries(
 
   async function dessiner(carte: any, conteneur: HTMLElement): Promise<number> {
     const voyage = conteneur.dataset.voyage!;
-    const reponse = await fetch(`/donnees/${voyage}/trace.geojson`);
+    // La page d'une journee ne charge que la sienne : le fichier complet
+    // pese 246 Ko comprimes, pour une carte cadree sur un seul jour.
+    const jourSeul = conteneur.dataset.vue === "jour" ? conteneur.dataset.jour : null;
+    const adresse = jourSeul
+      ? `/donnees/${voyage}/jours/${jourSeul}.geojson`
+      : `/donnees/${voyage}/trace.geojson`;
+    const reponse = await fetch(adresse);
     if (!reponse.ok) {
       throw new Error(`trace indisponible (HTTP ${reponse.status})`);
     }

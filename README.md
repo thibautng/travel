@@ -72,10 +72,38 @@ L’AVIF coûte donc vingt-trois fois plus cher sur ce processeur, dépourvu
 d’AVX2, et rend 32 % de poids en moins. Un build complet en AVIF y prendrait
 une vingtaine de minutes.
 
-Le poids dépasse largement l’estimation de 200 Mo de la section 8 : le JPEG
-en trois tailles coûte environ 1,2 Mo par photo. L’AVIF devrait ramener le
-total autour de 400 à 450 Mo, ce qui reste très en deçà des 10 Go gratuits
-de R2, mais l’estimation de la spec est à corriger une fois la mesure faite.
+## Poids à héberger
+
+Mesuré le 30 août 2026 sur le build en JPEG.
+
+| Poste | Fichiers | Poids |
+|---|---|---|
+| Vignettes, 320 px | 705 | 21 Mo |
+| Lecture, 1024 px | 705 | 189 Mo |
+| Visionneuse, 2048 px | 705 | **628 Mo** |
+| **Total des dérivés** | **2 115** | **838 Mo** |
+| Le site lui-même (`dist`) | 50 | 4 Mo |
+
+L’estimation de 200 Mo de la section 8 était donc quatre fois trop basse. En
+AVIF, avec le repli JPEG en 1024 qu’impose la section 6.2, et au taux de 32 %
+mesuré ci-dessus, le total descendrait autour de **760 Mo** seulement : le
+repli reprend une bonne part du gain.
+
+Le vrai levier n’est pas le format mais la taille. **Le 2048 px pèse à lui
+seul les trois quarts du total**, pour un seul usage, l’agrandissement au
+clic. Le retirer ramènerait le site à 210 Mo. C’est un arbitrage à rendre,
+pas une évidence.
+
+Les vidéos, si elles sont ajoutées : 128 fichiers, **77 minutes**, 5,4 Go en
+source à 9,3 Mbit/s de moyenne, 95 en 1080p et 33 en 1920. Transcodées en
+H.264 720p CRF 23 comme le prévoit la section 6.2, comptez **1,2 à 1,7 Go**
+selon l’agitation des plans, plus une trentaine de mégaoctets d’images
+d’affiche. Soit environ **2,2 Go** au total, contre 840 Mo sans vidéo.
+
+Les deux tiennent dans les 10 Go gratuits de R2, dont l’argument décisif
+n’est pas le stockage mais **l’absence de frais de sortie** : sur un site où
+chaque visiteur télécharge des dizaines de mégaoctets, c’est la bande
+passante qui déraperait ailleurs.
 
 ## Ne pas travailler sur un lecteur pCloud
 
@@ -96,22 +124,37 @@ pCloud : elles se lisent de façon stable et le pipeline n’y écrit jamais.
 
 ## Budget du site
 
-Mesuré sur le build du lot 4, avant la carte.
+Mesuré le 30 août 2026, carte comprise, **en brotli** comme le veut la
+section 9.4.
 
 | Mesure | Valeur | Budget de la section 9.4 |
 |---|---|---|
-| JavaScript, pages sans carte | 986 octets, insérés dans la page | moins de 50 Ko transférés |
-| Fichiers JavaScript servis à part | aucun | |
-| Page médiane | 53 Ko de HTML | |
-| Page la plus lourde | 271 Ko, celle des photos | |
-| `dist` complet | 1,44 Mo, 27 fichiers | |
+| JavaScript, pages sans carte | 986 octets, insérés dans la page | moins de 50 Ko |
+| MapLibre | 201 Ko | |
+| Travailleur de MapLibre | 108 Ko | |
+| Notre script de carte | 3 Ko | |
+| **JavaScript, pages avec carte** | **312 Ko** | moins de 320 Ko |
+| Trace complète, vue d’ensemble et lecteur | 133 Ko | |
+| Trace d’une journée | 2 Ko en médiane, 44 Ko au pire | |
+| Page d’une journée, HTML | 11 Ko | |
+| Vue d’ensemble, HTML | 4 Ko | |
+| `dist` complet | 4,1 Mo, 50 fichiers | |
 
 Les 986 octets sont ceux de la visionneuse, seul script des pages sans
 carte. Les dérivés d’images ne sont pas dans `dist` : ils vont sur R2.
 
+Le budget des pages à carte a été relevé de 300 à 320 Ko après cette
+mesure : MapLibre 6 sert son travailleur dans un second fichier, que
+l’hypothèse de la spec ignorait. Sur les 312 Ko, 3 sont à nous.
+
+MapLibre n’est chargé que lorsque la carte approche de l’écran. Sur un
+téléphone, où la carte est le bandeau du haut, cela veut dire tout de suite ;
+sur un ordinateur, une journée lue sans jamais regarder la carte ne le charge
+jamais.
+
 ## État
 
-Lots 1 et 2 terminés, lot 3 écrit et validé en JPEG. Voir la feuille de route en section 11 de [SPEC.md](SPEC.md).
+Lots 1 à 5 terminés, en JPEG. Reste le lot 6 : mise en ligne, R2, extrait PMTiles. Voir la feuille de route en section 11 de [SPEC.md](SPEC.md).
 
 `carnet build 2026-alpes` produit `data/2026-alpes/` et `media/2026-alpes/` :
 833 médias inventoriés, 23 journées, 121 tronçons de trace, 3 491 km, et les

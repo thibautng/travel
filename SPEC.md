@@ -622,7 +622,11 @@ Les vidéos suivent une convention distincte, `VIDAAAAMMJJHHMMSS.mp4`, que la no
 
 Règle : normalisation à l’ingestion (5.3), suffixes de variante conservés, anomalie `nom_normalise` posée sur tout fichier dont l’identifiant diffère du nom d’origine.
 
-**C7 | Volumétrie.** Cible d’hébergement : rester dans les 10 Go gratuits de R2, sélection comprise (D7). Dossier source : 835 fichiers au total, 8,6 Go dont 5,6 Go de vidéo : 707 fichiers `.jpg` et 128 fichiers `.mp4`. Sur les 707 photos, 705 sont à la racine (dont 14 GoPro) et 2 dans le sous-dossier `[Originals]`, voir C8. Aucun fichier HEIF, MOV ou 3GP : pour ce voyage, `nom-exif` n’a besoin de couvrir que JPEG et MP4. Après dérivés, prévoir environ 200 Mo de photos et environ 1 Go de vidéo. Ne jamais servir les originaux depuis le site.
+**C7 | Volumétrie.** Cible d’hébergement : rester dans les 10 Go gratuits de R2, sélection comprise (D7). Dossier source : 835 fichiers au total, 8,6 Go dont 5,6 Go de vidéo : 707 fichiers `.jpg` et 128 fichiers `.mp4`. Sur les 707 photos, 705 sont à la racine (dont 14 GoPro) et 2 dans le sous-dossier `[Originals]`, voir C8. Aucun fichier HEIF, MOV ou 3GP : pour ce voyage, `nom-exif` n’a besoin de couvrir que JPEG et MP4. Ne jamais servir les originaux depuis le site.
+
+*Mesure du 30 août 2026.* L’estimation de 200 Mo de photos était quatre fois trop basse : les dérivés en JPEG pèsent **838 Mo**, dont 628 pour le seul 2048 px. En AVIF, repli JPEG compris, le total descendrait autour de 760 Mo, le repli reprenant une bonne part du gain. Les vidéos, elles, sont bien estimées : 77 minutes de rushes en 1080p, transcodées en 720p CRF 23, donnent 1,2 à 1,7 Go. Environ **2,2 Go au total**, ce qui tient dans les 10 Go de R2 mais laisse moins de marge qu’annoncé.
+
+Le poids tient donc à la taille et non au format : le 2048 px pèse les trois quarts du total pour un seul usage, l’agrandissement au clic. Le retirer ramènerait les photos à 210 Mo. À arbitrer avant la mise en ligne.
 
 **C8 | Un sous-dossier `[Originals]` produit des homonymes.** Le dossier source contient `[Originals]`, comportement classique de l’éditeur photo Android : la version retouchée reste à la racine, l’original y est déplacé. Il renferme deux fichiers, `IMG20260731092009.jpg` et `IMG20260808120006.jpg`, tous deux **homonymes exacts** de fichiers de la racine. Un parcours récursif naïf produit donc deux collisions d’identifiant.
 
@@ -691,7 +695,11 @@ Le site ayant une page par journée, et non une seule page qui déroule le voyag
 Budgets exprimés en **poids transféré, compression brotli comprise, hors tuiles de fond de carte** :
 
 - moins de 50 Ko de JavaScript sur les pages sans carte ;
-- moins de 300 Ko sur les pages avec carte, MapLibre pesant à lui seul environ 230 Ko.
+- moins de 320 Ko sur les pages avec carte, MapLibre pesant à lui seul environ 310 Ko.
+
+*Amendement du 30 août 2026, après mesure.* Le plafond était de 300 Ko, sur l’hypothèse d’un MapLibre à 230 Ko. La mesure donne 201 Ko pour la bibliothèque et **108 Ko de plus pour son travailleur**, que MapLibre 6 sert dans un second fichier : le décodage des tuiles vectorielles ne se fait plus sur le fil principal. Le total atteint 312 Ko, dont 3 Ko sont à nous. Le dépassement ne vient donc pas du site mais d’un changement de version de la bibliothèque, et il n’y a rien à y retrancher : le plafond monte à 320 Ko plutôt que d’être affiché comme tenu alors qu’il ne l’est pas.
+
+**La trace se sert découpée.** Le fichier complet pèse 133 Ko en brotli, ce qui est le prix de la vue d’ensemble et du lecteur jour par jour, qui montrent tout le voyage. Une page de journée, elle, ne charge que la sienne, servie par un point de sortie séparé : **2 Ko en médiane** au lieu de 133. Le découpage se fait à la construction du site et non dans le pipeline, `data/` gardant un seul fichier qui reste la source.
 
 **Plein écran et zoom.** La carte porte deux contrôles, le zoom et le plein écran, tous deux fournis par MapLibre. Une carte de 3 500 km lue dans un bandeau de téléphone a besoin de pouvoir s’étendre.
 

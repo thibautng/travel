@@ -439,28 +439,48 @@ const titres = Object.fromEntries(
     bottom: 0.6rem;
     z-index: 2;
     margin: 0;
+    /* En colonne et non en ligne : c’est la vignette qui fixe la largeur du
+       bloc, et le titre passe dessous en revenant à la ligne. Cot’ à côte,
+       un titre long étirait l’étiquette sur toute la carte. */
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.3rem 0.6rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+    width: max-content;
+    padding: 0.35rem;
     border-radius: 3px;
     background: rgba(255, 255, 255, 0.92);
     color: #2b2723;
     font-family: ui-sans-serif, system-ui, sans-serif;
     font-size: 0.82rem;
+    line-height: 1.3;
     pointer-events: none;
     max-width: calc(100% - 1.2rem);
   }
+  /* Sans vignette — le nom d’un camping, un survol de tracé — l’étiquette
+     reste la bande discrète d’avant. */
+  .carte-etiquette:not(:has(img)) {
+    padding: 0.3rem 0.6rem;
+  }
+  .carte-etiquette span {
+    /* La largeur de la vignette borne le titre : au-delà, il revient à la
+       ligne au lieu d’élargir le bloc. */
+    max-width: 240px;
+    text-wrap: pretty;
+  }
   @media (max-width: 30rem) {
     .carte-etiquette img {
-      width: 112px;
-      height: 75px;
+      width: 152px;
+      height: 101px;
+    }
+    .carte-etiquette span {
+      max-width: 152px;
     }
   }
   .carte-etiquette img {
     display: block;
-    width: 176px;
-    height: 117px;
+    width: 240px;
+    height: 160px;
     object-fit: cover;
     border-radius: 2px;
   }

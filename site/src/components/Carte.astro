@@ -121,7 +121,7 @@ const titres = Object.fromEntries(
     // Un fond injoignable ou un style invalide ne doit pas laisser un
     // rectangle gris muet : la page le dit.
     let echecs = 0;
-    carte.on("error", (evenement: { error?: Error }) => {
+    carte.on("error", (evenement: any) => {
       echecs += 1;
       const message = evenement.error?.message ?? "erreur inconnue";
       console.error("carte :", message);
@@ -130,9 +130,8 @@ const titres = Object.fromEntries(
       if (echecs === 1) signaler(conteneur, message);
     });
 
-    const voyage = conteneur.dataset.voyage!;
     carte.on("load", () => {
-      dessiner(carte, voyage)
+      dessiner(carte, conteneur)
         .then(() => temoin?.remove())
         .catch((erreur: unknown) => {
           signaler(conteneur, erreur instanceof Error ? erreur.message : String(erreur));
@@ -264,7 +263,8 @@ const titres = Object.fromEntries(
     bloc.textContent = texte;
   }
 
-  async function dessiner(carte: any, voyage: string): Promise<number> {
+  async function dessiner(carte: any, conteneur: HTMLElement): Promise<number> {
+    const voyage = conteneur.dataset.voyage!;
     const reponse = await fetch(`/donnees/${voyage}/trace.geojson`);
     if (!reponse.ok) {
       throw new Error(`trace indisponible (HTTP ${reponse.status})`);

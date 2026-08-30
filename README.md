@@ -152,6 +152,57 @@ téléphone, où la carte est le bandeau du haut, cela veut dire tout de suite ;
 sur un ordinateur, une journée lue sans jamais regarder la carte ne le charge
 jamais.
 
+## Mise en ligne
+
+Rien n'est encore publié. Ce qui suit est la procédure, écrite d'avance, et
+les commandes sont à vérifier au premier passage réel.
+
+**Répartition.** Le site va sur Cloudflare Pages, les dérivés et les tuiles
+sur R2. Motif en section 10 de la spec : Pages plafonne à 25 Mo par fichier
+et n'est pas fait pour porter 838 Mo d'images, et R2 ne facture pas la sortie,
+ce qui est le poste qui déraperait ailleurs sur un site d'images.
+
+**Le site.** Un push sur `main` suffit une fois le dépôt connecté à Pages,
+avec `site` comme racine, `npm run build` comme commande et `dist` comme
+sortie. `carnet` ne tourne jamais en CI : le dossier source de 8,6 Go vit sur
+le poste, et `data/` est commité.
+
+**Les dérivés.** `rclone` fait le différentiel, la reprise et les sommes de
+contrôle, ce qui vaut mieux qu'une sous-commande `push` à écrire :
+
+```
+rclone sync media/ r2:voyages-medias/ --progress --checksum --transfers 8
+```
+
+Le dépôt R2 doit exposer les en-têtes CORS et accepter les requêtes HTTP
+Range, dont les PMTiles ont besoin. L'adresse publique du dépôt se donne au
+site par `PUBLIC_MEDIA_URL`, que `urlMedia()` lit déjà et qui vaut `/media`
+en développement.
+
+**Le fond de carte.** Tant que `PUBLIC_FOND_PMTILES` est vide, la carte
+utilise l'instance publique d'OpenFreeMap, comme le prévoit D4. Pour passer
+aux PMTiles auto-hébergés, produire l'extrait des Alpes puis le poser sur R2 :
+
+```
+pmtiles extract https://build.protomaps.com/20260801.pmtiles alpes.pmtiles   --bbox=5.5,44.0,14.5,48.5 --maxzoom=14
+rclone copy alpes.pmtiles r2:voyages-tuiles/
+```
+
+Puis déclarer `PUBLIC_FOND_PMTILES` dans les variables de Pages. Le protocole
+`pmtiles://` et le style associé ne sont embarqués dans le site que si cette
+variable est renseignée : sans elle, le morceau est éliminé à la
+construction, et les 312 Ko de JavaScript mesurés plus haut ne bougent pas.
+
+**En-têtes.** `site/public/_headers` porte le `X-Robots-Tag: noindex`, qui
+double la balise du gabarit au niveau HTTP, et les durées de cache : un an
+pour `/_astro/`, dont les noms portent une empreinte, une heure pour les
+données, qui changent à chaque build du pipeline.
+
+**Accès.** Le site est non indexé mais public : quiconque a le lien entre.
+Pour un carnet qui montre des enfants, **Cloudflare Access** ajoute un mot de
+passe ou une liste d'adresses autorisées, gratuitement jusqu'à cinquante
+personnes, sur la même infrastructure. À trancher avant de diffuser le lien.
+
 ## État
 
 Lots 1 à 5 terminés, en JPEG. Reste le lot 6 : mise en ligne, R2, extrait PMTiles. Voir la feuille de route en section 11 de [SPEC.md](SPEC.md).

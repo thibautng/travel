@@ -57,11 +57,22 @@ const titres = Object.fromEntries(
 </div>
 
 <script>
+  /**
+   * Fond de carte. Section 10 et D4.
+   *
+   * Par defaut l'instance publique d'OpenFreeMap, sans cle ni inscription.
+   * Si `PUBLIC_FOND_PMTILES` designe un fichier PMTiles sur R2, c'est lui qui
+   * sert, et OpenFreeMap redevient ce que D4 en dit : un repli.
+   *
+   * La variable est lue a la construction, pas au chargement de la page : un
+   * site publie sans elle n'embarque meme pas le protocole PMTiles.
+   */
   const STYLE_FOND = "https://tiles.openfreemap.org/styles/positron";
+  const FOND_PMTILES = import.meta.env.PUBLIC_FOND_PMTILES ?? "";
 
   async function afficher(conteneur: HTMLElement) {
     conteneur.dataset.etat = "chargement";
-    const { Map, setWorkerUrl, NavigationControl, FullscreenControl } =
+    const { Map, setWorkerUrl, NavigationControl, FullscreenControl, addProtocol } =
       await import("maplibre-gl");
     await import("maplibre-gl/dist/maplibre-gl.css");
 
@@ -82,9 +93,20 @@ const titres = Object.fromEntries(
     );
     setWorkerUrl(adresseTravailleur);
 
+    // Le protocole `pmtiles://` n'existe pas dans MapLibre : la bibliotheque
+    // du meme nom l'ajoute, et traduit chaque demande de tuile en une requete
+    // HTTP Range sur le fichier unique pose sur R2. Import dynamique, pour
+    // qu'un site servi par OpenFreeMap ne le telecharge jamais.
+    let style: any = STYLE_FOND;
+    if (FOND_PMTILES) {
+      const { Protocol } = await import("pmtiles");
+      addProtocol("pmtiles", new Protocol().tile);
+      style = styleProtomaps(FOND_PMTILES);
+    }
+
     const carte = new Map({
       container: conteneur,
-      style: STYLE_FOND,
+      style,
       // Repli seulement : le cadrage reel vient de l'emprise de la trace.
       center: [11, 46.5],
       zoom: 4,
@@ -140,6 +162,65 @@ const titres = Object.fromEntries(
         });
     });
     return carte;
+  }
+
+  /**
+   * Style clair pour un fichier PMTiles produit par protomaps.
+   *
+   * Ecrit a la main plutot qu'apporte par `protomaps-themes-base` : le site
+   * n'a besoin que de six couches, et la trace doit rester lisible par-dessus
+   * un fond volontairement pale. Les couleurs sont celles du gabarit.
+   */
+  function styleProtomaps(url: string): any {
+    const source = { pmtiles: { type: "vector", url: `pmtiles://${url}`, attribution: "© OpenStreetMap, Protomaps" } };
+    const couche = (id: string, couleur: string, filtre?: any[]) => ({
+      id,
+      type: "fill",
+      source: "pmtiles",
+      "source-layer": id === "fond" ? "earth" : id,
+      ...(filtre ? { filter: filtre } : {}),
+      paint: { "fill-color": couleur },
+    });
+    return {
+      version: 8,
+      glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+      sources: source,
+      layers: [
+        { id: "papier", type: "background", paint: { "background-color": "#f4f1ec" } },
+        couche("fond", "#eae5dd"),
+        couche("landuse", "#e6e8de"),
+        couche("water", "#cfd9de"),
+        {
+          id: "routes",
+          type: "line",
+          source: "pmtiles",
+          "source-layer": "roads",
+          paint: {
+            "line-color": "#dcd6cc",
+            "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.4, 12, 1.6],
+          },
+        },
+        {
+          id: "frontieres",
+          type: "line",
+          source: "pmtiles",
+          "source-layer": "boundaries",
+          paint: { "line-color": "#c9c2b8", "line-dasharray": [3, 2], "line-width": 0.8 },
+        },
+        {
+          id: "noms",
+          type: "symbol",
+          source: "pmtiles",
+          "source-layer": "places",
+          layout: {
+            "text-field": ["get", "name"],
+            "text-font": ["Noto Sans Regular"],
+            "text-size": ["interpolate", ["linear"], ["zoom"], 4, 10, 10, 13],
+          },
+          paint: { "text-color": "#6f665e", "text-halo-color": "#f4f1ec", "text-halo-width": 1.4 },
+        },
+      ],
+    };
   }
 
   /**

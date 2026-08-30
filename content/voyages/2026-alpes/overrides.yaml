@@ -107,9 +107,10 @@ modes:
   # temps est celui de l’installation du camp et des courses, pas du trajet.
   - jour: 2026-07-27
     mode: marche
-    de: "16:40"
+    de: "16:25"
     a: "19:00"
-    note: "Tour complet de l’Eibsee à pied."
+    note: "Tour complet de l’Eibsee à pied. La borne haute exclut la photo de
+      19 h 07, qui ouvre le retour en voiture vers Garmisch."
   - jour: 2026-07-27
     mode: route
 

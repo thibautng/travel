@@ -2,13 +2,22 @@
 //!
 //! Voir SPEC.md, section 6.2, étape 3, et section 8, contraintes C1, C2, C4 et C5.
 
+use crate::lieux::distance_m;
 use crate::scan::{Anomalie, Fiabilite, Media};
 use crate::voyage::Voyage;
 use chrono::{Duration, NaiveDate};
 use std::collections::BTreeMap;
 
-/// Deux positions identiques à la cinquième décimale, soit environ un mètre.
-const DECIMALES: f64 = 100_000.0;
+/// Rayon, en mètres, en deçà duquel deux positions sont tenues pour la même.
+///
+/// La première version comparait les coordonnées à la cinquième décimale, soit
+/// au mètre près. C'était trop fin : autour de l'Eibsee, deux vidéos portaient
+/// le relèvement réseau d'un cluster de seize photos à trois mètres près, et
+/// échappaient à C2 pour cette différence. Faute d'être clonées, elles étaient
+/// promues fiables, servaient d'ancres à la trace, et le sentier de rive
+/// traversait le lac. Un relevé d'antenne ne se répète pas au mètre près : il
+/// se répète à la dizaine de mètres.
+const RAYON_CLONE_M: f64 = 25.0;
 
 /// Au-delà de cet écart, deux médias à la même position sont suspects (C2).
 const ECART_CLONE_MINUTES: i64 = 20;
@@ -83,21 +92,41 @@ pub fn evaluer(medias: &mut [Media], voyage: &Voyage) -> Bilan {
         }
     }
 
-    // C2 : positions clonées, quelle que soit l'altitude.
-    let mut groupes: BTreeMap<(i64, i64), Vec<usize>> = BTreeMap::new();
-    for (indice, media) in medias.iter().enumerate() {
-        if let Some(position) = media.position {
-            let cle = (
-                (position.lat * DECIMALES).round() as i64,
-                (position.lon * DECIMALES).round() as i64,
-            );
-            groupes.entry(cle).or_default().push(indice);
+    // C2 : positions clonées, quelle que soit l'altitude. Le regroupement se
+    // fait par voisinage et non par cellule d'une grille : deux points à un
+    // mètre l'un de l'autre mais de part et d'autre d'une frontière de cellule
+    // ne seraient jamais rapprochés.
+    let positions: Vec<Option<crate::scan::Position>> =
+        medias.iter().map(|m| m.position).collect();
+    let mut groupes: Vec<Vec<usize>> = Vec::new();
+    let mut place: Vec<Option<usize>> = vec![None; medias.len()];
+    for indice in 0..medias.len() {
+        let Some(position) = positions[indice] else {
+            continue;
+        };
+        // Le groupe se rattache au premier voisin déjà placé : les relèvements
+        // d'une même antenne forment un amas serré, pas une chaîne.
+        let voisin = (0..indice).find(|autre| {
+            place[*autre].is_some()
+                && positions[*autre]
+                    .map(|p| distance_m(&p, &position) <= RAYON_CLONE_M)
+                    .unwrap_or(false)
+        });
+        match voisin.and_then(|v| place[v]) {
+            Some(groupe) => {
+                groupes[groupe].push(indice);
+                place[indice] = Some(groupe);
+            }
+            None => {
+                groupes.push(vec![indice]);
+                place[indice] = Some(groupes.len() - 1);
+            }
         }
     }
 
     let ecart_max = Duration::minutes(ECART_CLONE_MINUTES);
     let mut a_marquer: Vec<usize> = Vec::new();
-    for indices in groupes.values() {
+    for indices in groupes.iter() {
         if indices.len() < 2 {
             continue;
         }
@@ -207,6 +236,86 @@ pub fn trous_candidats(medias: &[Media]) -> Vec<TrouCandidat> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::noms::Convention;
+    use crate::scan::{OrigineDate, OriginePosition, Position, TypeMedia};
+    use chrono::DateTime;
+
+    fn voyage_minimal() -> Voyage {
+        Voyage {
+            id: "test".to_string(),
+            titre: "Test".to_string(),
+            sous_titre: None,
+            date_debut: NaiveDate::from_ymd_opt(2026, 7, 24).unwrap(),
+            date_fin: NaiveDate::from_ymd_opt(2026, 8, 15).unwrap(),
+            pays: vec![],
+            distance_km: None,
+            nuits: None,
+            mode: None,
+            fuseau: chrono_tz::Europe::Paris,
+            source_photos: std::path::PathBuf::from("."),
+            dossiers_ignores: vec![],
+            depart: None,
+            arrivee: None,
+            notion: None,
+            lieux: vec![],
+        }
+    }
+
+    fn media_positionne(id: &str, instant: &str, lat: f64, lon: f64) -> Media {
+        let prise_le = DateTime::parse_from_rfc3339(instant).unwrap();
+        Media {
+            id: id.to_string(),
+            type_media: TypeMedia::Photo,
+            fichier_source: format!("{id}.jpg"),
+            prise_le: Some(prise_le),
+            origine_date: OrigineDate::Exif,
+            jour: Some(prise_le.date_naive()),
+            position: Some(Position {
+                lat,
+                lon,
+                alt: Some(980.0),
+            }),
+            fiabilite: Fiabilite::Haute,
+            origine_position: Some(OriginePosition::Exif),
+            lieu: None,
+            publie: true,
+            derives: None,
+            lqip: None,
+            anomalies: Vec::new(),
+            largeur: None,
+            hauteur: None,
+            orientation: None,
+            appareil: None,
+            convention: Convention::Telephone,
+            octets: 1,
+        }
+    }
+
+    /// Le piège de l'Eibsee : un relèvement d'antenne que deux appareils
+    /// n'écrivent pas au même mètre près. Comparées à la cinquième décimale,
+    /// les deux positions passaient pour distinctes et échappaient à C2.
+    #[test]
+    fn le_clonage_tolere_la_gigue_de_quelques_metres() {
+        let voyage = voyage_minimal();
+        let mut medias = vec![
+            media_positionne("A", "2026-07-27T17:05:00+02:00", 47.45753, 10.98037),
+            media_positionne("B", "2026-07-27T17:40:00+02:00", 47.45753, 10.98037),
+            media_positionne("VIDEO", "2026-07-27T17:16:00+02:00", 47.45750, 10.98040),
+            // Deux cents mètres plus loin : un lieu, pas une antenne.
+            media_positionne("AILLEURS", "2026-07-27T18:00:00+02:00", 47.45930, 10.98037),
+        ];
+        evaluer(&mut medias, &voyage);
+        for id in ["A", "B", "VIDEO"] {
+            let m = medias.iter().find(|m| m.id == id).unwrap();
+            assert!(
+                m.anomalies.contains(&Anomalie::PositionClonee),
+                "{id} aurait dû être reconnu cloné"
+            );
+        }
+        let seul = medias.iter().find(|m| m.id == "AILLEURS").unwrap();
+        assert!(!seul.anomalies.contains(&Anomalie::PositionClonee));
+    }
+
 
     #[test]
     fn distance_connue() {

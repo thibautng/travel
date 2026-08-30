@@ -407,7 +407,7 @@ Il n’existe pas de sous-commande `push`. La synchronisation de `media/` vers R
 2. **Datation.** La date de prise de vue vient de l’EXIF, jamais du nom de fichier (contrainte C3). Si `OffsetTimeOriginal` est présent, il fait foi. Sinon, l’horodatage est interprété dans le `fuseau` du voyage. Aucune résolution de fuseau à partir des coordonnées n’est faite : voir la note de fin de section.
 
    Un fichier **totalement dépourvu d’EXIF** est daté par son nom, si celui-ci porte une date reconnaissable, avec l’anomalie `date_du_nom` (contrainte C10). L’ordre de préséance est donc : EXIF, puis nom, puis exclusion. **Jamais la date de modification du fichier**, qui ne survit pas aux copies et aux sauvegardes.
-3. **Scoring.** `fiabilite: haute` si la position porte une altitude **non nulle**, `basse` si l’altitude est absente ou strictement nulle (anomalie `altitude_nulle`). En parallèle, détection des positions clonées : deux médias séparés de plus de 20 minutes portant des coordonnées identiques à la cinquième décimale reçoivent l’anomalie `position_clonee`, **quelle que soit leur altitude**. Le clone ne déclasse pas à lui seul : c’est un signalement, pas un verdict (contraintes C1 et C2).
+3. **Scoring.** `fiabilite: haute` si la position porte une altitude **non nulle**, `basse` si l’altitude est absente ou strictement nulle (anomalie `altitude_nulle`). En parallèle, détection des positions clonées : deux médias séparés de plus de 20 minutes et distants de moins de **25 mètres** reçoivent l’anomalie `position_clonee`, **quelle que soit leur altitude**. Le clone ne déclasse pas à lui seul : c’est un signalement, pas un verdict (contraintes C1 et C2).
 4. **Surcharges.** Application d’`overrides.yaml`. Les valeurs manuelles écrasent tout, y compris le verdict de fiabilité : une position posée à la main est `haute` et `origine_position: override`.
 5. **Rattachement au jour.** Un média appartient au jour civil de sa prise de vue, en heure locale du voyage.
 6. **Héritage.** Tout média encore sans position reçoit celle du `lieu` de sa journée, avec `origine_position: heritee` et `fiabilite: basse` (D5). Si la journée ne déclare pas de lieu, la position reste `absente`.
@@ -418,7 +418,9 @@ Il n’existe pas de sous-commande `push`. La synchronisation de `media/` vers R
 11. **Dérivés vidéos.** Appel à `ffmpeg` en sous-processus : H.264 720p, CRF 23, audio AAC 128 kb/s, plus une image poster extraite à 1 seconde. `ffmpeg` est une dépendance externe assumée, ne pas tenter de transcoder en Rust pur. Étape activée par le drapeau `--videos`, et **en pause** jusqu'à la sélection (D8).
 12. **Itinéraires.** Pour chaque couple de positions fiables consécutives d’une journée en mode `route`, résolution de l’itinéraire par le moteur de routage, puis écriture dans `data/<voyage>/itineraires.json`. **Le cache est consulté avant tout appel réseau** : un build ultérieur n’émet aucune requête. La clé de cache est le couple de coordonnées arrondi, le mode et les éventuels points de passage.
 13. **Traces.** Pour chaque journée et chaque mode, tri des positions par heure, construction des `LineString`, substitution des tronçons `route` par leur itinéraire calculé, injection des segments manuels d’`overrides.yaml`. Renseignement de `source` pour chaque `Feature`.
-14. **Émission.** Écriture de `media.json`, `jours.json`, `trace.geojson` et `itineraires.json` dans `data/<voyage>/`, des fichiers dérivés dans `media/<voyage>/`, et de `.build-cache.json`, qui porte pour chaque source son couple taille et mtime **ainsi qu’une empreinte des paramètres d’encodage** (format, qualité, tailles, version du pipeline). Un changement de paramètre invalide le cache. Le drapeau `--force` ignore le cache.
+14. **Pose sur la trace.** Les positions `basse` encadrées dans la journée par deux positions fiables sont replacées sur le tronçon qui relie ces deux bornes, à la fraction que dit leur horodatage. `origine_position: posee`, la fiabilité reste `basse`. Cette étape vient après les traces parce qu’elle en dépend, et les tronçons n’en sont pas affectés : ils sont bâtis sur les seules positions fiables. Garde-fous : 90 minutes d’écart au plus de part et d’autre, et un tronçon qui relie effectivement les deux bornes, à 60 mètres près.
+
+15. **Émission.** Écriture de `media.json`, `jours.json`, `trace.geojson` et `itineraires.json` dans `data/<voyage>/`, des fichiers dérivés dans `media/<voyage>/`, et de `.build-cache.json`, qui porte pour chaque source son couple taille et mtime **ainsi qu’une empreinte des paramètres d’encodage** (format, qualité, tailles, version du pipeline). Un changement de paramètre invalide le cache. Le drapeau `--force` ignore le cache.
 
 Note sur les fuseaux. `chrono-tz` convertit une zone connue, il ne la déduit pas de coordonnées. Le champ `fuseau` du voyage suffit au Tour des Alpes et à tout voyage tenant dans un seul fuseau. Le jour où un voyage traversera plusieurs fuseaux (Japon, Polynésie), deux options seront à trancher : une liste de fuseaux datés dans `voyage.yaml`, ou l’ajout de `tzf-rs` pour résoudre la zone à partir de la position. Ne rien implémenter avant d’en avoir besoin.
 
@@ -578,15 +580,21 @@ Règle : **altitude non nulle = position fiable, altitude nulle ou absente = pos
 
 C’est sans conséquence sur la trace, qui se construit à partir des photos, bien plus nombreuses et mieux réparties. C’en serait une sur l’affichage : une vidéo n’apparaîtrait jamais en pastille sur la carte.
 
-**Règle retenue : une vidéo est fiable si une photo proche la confirme, ou si sa position n’est pas clonée.** L’altitude n’est pas un discriminant pour ce format, le conteneur MP4 ne la porte pas.
+**Règle retenue : une vidéo est fiable si une photo proche la confirme **et** si sa position n’est pas clonée.** L’altitude n’est pas un discriminant pour ce format, le conteneur MP4 ne la porte pas.
 
 La confirmation par une photo demande deux conditions cumulées : une photo de fiabilité `haute` prise à moins de **dix minutes** de la vidéo, et une distance de moins de **500 mètres** entre les deux positions. La seconde n’est pas un excès de prudence : sans elle, une vidéo dont la position est gelée serait promue par une photo prise au même moment ailleurs.
 
-Le second critère, l’absence de clonage, traite le cas majoritaire. La première application de la seule règle de proximité n’a promu que 44 vidéos sur 128, faute de photo au bon moment, et laissait de côté les deux seules positions documentant le trajet du 5 août. Or 66 des 84 vidéos écartées portaient une position non clonée, donc plausible. Avec les deux critères, 110 vidéos sur 128 sont fiables.
+*Amendement du 30 août 2026.* Les deux critères étaient d’abord alternés : confirmation **ou** absence de clonage, ce qui promouvait 110 vidéos sur 128. La carte a montré le défaut. Au bord de l’Eibsee, quatre vidéos portaient un relèvement d’antenne tombé au milieu du lac. Deux ont échappé au clonage — elles portaient la position du groupe de seize photos à trois mètres près, et C2 comparait alors au mètre. Les deux autres étaient bien clonées, mais une photo de la rive prise à quatre cents mètres les « confirmait » : le lac est plus petit que le seuil de confirmation. Toutes quatre promues fiables, elles servaient d’ancres à la trace, et le tour du lac à pied traversait l’eau.
+
+Les deux critères sont donc cumulés, ce qui restitue la règle telle qu’elle avait été énoncée : la vidéo hérite de la fiabilité de la photo la plus proche dans le temps. Sans photo pour l’appuyer, il n’y a rien dont hériter. 32 vidéos sur 128 sont désormais fiables.
+
+Les 96 autres ne sont pas perdues pour la carte : l’étape de pose (6.2, étape 14) les replace sur la trace du jour à l’heure qu’elles portent, et elles s’affichent en pastille creuse. Une position posée sur le chemin réellement suivi vaut mieux qu’un relèvement d’antenne tenu pour mesuré.
 
 Une vidéo sans position du tout relève, elle, de l’héritage depuis le lieu de la journée (D5).
 
-**C2 | Détection des positions clonées.** Deux médias éloignés de plus de 20 minutes et portant des coordonnées identiques à la cinquième décimale reçoivent l’anomalie `position_clonee`, **quelle que soit leur altitude**. Le signalement ne déclasse pas à lui seul : le déclassement vient de C1.
+**C2 | Détection des positions clonées.** Deux médias éloignés de plus de 20 minutes et distants de moins de **25 mètres** reçoivent l’anomalie `position_clonee`, **quelle que soit leur altitude**. Le signalement ne déclasse pas à lui seul : le déclassement vient de C1.
+
+*Amendement du 30 août 2026.* La comparaison portait d’abord sur les coordonnées arrondies à la cinquième décimale, soit au mètre. C’était trop fin : deux appareils qui recopient le même relèvement d’antenne ne l’écrivent pas au même mètre. Autour de l’Eibsee, deux vidéos à trois mètres d’un groupe de seize photos y échappaient. Le regroupement se fait donc par voisinage à 25 mètres, et non par cellule d’une grille : deux points à un mètre l’un de l’autre mais de part et d’autre d’une frontière de cellule ne se seraient jamais rencontrés.
 
 Ce découplage est ce qui rend la détection utile, et l’audit le confirme dans les deux sens. Les deux plus gros groupes du Tour des Alpes, 18 et 16 photos, portent tous une altitude nulle : C1 les attrape déjà. Mais un troisième groupe de 15 photos porte une altitude réelle et identique au millimètre, 2 331,958 mètres, ce qui ressemble à un gel de position plutôt qu’à un vrai relevé. À l’opposé, les groupes polynésiens montrent des altitudes qui varient de quelques dizaines de centimètres d’une photo à l’autre, signature d’un vrai bruit GPS.
 
@@ -664,7 +672,9 @@ La version 1.2 prévoyait quatre styles de trait, sous le titre « Honnêteté d
 
 Les traits sont épais et bordés d’un halo clair. Le fond Positron est fait de traits gris fins, frontières et cours d’eau, dans lesquels une ligne colorée se perd sans ce dégagement.
 
-Même principe pour les points de médias : pastille pleine pour une position `haute`, pastille creuse pour une position `interpolee` ou `heritee`. Les positions `basse` non résolues ne sont pas affichées, et les positions `absente` non plus.
+Même principe pour les points de médias : pastille pleine pour une position `haute`, pastille creuse pour une position reconstituée, c’est-à-dire `posee`, `interpolee` ou `heritee`. Les positions `basse` qu’aucun mécanisme n’a su replacer ne sont pas affichées — ce serait poser un point au hasard — et les positions `absente` non plus.
+
+La photo et la vidéo ne partagent pas la même teinte : la vidéo n’a pas de vignette à montrer au survol, et sans cette distinction elle passait pour une photo dont la vignette manquait.
 
 ### 9.3 Responsive
 
@@ -695,7 +705,9 @@ MapLibre n’est chargé qu’à la demande, en `client:visible`. Les images son
 
 ### 9.5 Ton visuel
 
-Sobre. Le sujet, ce sont les photos et le texte, pas l’interface. Typographie lisible, marges généreuses, pas d’animation gratuite. Mode sombre et mode clair, pilotés par la préférence système. Palette dérivée des paysages : neutres chauds, un accent terre cuite pour les traces et les liens.
+Sobre. Le sujet, ce sont les photos et le texte, pas l’interface. Typographie lisible, marges généreuses, pas d’animation gratuite. Mode sombre et mode clair, pilotés par la préférence système. Palette dérivée des paysages : neutres chauds, un accent terre cuite pour les liens.
+
+**La carte, elle, ne suit pas cette palette.** Six modes de déplacement rabattus vers le beige ne se distinguaient plus les uns des autres : le brun de la route se confondait avec le violet du train et avec le bleu du bateau, sur un fond Positron déjà gris. Les teintes des traçés sont donc franches et écartées sur la roue chromatique, la sobriété restant à la page qui entoure la carte. La route, qui pèse les trois quarts des kilomètres, prend le brun le plus sombre et sert de fond aux autres.
 
 ---
 

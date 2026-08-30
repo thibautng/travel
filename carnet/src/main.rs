@@ -4,7 +4,10 @@
 //! `check` et la part de `build` qui ne produit pas de dérivés.
 
 use anyhow::{bail, Context, Result};
-use carnet::{derive, emit, itineraire, jours, lieux, overrides, quality, scan, selection, track, voyage};
+use carnet::{
+    derive, emit, itineraire, jours, lieux, overrides, pose, quality, scan, selection, track,
+    voyage,
+};
 use clap::{Parser, Subcommand};
 use indicatif::{ProgressBar, ProgressStyle};
 use std::path::{Path, PathBuf};
@@ -77,6 +80,7 @@ struct Pipeline {
     journees: Vec<jours::Journee>,
     journal: overrides::Journal,
     bilan_lieux: lieux::Bilan,
+    bilan_pose: pose::Bilan,
     bilan_qualite: quality::Bilan,
     traces: track::Traces,
     itineraires: itineraire::Itineraires,
@@ -107,7 +111,7 @@ fn executer(depot: &Path, voyage_id: &str, silencieux: bool) -> Result<Pipeline>
 
     // Étapes 12 et 13 : itinéraires et traces.
     let mut itineraires = itineraire::Itineraires::charger(depot, voyage_id)?;
-    let traces = track::construire(
+    let mut traces = track::construire(
         &inventaire.medias,
         &voyage,
         &journees,
@@ -115,12 +119,20 @@ fn executer(depot: &Path, voyage_id: &str, silencieux: bool) -> Result<Pipeline>
         &mut itineraires,
     );
 
+    // Étape 14 : les positions qu’on ne croit pas reviennent sur la trace.
+    // Elle n’existe qu’ici, après le calcul des itinéraires ; les tronçons,
+    // bâtis sur les seules positions fiables, n’en sont pas affectés, et
+    // seuls les points de la carte sont reconstruits.
+    let bilan_pose = pose::appliquer(&mut inventaire.medias, &traces);
+    pose::rafraichir_points(&mut traces, &inventaire.medias);
+
     Ok(Pipeline {
         voyage,
         inventaire,
         journees,
         journal,
         bilan_lieux,
+        bilan_pose,
         bilan_qualite,
         traces,
         itineraires,
@@ -293,13 +305,25 @@ fn main() -> Result<()> {
         Commande::Stats { voyage } => {
             let p = executer(&depot, &voyage, false)?;
             emit::rapport(&p.voyage, &p.inventaire, &p.bilan_qualite);
-            emit::rapport_traces(&p.traces, &p.journal, &p.bilan_lieux, &p.itineraires);
+            emit::rapport_traces(
+                &p.traces,
+                &p.journal,
+                &p.bilan_lieux,
+                &p.bilan_pose,
+                &p.itineraires,
+            );
             Ok(())
         }
 
         Commande::Check { voyage } => {
             let p = executer(&depot, &voyage, true)?;
-            emit::rapport_traces(&p.traces, &p.journal, &p.bilan_lieux, &p.itineraires);
+            emit::rapport_traces(
+                &p.traces,
+                &p.journal,
+                &p.bilan_lieux,
+                &p.bilan_pose,
+                &p.itineraires,
+            );
 
             // Aucun arbitrage silencieux : une surcharge qui ne vise rien, ou
             // une référence de lieu inconnue, font échouer la commande.
@@ -371,7 +395,13 @@ fn main() -> Result<()> {
                 emit::ecrire_trace_geojson(&depot, &p.voyage, &p.traces, &p.inventaire.medias)?;
             let cache = p.itineraires.enregistrer()?;
 
-            emit::rapport_traces(&p.traces, &p.journal, &p.bilan_lieux, &p.itineraires);
+            emit::rapport_traces(
+                &p.traces,
+                &p.journal,
+                &p.bilan_lieux,
+                &p.bilan_pose,
+                &p.itineraires,
+            );
 
             println!();
             println!("SÉLECTION (D7)");

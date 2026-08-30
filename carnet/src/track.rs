@@ -33,16 +33,21 @@ impl Mode {
 
     /// Couleur de la trace, dérivée du mode et jamais stockée à la main.
     ///
-    /// Palette de la section 9.5 : neutres chauds, accent terre cuite. Le
-    /// terre cuite est réservé à la marche, qui est le mode le plus raconté.
+    /// La première palette suivait les neutres chauds de la section 9.5. À
+    /// l’usage, six teintes rabattues vers le beige ne se distinguaient plus :
+    /// le brun de la route se confondait avec le violet du train et avec le
+    /// bleu du bateau, sur un fond Positron déjà gris. Les teintes sont donc
+    /// franches et écartées sur la roue, la sobriété revenant à la page qui
+    /// entoure la carte. La route, qui pèse les trois quarts des kilomètres,
+    /// prend le brun le plus sombre : elle sert de fond aux autres.
     pub fn couleur(self) -> &'static str {
         match self {
-            Mode::Marche => "#c0562a",
-            Mode::Route => "#8a6a4f",
-            Mode::Velo => "#4f7d5e",
-            Mode::Bateau => "#3f6d8c",
-            Mode::Train => "#7a5c8a",
-            Mode::Telepherique => "#a8873f",
+            Mode::Route => "#4a3b2e",
+            Mode::Marche => "#d1491f",
+            Mode::Velo => "#2e7d32",
+            Mode::Bateau => "#1565c0",
+            Mode::Train => "#8e24aa",
+            Mode::Telepherique => "#b08300",
         }
     }
 
@@ -650,7 +655,7 @@ mod tests {
 
     #[test]
     fn couleur_de_la_marche_conforme_a_la_spec() {
-        assert_eq!(Mode::Marche.couleur(), "#c0562a");
+        assert_eq!(Mode::Marche.couleur(), "#d1491f");
     }
 
     #[test]

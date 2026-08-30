@@ -115,12 +115,26 @@ fn promouvoir_videos(medias: &mut [Media], bilan: &mut Bilan) {
         let confirmee_par_photo = minutes <= MINUTES_PROMOTION_VIDEO
             && distance_m(&position, position_repere) <= METRES_PROMOTION_VIDEO;
 
-        // Faute de photo au bon moment, la position d'une vidéo se juge sur
-        // le seul critère qui la concerne : le clonage. L'altitude n'en est
-        // pas un, le format MP4 ne la porte pas.
+        // La position d'une vidéo se juge sur le seul critère qui la concerne :
+        // le clonage. L'altitude n'en est pas un, le format MP4 ne la porte pas.
         let non_clonee = !media.anomalies.contains(&Anomalie::PositionClonee);
 
-        if !confirmee_par_photo && !non_clonee {
+        // Les deux conditions, et non l'une ou l'autre.
+        //
+        // La règle énoncée est que la vidéo hérite de la fiabilité de la photo
+        // la plus proche dans le temps : sans photo pour l'appuyer, il n'y a
+        // rien dont hériter. La première version promouvait aussi les vidéos
+        // dont la position n'était pas clonée, faute de mieux ; au bord de
+        // l'Eibsee, un relèvement d'antenne isolé est ainsi devenu une ancre
+        // de trace au milieu du lac, et le tour du lac traversait l'eau.
+        //
+        // Réciproquement, une position clonée n'est pas rattrapée par une
+        // photo proche : la rive est à moins de cinq cents mètres du milieu du
+        // lac, le seuil de confirmation ne discrimine rien à cette échelle.
+        //
+        // Une vidéo refusée ici n'est pas perdue : `pose.rs` la remet sur la
+        // trace du jour à l'heure qu'elle porte.
+        if !non_clonee || !confirmee_par_photo {
             continue;
         }
         // L'anomalie reste : c'est un fait constaté. Seul le verdict change.
@@ -306,16 +320,15 @@ mod tests {
     /// dont la position n'est pas clonée est fiable, l'altitude n'étant pas
     /// un discriminant pour ce format.
     #[test]
-    fn video_non_clonee_est_promue_sans_photo_proche() {
+    fn video_sans_photo_proche_reste_basse_meme_non_clonee() {
         let mut medias = vec![
             media("PHOTO", "2026-08-14T09:00:00+02:00", Some((45.5, 7.4)), Fiabilite::Haute),
             video("VIDEO", "2026-08-14T18:05:00+02:00", (46.7, 12.0)),
         ];
         let mut bilan = Bilan::default();
         promouvoir_videos(&mut medias, &mut bilan);
-        assert_eq!(bilan.videos_promues, 1);
-        assert_eq!(bilan.videos_sans_clone, 1);
-        assert_eq!(bilan.videos_par_photo, 0);
+        assert_eq!(bilan.videos_promues, 0);
+        assert_eq!(medias[1].fiabilite, Fiabilite::Basse);
     }
 
     /// Une position clonée, elle, ne se rattrape que par une photo proche.
@@ -349,9 +362,11 @@ mod tests {
         assert_eq!(bilan.videos_promues, 0);
     }
 
-    /// Mais une photo proche rattrape bien une position clonée.
+    /// Une photo proche ne rattrape pas une position clonée : c'est le piège de
+    /// l'Eibsee, où la rive est à moins de cinq cents mètres du milieu du lac.
+    /// La vidéo reste basse, et `pose.rs` la remettra sur le sentier.
     #[test]
-    fn video_clonee_confirmee_par_une_photo_proche() {
+    fn la_photo_proche_ne_rattrape_pas_une_position_clonee() {
         let mut clonee = video("VIDEO", "2026-08-14T10:05:00+02:00", (45.5005, 7.4005));
         clonee.anomalies.push(Anomalie::PositionClonee);
         let mut medias = vec![
@@ -360,8 +375,8 @@ mod tests {
         ];
         let mut bilan = Bilan::default();
         promouvoir_videos(&mut medias, &mut bilan);
-        assert_eq!(bilan.videos_promues, 1);
-        assert_eq!(bilan.videos_par_photo, 1);
+        assert_eq!(bilan.videos_promues, 0);
+        assert_eq!(medias[1].fiabilite, Fiabilite::Basse);
     }
 
     #[test]

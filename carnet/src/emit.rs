@@ -249,6 +249,7 @@ pub fn rapport(voyage: &Voyage, inventaire: &Inventaire, bilan: &Bilan) {
 use crate::itineraire::Itineraires;
 use crate::jours::Journee;
 use crate::lieux::Bilan as BilanLieux;
+use crate::pose::Bilan as BilanPose;
 use crate::overrides::Journal;
 use crate::track::{Mode, Traces};
 use chrono::{DateTime, FixedOffset};
@@ -526,6 +527,7 @@ pub fn rapport_traces(
     traces: &Traces,
     journal: &Journal,
     lieux: &BilanLieux,
+    pose: &BilanPose,
     itineraires: &Itineraires,
 ) {
     println!();
@@ -555,6 +557,10 @@ pub fn rapport_traces(
     println!("  interpolées    {}", lieux.interpolees);
     println!("  héritées       {}", lieux.heritees);
     println!("  sans position  {}", lieux.sans_position);
+    println!(
+        "  posées sur la trace {} ({} sans tronçon porteur)",
+        pose.posees, pose.sans_troncon
+    );
     if !lieux.jours_sans_lieu.is_empty() {
         println!(
             "  {} journées sans lieu déclaré, dont des médias auraient pu hériter",

@@ -58,6 +58,9 @@ pub enum OriginePosition {
     Override,
     Heritee,
     Interpolee,
+    /// Reposée sur la trace du jour à la fraction que dit l’horodatage, faute
+    /// de croire le relévé d’origine. Voir `pose.rs`.
+    Posee,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]

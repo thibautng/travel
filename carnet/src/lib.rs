@@ -11,6 +11,7 @@ pub mod jours;
 pub mod lieux;
 pub mod noms;
 pub mod overrides;
+pub mod pose;
 pub mod quality;
 pub mod scan;
 pub mod selection;

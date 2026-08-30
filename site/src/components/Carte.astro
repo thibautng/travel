@@ -228,7 +228,7 @@ const titres = Object.fromEntries(
     const voyage = conteneur.dataset.voyage!;
     const titres: Record<string, string> = JSON.parse(conteneur.dataset.titres ?? "{}");
 
-    for (const couche of ["trace", "photos", "videos"]) {
+    for (const couche of ["trace", "photos", "videos", "photos-posees", "videos-posees"]) {
       carte.on("click", couche, (e: any) => {
         const jour = e.features?.[0]?.properties?.jour;
         if (jour) window.location.href = `/voyages/${voyage}/jours/${jour}/`;
@@ -240,7 +240,7 @@ const titres = Object.fromEntries(
     // gestionnaire par couche, celui de la trace ecrasait celui de la
     // pastille et la vignette n'apparaissait jamais. Ici l'ordre des couches
     // interrogees fait la priorite.
-    const COUCHES = ["photos", "videos", "camps", "trace"];
+    const COUCHES = ["photos", "videos", "photos-posees", "videos-posees", "camps", "trace"];
     carte.on("mousemove", (e: any) => {
       const trouvees = carte.queryRenderedFeatures(e.point, { layers: COUCHES });
       if (trouvees.length === 0) {
@@ -355,25 +355,56 @@ const titres = Object.fromEntries(
       "circle-stroke-color": "#2b2723",
       "circle-opacity": 0.95,
     });
-    const point = (type: string) => [
+    // Section 9.2 : pastille pleine pour une position mesurée, creuse pour une
+    // position reconstituée. Une position basse qu’aucun mécanisme n’a su
+    // replacer n’est pas montrée : elle serait un point posé au hasard.
+    const RECONSTITUEES = ["posee", "interpolee", "heritee"];
+    const point = (type: string, mesuree: boolean) => [
       "all",
       ["==", ["geometry-type"], "Point"],
-      ["==", ["get", "fiabilite"], "haute"],
       ["==", ["get", "type"], type],
+      mesuree
+        ? ["==", ["get", "fiabilite"], "haute"]
+        : [
+            "all",
+            ["!=", ["get", "fiabilite"], "haute"],
+            ["in", ["get", "origine_position"], ["literal", RECONSTITUEES]],
+          ],
     ];
+    const creuse = (couleur: string) => ({
+      ...pastille(couleur),
+      "circle-color": "rgba(255, 255, 255, 0)",
+      "circle-stroke-color": couleur === COULEUR_PHOTO ? "#6f665e" : couleur,
+    });
 
+    // Les creuses d’abord : une pastille mesurée prime au survol comme au
+    // rendu, l’ordre d’ajout faisant la superposition.
+    carte.addLayer({
+      id: "videos-posees",
+      type: "circle",
+      source: "trace",
+      filter: point("video", false),
+      paint: creuse(COULEUR_VIDEO) as any,
+    });
+    carte.addLayer({
+      id: "photos-posees",
+      type: "circle",
+      source: "trace",
+      filter: point("photo", false),
+      paint: creuse(COULEUR_PHOTO) as any,
+    });
     carte.addLayer({
       id: "videos",
       type: "circle",
       source: "trace",
-      filter: point("video"),
+      filter: point("video", true),
       paint: pastille(COULEUR_VIDEO) as any,
     });
     carte.addLayer({
       id: "photos",
       type: "circle",
       source: "trace",
-      filter: point("photo"),
+      filter: point("photo", true),
       paint: pastille(COULEUR_PHOTO) as any,
     });
 

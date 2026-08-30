@@ -1040,7 +1040,7 @@
       "lat": 48.4812,
       "lon": 8.274700000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -1502,7 +1502,9 @@
       "repli": "photos/IMG20260726194149-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCFZQDKJ1x5gwRjBrjptLRFt6EJdANmAGHVSMVMotMgfhjhckgc/SnFK4IGt/tCcAf7BHWtyiz5JU7kO4DnHeuNT11Hy22JVgkhcA4CnlRXYBGwwGIODg9K4FukULBO7zCBsEZ3bu4OK7yT/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -1632,7 +1634,9 @@
       "repli": "photos/IMG20260726203211-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCS2v50vGmkEeGZly5++fYegFZqV9TRroNvrsS3cEsJIE+D5n8O5fT8hTv1Dl6EN7/x8Wv+9WS2NOqINV/5BVj/ANdn/nVR2Jnuf//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 6560,
     "hauteur": 3696,
     "orientation": 1,
@@ -1660,7 +1664,9 @@
       "repli": "photos/IMG20260726203214-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBLG7ljVpJ3jhV/nCn723p9ai9jSyk9Rsl2ySzzAZRHEoIPOG78+1Fwa0Fn/wCQgf8Ar3b+VZPY1XxEL/8AITj/AOvZKpbIh7s//9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 6560,
     "hauteur": 3696,
     "orientation": 1,
@@ -1677,7 +1683,7 @@
       "lat": 47.496900000000004,
       "lon": 11.090200000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -1696,11 +1702,12 @@
       "lat": 47.497,
       "lon": 11.090200000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -1714,11 +1721,12 @@
       "lat": 47.4975,
       "lon": 11.0899
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -1743,7 +1751,9 @@
       "repli": "photos/IMG20260727111003-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCu8TIrfPjr0f8AxFc9jq5rKwsayxv5iEocfeXaTj86Ngun0JdQht7OQIiTK8g3cSEAfhzWjsYK4thbx3cRRZnWbGcShWI9x60WTG20M1i585os4WRoj07c1cl71kRF+7dl3w8A80jOApEann2zUKyHJN2I57OE5+TqOaYFu2cxyBVxgJjp1pLcGf/Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -1841,12 +1851,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.49425,
-      "lon": 11.10998611111111,
-      "alt": 0.0
+      "lat": 47.49506709335553,
+      "lon": 11.109223201079667
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727154001-320.jpg",
@@ -1871,12 +1880,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.49425,
-      "lon": 11.10998611111111,
-      "alt": 0.0
+      "lat": 47.494470320530084,
+      "lon": 11.106804799065825
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727154018-320.jpg",
@@ -2097,12 +2105,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45433153861545,
+      "lon": 10.983100010004001
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727164955-320.jpg",
@@ -2128,12 +2135,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45438480792317,
+      "lon": 10.983362515006004
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727165131-320.jpg",
@@ -2159,12 +2165,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45485146925437,
+      "lon": 10.985662168200614
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727170532-320.jpg",
@@ -2190,12 +2195,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.454859792583704,
+      "lon": 10.985703184607177
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727170547-320.jpg",
@@ -2221,12 +2225,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45489142123516,
+      "lon": 10.985859046952115
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727170644-320.jpg",
@@ -2252,12 +2255,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45502958850207,
+      "lon": 10.986539919301054
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727171053-320.jpg",
@@ -2283,12 +2285,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45503125316794,
+      "lon": 10.986548122582366
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727171056-320.jpg",
@@ -2314,12 +2315,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.455035692276915,
+      "lon": 10.9865699979992
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727171104-320.jpg",
@@ -2345,12 +2345,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45503624716554,
+      "lon": 10.986572732426303
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727171105-320.jpg",
@@ -2376,11 +2375,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.4557,
-      "lon": 10.9772
+      "lat": 47.45509340069361,
+      "lon": 10.986854378418034
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -2394,12 +2393,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.455203268640794,
+      "lon": 10.98739579498466
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727171606-320.jpg",
@@ -2425,14 +2423,15 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.4575,
-      "lon": 10.9804
+      "lat": 47.45521658596772,
+      "lon": 10.98746142123516
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -2443,12 +2442,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45540580298786,
+      "lon": 10.988393860877684
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727172211-320.jpg",
@@ -2474,14 +2472,15 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.4575,
-      "lon": 10.9804
+      "lat": 47.45579699946646,
+      "lon": 10.990321631986127
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -2492,12 +2491,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45581697545685,
+      "lon": 10.990420071361878
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727173432-320.jpg",
@@ -2523,12 +2521,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45583806122449,
+      "lon": 10.990523979591837
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727173510-320.jpg",
@@ -2554,12 +2551,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.4559989789249,
+      "lon": 10.991316963452048
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727174000-320.jpg",
@@ -2599,7 +2595,9 @@
       "repli": "photos/IMG20260727175608-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDRhkt4thYksTjr0pMlNF6WS3hwxIG3+HPakk2U2kc1Iv2ZirjOevPStV7xi9BshCy8MWDAZyetWhMia53ABlJC9PmpWC4xrkkYVFGP0pW8wFEEfHBx/vGhbDH/AGWLH3T/AN9GgLH/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -2782,7 +2780,9 @@
       "repli": "photos/IMG20260727181751-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCR78QL8tlJllz+8A/SumVRvqYqKRnXOoTvGNvyBxknB/T/AOvWUqjZSikXk/1j/wC9Wcty0SN3+lIZ/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -2810,7 +2810,9 @@
       "repli": "photos/IMG20260727181753-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCRr9YVBWzkJZc/vF/lXTKo31MVFIzrnUJ3jGz5A45OD/n86ylUbKUUi+P9a/1rOW5aHt3+lIZ//9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -2824,12 +2826,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.45648700285962,
+      "lon": 10.993941594235615
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727181755-320.jpg",
@@ -2855,12 +2856,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.45648744873387,
+      "lon": 10.993940169131202
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727181756-320.jpg",
@@ -2886,12 +2886,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.45648878635662,
+      "lon": 10.99393589381796
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727181759-320.jpg",
@@ -2917,12 +2916,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.4564927992249,
+      "lon": 10.993923067878239
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727181808-320.jpg",
@@ -2948,12 +2946,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.456671594800014,
+      "lon": 10.993351601008388
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727182449-320.jpg",
@@ -2979,12 +2976,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.45676701188998,
+      "lon": 10.993046628663881
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG_20260727_183401-320.jpg",
@@ -3010,12 +3006,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.456924405501,
+      "lon": 10.992543566805884
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727183416-320.jpg",
@@ -3041,14 +3036,15 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.4579,
-      "lon": 10.9765
+      "lat": 47.45706396414193,
+      "lon": 10.992097509124429
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -3059,12 +3055,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.45707020638146,
+      "lon": 10.99207755766264
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727183943-320.jpg",
@@ -3090,12 +3085,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.4572628240584,
+      "lon": 10.991461912555968
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727184655-320.jpg",
@@ -3121,12 +3115,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.457525000000004,
-      "lon": 10.980369444444445,
-      "alt": 0.0
+      "lat": 47.45726549930391,
+      "lon": 10.991453361929487
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727184701-320.jpg",
@@ -3152,12 +3145,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.45727084979494,
+      "lon": 10.991436260676524
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727184713-320.jpg",
@@ -3183,12 +3175,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.4573140995974,
+      "lon": 10.991298025548405
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727184850-320.jpg",
@@ -3214,12 +3205,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.45789722222222,
-      "lon": 10.976522222222222,
-      "alt": 0.0
+      "lat": 47.457317220717165,
+      "lon": 10.991288049817511
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260727184857-320.jpg",
@@ -3273,14 +3263,15 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.4975,
-      "lon": 11.09
+      "lat": 47.48547636233132,
+      "lon": 11.059836448463967
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -3291,11 +3282,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.5027,
-      "lon": 11.099300000000001
+      "lat": 47.487558879797106,
+      "lon": 11.065111702076754
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -3309,11 +3300,11 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.5027,
-      "lon": 11.099300000000001
+      "lat": 47.48799586706862,
+      "lon": 11.066218640539764
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -3327,14 +3318,15 @@
     "origine_date": "exif",
     "jour": "2026-07-27",
     "position": {
-      "lat": 47.4974,
-      "lon": 11.090100000000001
+      "lat": 47.48908833524739,
+      "lon": 11.068985986697292
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -3348,7 +3340,7 @@
       "lat": 47.496900000000004,
       "lon": 11.090200000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -3367,7 +3359,7 @@
       "lat": 47.496900000000004,
       "lon": 11.090200000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -3397,7 +3389,9 @@
       "repli": "photos/IMG20260727204351-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCnYalIIkSVMrgDKnke5FUm7aEWV9UXZb612ZWTcyj7oU5Y/wBKfPIXKjI0z/j2/E0kNkrd6ZJ//9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -3425,7 +3419,9 @@
       "repli": "photos/IMG20260727204515-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCvp7OzmVWAWMEtxz0/WrgQEU6PaKGbzL1lyA3JrF67nT0sO064SJVjfLBjuYqudv1rWErHNa41ldywVkERyM9GrNs6UrkSMIogzHasmevr7U0Yx0Hu6OsKvFwR98D73JpNDvqSrbRXUSxzrvC8jNZqTRCIrpfKCKrHCjIyau90M//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -3775,12 +3771,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.47945555555556,
-      "lon": 11.048505555555556,
-      "alt": 0.0
+      "lat": 47.44806262376237,
+      "lon": 11.044485770500126
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728111251-320.jpg",
@@ -3805,12 +3800,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.47945555555556,
-      "lon": 11.048505555555556,
-      "alt": 0.0
+      "lat": 47.448046259625954,
+      "lon": 11.044470146822373
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728111258-320.jpg",
@@ -3835,12 +3829,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.48173055555556,
-      "lon": 11.060202777777778,
-      "alt": 0.0
+      "lat": 47.447660533553346,
+      "lon": 11.04410187441821
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728111543-320.jpg",
@@ -3850,7 +3843,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBmmoft23PO3aeMZ4zmuiLszF7Fe/RWuZCzcEk5/QU27gkSpcoJoHBCuRyc89OlZuz0KGTp5kfygkAnJ9KYEELRLOJBGiLOTgkZJ+melZt2ZRoyAjccAAkEjFXqtxaFaICY2m5QAhJGB7Utw2JnkY3WzPy+Xmpi2xyVj//Z",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 2608,
     "hauteur": 4624,
@@ -3865,11 +3859,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.481700000000004,
-      "lon": 11.0602
+      "lat": 47.44726779427942,
+      "lon": 11.043726906152154
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -3884,12 +3878,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.48173055555556,
-      "lon": 11.060202777777778,
-      "alt": 0.0
+      "lat": 47.44711584158415,
+      "lon": 11.043581829144452
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728111936-320.jpg",
@@ -3899,7 +3892,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCCDEr45G9gufrSuM0oWJh24bbjGMfcrQgxLFiJFUNtP8OD1OKzRTL9vcXMFvEu3MrjA3Hr14x61QjJgRkmj8w4C8jHr2qUNmjPPJCgYgSbhwOCAM9PrTETizhm2lgVO3OVOKmGwMggYzXUMbn5IycAd/rTQz//2Q==",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 2304,
     "hauteur": 4096,
@@ -3914,12 +3908,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.48173055555556,
-      "lon": 11.060202777777778,
-      "alt": 0.0
+      "lat": 47.44661790429042,
+      "lon": 11.043106422949986
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728112309-320.jpg",
@@ -3929,7 +3922,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCnGouZkSRxGMk7uvPvRcRDPGJL941wEHBCk8gd6ALvkW8UhSNgQSAfUfjQ/IEZT3E0DB5EZHGV3OOtIZoWKCTfvVwwHJGeM0JCuWIt8krebH5mBt6Ag9wefanfyHrtcntY1BaPHyhifqR61XSxPW5IyqTtKgjy8/rSGf/Z",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 2608,
     "hauteur": 4624,
@@ -3944,12 +3938,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.48173055555556,
-      "lon": 11.060202777777778,
-      "alt": 0.0
+      "lat": 47.44654543454345,
+      "lon": 11.043037232377083
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728112340-320.jpg",
@@ -3959,7 +3952,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCLS4LaK5KXuW+Xt1H0o2AzLxCL12UkK5J5OaQF6KNGdCpIkKngduKAKD3STIrk7mjPPGM0AaFkm5Fkx95sHIOfwoQEGpadndLbKoGPmX1oaAvRL8iHP3CgH400SR+WBM8gJzknGeOgoKP/2Q==",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 2608,
     "hauteur": 4624,
@@ -3974,12 +3968,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.48173055555556,
-      "lon": 11.060202777777778,
-      "alt": 0.0
+      "lat": 47.44639581958195,
+      "lon": 11.042894387323347
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728112444-320.jpg",
@@ -3989,7 +3982,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC7pj+bZ7WPzx8YPp2rVTtEza1MLUY/Lu5cnlgDj681jF3ijWWjLsEn2fv8xToD296JxUlYSdjJmvBNcNuX5j904prTQNyzaTrc3JndAAoC7Qc/hT31F5FrzwoYxrkH7u8A5/l/OkBn6cAtpJIPvBWIz68Cqfwi6lxUVrJCygnkEnuBUrYZ/9k=",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 2608,
     "hauteur": 4624,
@@ -4106,11 +4100,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.481700000000004,
-      "lon": 11.0602
+      "lat": 47.44434922475038,
+      "lon": 11.03988153561828
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -4125,12 +4119,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.45311944444445,
-      "lon": 10.98105,
-      "alt": 0.0
+      "lat": 47.44375679403481,
+      "lon": 11.038451590501792
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728115007-320.jpg",
@@ -4156,12 +4149,11 @@
     "origine_date": "exif",
     "jour": "2026-07-28",
     "position": {
-      "lat": 47.45311944444445,
-      "lon": 10.98105,
-      "alt": 0.0
+      "lat": 47.44116229038658,
+      "lon": 11.032189258512545
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260728121249-320.jpg",
@@ -4407,7 +4399,7 @@
       "lat": 47.4409,
       "lon": 11.0338
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -6023,7 +6015,9 @@
       "repli": "photos/IMG20260730091016-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC896EcALkYJJJxgCpuPluXYbiNs7WDbTg4OcVRJzGpTMlxzGkg28Aj39uaSKLOizKrPGv3tnzfLjGCfz69aLWC9yDVInkELhSGXg8561lGrGTNZU3FBo58ou0qsWYYBx19aqU1HcmNNy2NeSNUiAA7GvPTdzs3K6qN6D0Bqx9D/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -6051,7 +6045,9 @@
       "repli": "photos/IMG20260730093224-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl0ceUVaPPOARxXZGTcLNEPcjO1WwwORWLvCWvQrdD4v8AVD/rp/Sumj8C/wAX6Gct/kFx/rT9KvF/xfkEPhP/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -6079,7 +6075,9 @@
       "repli": "photos/IMG20260730093226-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDl0eLyirIwIPUHiuuMlytWAZ8oOGJ49qw+GWoCp9w/7/8ASuyHwP8AxfoIbN/rWrLE/wAVgtj/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -6093,14 +6091,15 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.6378,
-      "lon": 13.017900000000001
+      "lat": 47.63768457670243,
+      "lon": 13.017652209500493
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -6111,14 +6110,15 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.6378,
-      "lon": 13.017900000000001
+      "lat": 47.63765268596529,
+      "lon": 13.017581875135019
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -6129,14 +6129,15 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.6378,
-      "lon": 13.017900000000001
+      "lat": 47.63765167842827,
+      "lon": 13.017579653032813
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -6655,7 +6656,9 @@
       "repli": "photos/IMG20260730144328-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCaBGtJjaSnIU7o2P8AEv8AiKhO42rEd1cQRTKJF+cjcD+lTNNqyENgmW808RysUlQkxyHqT/8AXo2dy9yjeForiG5ysgYYwRggjrketXJXRk9xLcFoVAXqTj65osaXHSQTylklRioYAHGdx+vWrehC1Na2hSCEBB155qkhML35LJ2UAEMDnFTU+ER//9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -6683,7 +6686,9 @@
       "repli": "photos/IMG20260730144341-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCjb3LgDy1YsuSpHBBx/KiN0xStY0Uke5jMkqETIu4KoyOv86J1HOwRjYzdM/492/3v6VpEmRftv+PD8RXOaM//2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -6809,12 +6814,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79727222222222,
-      "lon": 13.045091666666666,
-      "alt": 0.0
+      "lat": 47.796509597484274,
+      "lon": 13.045008320754718
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730145457-320.jpg",
@@ -6839,12 +6843,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79727222222222,
-      "lon": 13.045091666666666,
-      "alt": 0.0
+      "lat": 47.79650213836478,
+      "lon": 13.0450156918239
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730145509-320.jpg",
@@ -6869,12 +6872,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79727222222222,
-      "lon": 13.045091666666666,
-      "alt": 0.0
+      "lat": 47.796481625786164,
+      "lon": 13.045035962264151
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730145542-320.jpg",
@@ -6899,14 +6901,15 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.7964,
-      "lon": 13.0462
+      "lat": 47.79601729559748,
+      "lon": 13.045494811320756
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -6959,7 +6962,9 @@
       "repli": "photos/IMG20260730153611-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCIXDFAViWQZwpUEZ9cV0LEMx9mL/aZjJXyArD3zij6wuovZtE7f6u3/wCuDf0rjOlFF/8AUzf7w/lRITP/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -7029,14 +7034,15 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.7952,
-      "lon": 13.0478
+      "lat": 47.79521011824325,
+      "lon": 13.047014853603603
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -7061,7 +7067,9 @@
       "repli": "photos/IMG20260730162717-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCsI69G5wjwiGLaWw/LBcjkdOlYOdqhpyvluRtO8h2WsTO3rjP6UvaroVyMu2R86yYEfvmJVQRgHPTn6j9KwcvfuaqPu2MpLiRCXSCZSB1GAf51ncuxuaZfJNbwuyMN3GVT5VPYH09fxoAq2dulwEDk/NbrISPUkikM1YFSOPCIoxx0pAf/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -7229,7 +7237,9 @@
       "repli": "photos/IMG20260730171320-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDHj0GSUFlnGwdyDWamaONnYdHo0YuIw8zFS2DgYPWk52GoJmvZEeWueF2j8ahFS3EuJD5qHbjbIOfWkxw6i20chgVkXI4IHHNNCluRXQkEW+UBGLgBRxgD+tDHDcnFqix7leVemQshAP5UJg1cr3MCLGW+Ytjqzkn9TSbKjGzP/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -7243,11 +7253,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.806799999999996,
-      "lon": 13.0412
+      "lat": 47.795102647470124,
+      "lon": 13.047076261759472
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -7275,7 +7285,9 @@
       "repli": "photos/IMG20260730172754-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCGTWo34a22j1L/AP1q6PbWMOS5G1yrgGOJTn1fH9KarsPZIzLT/j4P+9XMbGzd/wCrj+o/nSQM/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -7401,12 +7413,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79626111111111,
-      "lon": 13.053844444444445,
-      "alt": 0.0
+      "lat": 47.79493925870037,
+      "lon": 13.05124692266028
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730174842-320.jpg",
@@ -7431,12 +7442,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79626111111111,
-      "lon": 13.053844444444445,
-      "alt": 0.0
+      "lat": 47.794712881820736,
+      "lon": 13.051107525192414
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730174944-320.jpg",
@@ -7461,12 +7471,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.791799999999995,
-      "lon": 13.046316666666666,
-      "alt": 0.0
+      "lat": 47.794436661922816,
+      "lon": 13.050932216131054
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730175100-320.jpg",
@@ -7804,11 +7813,12 @@
       "lat": 47.5739,
       "lon": 12.987699999999998
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -8397,12 +8407,11 @@
     "origine_date": "exif",
     "jour": "2026-07-31",
     "position": {
-      "lat": 47.57386666666667,
-      "lon": 12.987697222222222,
-      "alt": 0.0
+      "lat": 47.514430332647464,
+      "lon": 12.986407161636945
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260731101541-320.jpg",
@@ -9469,7 +9478,9 @@
       "repli": "photos/IMG20260801211446-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDnUs5XikkAwseM575qOZDsQmF/4lp3Qjr4bIx22cCRW5K7vlH196zlFp8r3KozhOPMtiNtPgG9GGW2kg46EjpT5JXDmj2L9vKxURNHmIjGem73pyu5avUzhywjyxWhI8IGSCcdq1ExdoA4rje50rREvlqWx6kCqjuKR//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -9621,11 +9632,11 @@
     "origine_date": "exif",
     "jour": "2026-08-02",
     "position": {
-      "lat": 46.2472,
-      "lon": 13.5778
+      "lat": 46.24534206524405,
+      "lon": 13.568588447387786
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -9639,11 +9650,11 @@
     "origine_date": "exif",
     "jour": "2026-08-02",
     "position": {
-      "lat": 46.2472,
-      "lon": 13.5778
+      "lat": 46.24554294824626,
+      "lon": 13.569065930831494
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -9843,12 +9854,11 @@
     "origine_date": "exif",
     "jour": "2026-08-02",
     "position": {
-      "lat": 46.242308333333334,
-      "lon": 13.582755555555556,
-      "alt": 0.0
+      "lat": 46.247002824554066,
+      "lon": 13.585882295969846
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260802181648-320.jpg",
@@ -9873,12 +9883,11 @@
     "origine_date": "exif",
     "jour": "2026-08-02",
     "position": {
-      "lat": 46.242308333333334,
-      "lon": 13.582755555555556,
-      "alt": 0.0
+      "lat": 46.2470787824577,
+      "lon": 13.585912981128477
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260802181700-320.jpg",
@@ -9903,12 +9912,11 @@
     "origine_date": "exif",
     "jour": "2026-08-02",
     "position": {
-      "lat": 46.24466666666667,
-      "lon": 13.585922222222223,
-      "alt": 0.0
+      "lat": 46.24725083973842,
+      "lon": 13.586012373441127
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260802181728-320.jpg",
@@ -9961,11 +9969,11 @@
     "origine_date": "exif",
     "jour": "2026-08-02",
     "position": {
-      "lat": 46.251,
-      "lon": 13.5867
+      "lat": 46.24826319794962,
+      "lon": 13.583389709379276
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -9979,12 +9987,11 @@
     "origine_date": "exif",
     "jour": "2026-08-02",
     "position": {
-      "lat": 46.24745277777778,
-      "lon": 13.588080555555557,
-      "alt": 0.0
+      "lat": 46.24660306828633,
+      "lon": 13.581113891132198
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260802193028-320.jpg",
@@ -10141,7 +10148,9 @@
       "repli": "photos/IMG20260802215431-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDndGsvt9+qMMxp8z+49KmTsho7qNQFG3GB6VkUcz4fBt9OmnRC8srbUC9T/nmqnuJHQ2UMkUYErg8cKvQf41IzL8NkHTIx6M2fzpy3EtjcWkM5XwtI3lzpn5VYEfj/APqqp7iR1CHipGf/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -10158,7 +10167,7 @@
       "lat": 46.4186,
       "lon": 13.7373
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10330,7 +10339,7 @@
       "lat": 46.4389,
       "lon": 13.7496
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10360,7 +10369,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC4L85cSp06Ed6qOJXUzcCUyx+UshOA3Suh1YpXbI5WcwLiYQsHUjJ6kHIrgsr3NSaCe5CAGN2yOm37vpUySuPU2yx3qzcyfdwOw9K5+hoV7aZ/tNyARjIBAGOcda1qq1kCd9iVOJGI4w2Ky6DKN1O1mheILumcliwz0OK0Xv7g9Nj/2Q==",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 2304,
     "hauteur": 4096,
@@ -10406,11 +10416,12 @@
       "lat": 46.3135,
       "lon": 13.6567
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -10424,7 +10435,7 @@
       "lat": 46.3105,
       "lon": 13.6601
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10442,7 +10453,7 @@
       "lat": 46.243700000000004,
       "lon": 13.584200000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10460,7 +10471,7 @@
       "lat": 46.2372,
       "lon": 13.4452
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10489,7 +10500,9 @@
       "repli": "photos/IMG20260804144442-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCC2jNxZxP55jPP31yD+XasnHqTcWLTmzuiu4yxJwMEfzpO3UEMtP8AjzT6n+VbrYh7jx9yD6/0rOWxR//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -10517,7 +10530,9 @@
       "repli": "photos/IMG20260804144450-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwClpcjyLJF5vlqBndjI61jykt2J5NMneT5Z4WOOgbmloK9ynp/8f0rWBMi9H/rXqO40f//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -10545,7 +10560,9 @@
       "repli": "photos/IMG20260804144453-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCjpEsrB4o3Cnb1I4rBx3IbsSzafes+QEb6ODS0Fe5U0rrJ9K2iKexqw/8AHyPwrJgj/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -10573,7 +10590,9 @@
       "repli": "photos/IMG20260804144509-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBtrDa3FrgxnBPIVu/r9ayI95EU2iptzbvIT1G4A0XFzEfh7/XSf9dT/I1UtimdIOtZEH//2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4000,
     "hauteur": 2256,
     "orientation": 1,
@@ -10601,7 +10620,9 @@
       "repli": "photos/IMG20260804144512-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCHTEt5omDJltvzYbqPx7VkRaS2Fk0aFgTDJLn+6yjFK4uYztL/AOPh/wDriP8A0IVb2LOu/irIzZ//2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4000,
     "hauteur": 2256,
     "orientation": 1,
@@ -10618,11 +10639,12 @@
       "lat": 46.2291,
       "lon": 13.439400000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -10636,11 +10658,12 @@
       "lat": 46.2291,
       "lon": 13.439400000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -10654,11 +10677,12 @@
       "lat": 46.2291,
       "lon": 13.439400000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -10767,7 +10791,7 @@
       "lat": 46.2292,
       "lon": 13.4392
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10797,7 +10821,9 @@
       "repli": "photos/IMG20260804172043-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCJI3u4yJWyVOQM1KXNqQmMlt/IRsNvGSct2Pt7VEoLcdyoCwzzVIyuHmPjHUeh6UMakJjrmnaxAxicYoAnk/1ZNdNVaEormuUZ/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -10825,7 +10851,9 @@
       "repli": "photos/IMG20260804172049-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCFI5LxMuSSpyAOM/X1qeXm1ITI5LcwIQWEgBPzHsfSs5QtqO5UEjrnDHn3q0ZXHefIRhvmX0ND1GpEZ5zTe5A1icYoAnlAHTjg1tVSTJRXrAZ//9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -10842,7 +10870,7 @@
       "lat": 46.2292,
       "lon": 13.4392
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10861,7 +10889,7 @@
       "lat": 46.2292,
       "lon": 13.4392
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10880,7 +10908,7 @@
       "lat": 46.2292,
       "lon": 13.4392
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10899,7 +10927,7 @@
       "lat": 46.2292,
       "lon": 13.4392
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -10929,7 +10957,9 @@
       "repli": "photos/IMG20260804172919-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBtinmLNGwWRlBIKmuGpG2xcNULJY+YVIj2YYHB54//AF1mptIdtDPglltLrdG5Q9CcZrrnHoznjPlNDyb27jBe5DAnkk1i3FdDde91KKbZmygJ56Dmuqaclc5WrOxpR5ijAAOR1FZexlLcpOwbVhfZEqooHAAxXWMRupB5wO9MR//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -10946,7 +10976,7 @@
       "lat": 46.2292,
       "lon": 13.4392
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -11060,11 +11090,12 @@
       "lat": 46.2445,
       "lon": 13.566
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -11089,7 +11120,9 @@
       "repli": "photos/IMG20260805124645-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBHXagCbfZmiycfh1qabl8UCZOOzHHGzcAH2nDBFJz9Mf1rT6zUejYezj2Lmo/6+H/rl/7NWctkVHcqW/3/APgQ/kK5uqG+p//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -11117,7 +11150,9 @@
       "repli": "photos/IMG20260805124657-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBsczQLt5bjIMmcAdOtUsRKxHIt2Q+aPtXmO7rIwwGByF/DHFOE3J3tqTJKKJLz/UR/7o/nXIvjibS2M+0/49rn/PrXZH+LH5nPP4H8j//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -11145,7 +11180,9 @@
       "repli": "photos/IMG20260805124702-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCysTehr0+ZHJYz73UUguhCrE44bHY1y1KzUrI0UdCaW4lIIZYtuMkxrux+Zrm9rpdM15UVd0Ik3TwQFScAngt+IJojU5t1dicUth0itnMQVQFPyDjJ+tKhTdZu/Qc5WGwwmQZudrHHTrtPqDWlalKlGM0ZQqKpJxElcrgjrV4aXJSuhzV5CI7FsZ4rGriZyjydBxoxT5j/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2608,
     "hauteur": 4624,
     "orientation": 1,
@@ -11173,7 +11210,9 @@
       "repli": "photos/IMG20260805124733-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCpb3cWeRjH91t1dvtkc3Iy6bobPlhZ/wDgYFP2gWMe2/1K1xROiRci7VojM//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -11201,7 +11240,9 @@
       "repli": "photos/IMG20260805124744-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC0LoDj7PI34j/GurnOewx9T8pTm0lCjktuFRKoUkR/xVDAjvf+PKb/AHDWci0f/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -11229,7 +11270,9 @@
       "repli": "photos/IMG20260805124747-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCSO6QMA0UgH97j/GujnRjysvR3UW3MYeTHoB/jRzXFaxzd1/rpP97+lcyN2aMH/Lv+P9a0Rmz/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -11257,7 +11300,9 @@
       "repli": "photos/IMG20260805124807-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCOzuRHbKJjvkHoR+Wa2hU0szKUXc0rW7hdclXH4Aj86v2l9ieWxSg7VxwN5EkX+ob/AHmrVGbP/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -11285,7 +11330,9 @@
       "repli": "photos/IMG20260805124824-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCm5mjeMZVkB/eHbg4+lbLFSe5k6SL0NzD0KyDnjjrW/tkzPksMHST/AH682J1Ma/3fxrojsYvc/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -11313,7 +11360,9 @@
       "repli": "photos/IMG20260805124915-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwAyN/lxEqVYjGD1H9PyqLWQlK7sOxJ8xBJUgYzgKTnkYxmp9pyltLqSj/l4/wB4/wA6qr0M47sjk++fr/hWEtjSR//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -11341,7 +11390,9 @@
       "repli": "photos/IMG20260805132050-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC+t5ak+WuS+7HTrWylqZPYZFqsDswQN8tNST0FsVjpqpcCRWkZw33NvB4rmTZq0iOBEtZHKQyI2D91Sdpz0NXztPQFBNDrqaVmjBldZSmFLOSQB7juaybua043ZbsJGa1RWbMiqA/PU+tJsco8uhU1JymmpOADJ5qjJHbmqgubczu4u6LGn4Ns0oVUYnBCjA4qXuUf/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -11369,7 +11420,9 @@
       "repli": "photos/IMG20260805132055-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDTSNsE44Fdt0c1ieJUH3wfwqW30GjEe61HzEAOIztDMSAvXrmuVTbNOUiH2vzLiWSRvKUMeD/KqU9b3Dk1SZa1KN9qQzsSjyAhwvOfTNc2yOmnFN6kwST7GsVrs2tkEuTwPUU0+4pbketkix3KSCrrgg1VNJysyJNxV0Lpzt/ZtuScnb3+tKp8TCLuj//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -11386,11 +11439,12 @@
       "lat": 46.7754,
       "lon": 12.036
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -11475,11 +11529,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.733000000000004,
-      "lon": 12.283000000000001
+      "lat": 46.73644862081005,
+      "lon": 12.30564125349162
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -11493,11 +11547,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.7308,
-      "lon": 12.3205
+      "lat": 46.73653671632526,
+      "lon": 12.307098106765984
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -11511,11 +11565,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.7308,
-      "lon": 12.3205
+      "lat": 46.73714485955928,
+      "lon": 12.317155093885786
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -11529,11 +11583,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.7343,
-      "lon": 12.336400000000001
+      "lat": 46.73850039377716,
+      "lon": 12.339571836204222
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -11547,11 +11601,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.7339,
-      "lon": 12.3423
+      "lat": 46.739009074332714,
+      "lon": 12.347983988982
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -11649,11 +11703,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.7428,
-      "lon": 12.3731
+      "lat": 46.741323333333334,
+      "lon": 12.374169933665009
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -11695,11 +11749,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.7403,
-      "lon": 12.3652
+      "lat": 46.744258040201004,
+      "lon": 12.39009920435511
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -12103,12 +12157,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.746772222222226,
-      "lon": 12.468180555555556,
-      "alt": 0.0
+      "lat": 46.74688098747975,
+      "lon": 12.472375663955734
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260806132258-320.jpg",
@@ -12133,12 +12186,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.746772222222226,
-      "lon": 12.468180555555556,
-      "alt": 0.0
+      "lat": 46.74679101089633,
+      "lon": 12.472925602800283
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260806132312-320.jpg",
@@ -12163,12 +12215,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.746772222222226,
-      "lon": 12.468180555555556,
-      "alt": 0.0
+      "lat": 46.746681753616464,
+      "lon": 12.473593385682946
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260806132329-320.jpg",
@@ -12224,7 +12275,7 @@
       "lat": 46.7491,
       "lon": 12.5092
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -12272,7 +12323,7 @@
       "lat": 46.7721,
       "lon": 12.6088
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -12290,7 +12341,7 @@
       "lat": 46.7773,
       "lon": 12.6326
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -12308,7 +12359,7 @@
       "lat": 46.7838,
       "lon": 12.6591
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -12326,7 +12377,7 @@
       "lat": 46.785399999999996,
       "lon": 12.6868
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -12344,7 +12395,7 @@
       "lat": 46.785399999999996,
       "lon": 12.6868
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -12599,7 +12650,9 @@
       "repli": "photos/IMG20260807112442-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDSs5/tdurcnbwR711rQ5XqZV6WWchownHPG2ueqzWBWsb2S3R1QkFj17VLqhyklyzTMZZG78+prHnci0iCysJ3YeYmI/XfgmloOxoS2Ua4IfGT0zmolZFWLUSjrWgCyRqWyR0rKrsUj//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -12627,7 +12680,9 @@
       "repli": "photos/IMG20260807112457-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDNspm+UxlmkRgQEGfzqeZp3JsaEodpXcxZYkEhcYFRKV3qWkFh/wAeEdUBKPv/AI1jL4ho/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -12715,7 +12770,9 @@
       "repli": "photos/IMG20260807112953-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDXtNQ8+xUzN1wGbOOa1aRkmzEnlC3LLCp+Y9zmuao09TRFKKUr5abmYZ+7tPFJtsVi0ZNoDKnPO7jk1HQtIms7WC2yYzKxI6s1XqFkOm/eyYEXAIwe/wBc1lKVtxk8Q5rZEsCgLAn61yz1kV0P/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -12743,7 +12800,9 @@
       "repli": "photos/IMG20260807113002-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDSiuxPao0hIDdTnHOK3aW5gmzHaTbcFI1PJ781yVLPU1RVilIMaFyw9MHipcmxWLJkEYEioduPmOKl6qxaWhYs7aG1B2PK5PdiKvUdkLJiWUYiPDcHv+dZSlbQCWIfIDWohSo3bvQZxXNPVlH/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -12771,7 +12830,9 @@
       "repli": "photos/IMG20260807135926-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCQsxUKRksucHqPSlsImgjdo/OO0oGxg96ECRSLgv8ANx8mKLgPiugP3bEKucg+lAXAW0BALXQB9QhNTqK67j4oYQ6rkOvfIxTQXRMYU9KLmdgaFR0oCx//2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2256,
     "hauteur": 4000,
     "orientation": 1,
@@ -12799,7 +12860,9 @@
       "repli": "photos/IMG20260807135946-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDOtJri1lV0zweQvIP1o5yGaM+ryuFKgp/s5/xq+ZEmh/EfoP61BqNk6GgR/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -12827,7 +12890,9 @@
       "repli": "photos/IMG20260807140001-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBkW7y48sCc9MdPeldkcyLkvyiNkALMPmyapMZWj+6PrUGaJT/rD9BTLP/Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4000,
     "hauteur": 2256,
     "orientation": 1,
@@ -12855,7 +12920,9 @@
       "repli": "photos/IMG20260807140011-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCNCxVt2D83Q96E2RdFt8+Sj/ebJGM9qfMMhj6fjUGRMeg+hpln/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4000,
     "hauteur": 2256,
     "orientation": 1,
@@ -12869,12 +12936,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.70016862606974,
+      "lon": 12.086038679586014
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807140156-320.jpg",
@@ -12900,12 +12966,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.700590283532804,
+      "lon": 12.086084310589785
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807140231-320.jpg",
@@ -12931,12 +12996,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.7008494936904,
+      "lon": 12.086202690031836
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807140253-320.jpg",
@@ -12962,12 +13026,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.702377587602406,
+      "lon": 12.086734144728544
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807140501-320.jpg",
@@ -12993,12 +13056,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.70263498345027,
+      "lon": 12.087003463905274
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807140527-320.jpg",
@@ -13024,12 +13086,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.70286092573636,
+      "lon": 12.087304852502816
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807140552-320.jpg",
@@ -13055,12 +13116,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.70693907792831,
+      "lon": 12.089757220215489
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807141204-320.jpg",
@@ -13086,12 +13146,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.70892362244976,
+      "lon": 12.09276708574195
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807141626-320.jpg",
@@ -13117,12 +13176,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.71142938392417,
+      "lon": 12.095656934591757
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807142234-320.jpg",
@@ -13148,12 +13206,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.71155138556933,
+      "lon": 12.09552772984278
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807142249-320.jpg",
@@ -13179,12 +13236,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.71130621511545,
+      "lon": 12.093597880375984
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807142438-320.jpg",
@@ -13210,12 +13266,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69736666666666,
-      "lon": 12.084794444444444,
-      "alt": 0.0
+      "lat": 46.71062402198794,
+      "lon": 12.091154282694754
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807142705-320.jpg",
@@ -13254,7 +13309,9 @@
       "repli": "photos/IMG20260807144554-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDetLnZ757Vq1czvYbfXKRKZZegBOAM01og3OZj1NwS5clT27VPMmIivdWmvIip+WLHQf1qJS0GixDaLExjSTAXBG4BievWsjSxTu5onzAyAMB99QOvvTsFjRESi4MoJ3MADzximA5o1L5IHNAH/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2608,
     "hauteur": 4624,
     "orientation": 1,
@@ -13628,14 +13685,15 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.6986,
-      "lon": 12.085700000000001
+      "lat": 46.69942509943682,
+      "lon": 12.085716894701553
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -13646,14 +13704,15 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.6986,
-      "lon": 12.085700000000001
+      "lat": 46.699706071956406,
+      "lon": 12.085935485331317
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -13708,7 +13767,9 @@
       "repli": "photos/IMG20260807155217-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBpQxwpLEXK7gTgY2nOM8fhUbMLJq5eWSWYNtly68HPB/KrVS5PKPg/48PxP86zexstxp/4/pKOpJ//2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -13736,7 +13797,9 @@
       "repli": "photos/IMG20260807155223-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCmID5e+2Z3QNnIGBkHrWewOJaSWactiRiwAyWGMmtFPTUXKyza/wCpX/eb+dZmhC3/AB/H6UAf/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -13750,12 +13813,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.698799755406554,
+      "lon": 12.085476869969884
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807155803-320.jpg",
@@ -13781,12 +13843,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.69887233401483,
+      "lon": 12.085471493776678
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807155925-320.jpg",
@@ -13812,12 +13873,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.69894668283306,
+      "lon": 12.085465986456809
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807160049-320.jpg",
@@ -13843,12 +13903,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.69896470270942,
+      "lon": 12.085441486452908
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807160123-320.jpg",
@@ -13916,7 +13975,9 @@
       "repli": "photos/IMG20260807161446-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCdVZf3gQ4B64yK9HR6HL5lCSWN5y7McKODjOK46srvyNoqyNS91KEWu22kDlxghR0HelJgjnJJDI+AML7msJO4zVvIlmRWi3Js6kkkYrp9TCV3sSWlowjD/aCUI4AAOR+NZNrojWEZLdgDmWOMgFXB3UNu5cUuUnckDA4A7CpKP//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2608,
     "hauteur": 4624,
     "orientation": 1,
@@ -13944,7 +14005,9 @@
       "repli": "photos/IMG20260807161506-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCQjJOT9a9I5CtcFZLjhxiMErk9/WuSrO7t2NoLqat5LBbWrkbGaTpzk/WlKbBJHLySb3Kx/drnk7lGncWsaIGR/lA5yo6+tbSIjqPs7EeWsjtHtYZwYhms3YqKl1LSgY6fd6UNlpWBmJySaQz/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2608,
     "hauteur": 4624,
     "orientation": 1,
@@ -13958,12 +14021,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.7051807200807,
+      "lon": 12.089102910439069
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807163626-320.jpg",
@@ -13989,12 +14051,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.706328266746205,
+      "lon": 12.089540929494476
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807164015-320.jpg",
@@ -14020,12 +14081,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.70636580173209,
+      "lon": 12.089533530124497
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807164022-320.jpg",
@@ -14051,12 +14111,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.707852302111654,
+      "lon": 12.091168479070308
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807164652-320.jpg",
@@ -14082,12 +14141,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69365,
-      "lon": 12.085194444444445,
-      "alt": 0.0
+      "lat": 46.7089143804901,
+      "lon": 12.092749947546945
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807165208-320.jpg",
@@ -14113,12 +14171,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.70905085674532,
+      "lon": 12.093124501359883
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807165302-320.jpg",
@@ -14144,12 +14201,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.709457440792896,
+      "lon": 12.09540279020268
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807165809-320.jpg",
@@ -14175,12 +14231,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.70946664628676,
+      "lon": 12.095422288759298
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807165812-320.jpg",
@@ -14206,12 +14261,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.71060164275259,
+      "lon": 12.096335576212029
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807170220-320.jpg",
@@ -14237,12 +14291,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.711368256410836,
+      "lon": 12.094065954307494
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807170953-320.jpg",
@@ -14268,12 +14321,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.693691666666666,
-      "lon": 12.08481388888889,
-      "alt": 0.0
+      "lat": 46.71133847462724,
+      "lon": 12.093841264019344
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807171022-320.jpg",
@@ -14299,12 +14351,11 @@
     "origine_date": "exif",
     "jour": "2026-08-07",
     "position": {
-      "lat": 46.69648888888889,
-      "lon": 12.084419444444444,
-      "alt": 0.0
+      "lat": 46.70950867487075,
+      "lon": 12.089043777156723
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260807172218-320.jpg",
@@ -14474,12 +14525,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.588997222222226,
-      "lon": 12.255838888888889,
-      "alt": 0.0
+      "lat": 46.5944081799001,
+      "lon": 12.252109465715742
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808100439-320.jpg",
@@ -15066,11 +15116,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.562999999999995,
-      "lon": 12.4158
+      "lat": 46.615260279739275,
+      "lon": 12.292989133321264
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -15084,12 +15134,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.6153422490796,
+      "lon": 12.29296926564669
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808112046-320.jpg",
@@ -15114,12 +15163,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.617345152091254,
+      "lon": 12.292483803337559
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808113008-2-320.jpg",
@@ -15145,12 +15193,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.61888831402016,
+      "lon": 12.292109772768423
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808113721-320.jpg",
@@ -15175,12 +15222,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.618916825095056,
+      "lon": 12.29210286227292
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808113729-320.jpg",
@@ -15205,12 +15251,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.61912353038807,
+      "lon": 12.292052761180518
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808113827-320.jpg",
@@ -15235,12 +15280,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.61919124419096,
+      "lon": 12.292036348753697
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808113846-320.jpg",
@@ -15265,12 +15309,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.61951199378357,
+      "lon": 12.29195860567928
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG_20260808_114119-320.jpg",
@@ -15295,12 +15338,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.56296944444444,
-      "lon": 12.415827777777778,
-      "alt": 0.0
+      "lat": 46.619519121552294,
+      "lon": 12.291956878055405
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808114018-320.jpg",
@@ -15325,12 +15367,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.552899999999994,
-      "lon": 12.451783333333333,
-      "alt": 0.0
+      "lat": 46.62375301617478,
+      "lon": 12.290930669473113
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808120006-320.jpg",
@@ -15355,12 +15396,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.620808333333336,
-      "lon": 12.312055555555556,
-      "alt": 0.0
+      "lat": 46.62441233478182,
+      "lon": 12.29077086426459
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808120311-320.jpg",
@@ -15765,7 +15805,9 @@
       "repli": "photos/IMG20260808130249-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC3PqGWbaFCj++M84p3HYkNzGcMySrkc7F3DNO4iKX/AI9E+tZlD7Tr/wABX+VMD//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -15793,7 +15835,9 @@
       "repli": "photos/IMG20260808130252-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC7cX434UKMAZ3jv/SncLAbuLYrOrpx8xRSQadwK0//AB6T/wDXQVBRYseq/wDXP+tAH//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -15821,7 +15865,9 @@
       "repli": "photos/IMG20260808130315-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCzcXcvmEs7J6BTwvFO47CyXzrtaW2LcYyflzRcVis33ZP+uzfyqCjVg+4aAP/Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -15849,7 +15895,9 @@
       "repli": "photos/IMG20260808130326-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC3LdSeYvyDqBjrz9e1VzCsBZmZi9kx/wBpjkVSqNLRkuKb1Ht/qF/3/wClZGg9P9Wf9ygR/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -15877,7 +15925,9 @@
       "repli": "photos/IMG20260808132238-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC9JZxy26yRkoxGQp6fT1rt9pyyszn5Lq6HabHGE+dBuI3ls9RngVNV6lQ2Ip9RO4K8bvg8FTWF0aaj/t5OE8pkd8KcgD6fWpc1tuUoO1x0LYKyKnmKW25xz/8AWrLzGio9yWv3VyjJFhlYDkc9AKNEro0s3ozTeFRbCJchdmODz0qrGa0MjU5WtbKDycAux3EgZNO19AvbU//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2608,
     "hauteur": 4624,
     "orientation": 1,
@@ -15905,7 +15955,9 @@
       "repli": "photos/IMG20260808132249-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC6kkkSsIwG/wB48f8A1qftBcooncyRwjyVZuWxk/Snz3Vx8thV++n1P8qxQ2RWH+uP+9/jSZqj/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -15922,11 +15974,12 @@
       "lat": 46.6357,
       "lon": 12.310500000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -15951,7 +16004,9 @@
       "repli": "photos/IMG20260808132431-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCdppopfnkEgPVewFX7SwuUWO5mZifIQMT8vOT/APWpc/YOUrQ/dH1NYlE+n/8AH0Pp/SmtwP/Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -16105,12 +16160,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.611330555555554,
-      "lon": 12.292327777777778,
-      "alt": 0.0
+      "lat": 46.635677702491726,
+      "lon": 12.308170502989958
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808141846-320.jpg",
@@ -16135,12 +16189,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.60986944444445,
-      "lon": 12.288891666666666,
-      "alt": 0.0
+      "lat": 46.635593773390426,
+      "lon": 12.30832898906391
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808141944-320.jpg",
@@ -16166,12 +16219,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.60986944444445,
-      "lon": 12.288891666666666,
-      "alt": 0.0
+      "lat": 46.63553572488413,
+      "lon": 12.308190854714418
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808142051-320.jpg",
@@ -16197,12 +16249,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.60986944444445,
-      "lon": 12.288891666666666,
-      "alt": 0.0
+      "lat": 46.63534707195126,
+      "lon": 12.308083117916503
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808142316-320.jpg",
@@ -16228,12 +16279,11 @@
     "origine_date": "exif",
     "jour": "2026-08-08",
     "position": {
-      "lat": 46.60986944444445,
-      "lon": 12.288891666666666,
-      "alt": 0.0
+      "lat": 46.63534226649069,
+      "lon": 12.308091471333935
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260808142319-320.jpg",
@@ -17213,11 +17263,12 @@
       "lat": 46.6117,
       "lon": 12.2921
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -17231,11 +17282,12 @@
       "lat": 46.6117,
       "lon": 12.2921
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -17249,11 +17301,12 @@
       "lat": 46.6099,
       "lon": 12.2889
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -17774,7 +17827,9 @@
       "repli": "photos/IMG20260808202018-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCLSZLZYHSdl57MOB75rqi1Yxkncl1GS1js5Le3aNW3fMijrQ2rWFG97syB/wAeb/WsvsmvUgf7x+tQ9xn/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -17791,7 +17846,7 @@
       "lat": 46.5335,
       "lon": 11.5335
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -17820,7 +17875,9 @@
       "repli": "photos/IMG20260809115633-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCWPUZ3kVY4doJxz0z9TV86ZNhz3N2ykMNp9CwBNLmHYnl/hrkNBsnb6VXQD//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -17848,7 +17905,9 @@
       "repli": "photos/IMG20260809115655-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwBy6nNvUJCQPZSc1fOibErXVzINrKVyOdxAFHMFi0P4v96uV7mpT1H7h/3KqG4pH//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -17946,11 +18005,11 @@
     "origine_date": "exif",
     "jour": "2026-08-09",
     "position": {
-      "lat": 46.5249,
-      "lon": 11.533100000000001
+      "lat": 46.522589239869355,
+      "lon": 11.522580966667933
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -17964,12 +18023,11 @@
     "origine_date": "exif",
     "jour": "2026-08-09",
     "position": {
-      "lat": 46.52990277777778,
-      "lon": 11.519816666666667,
-      "alt": 0.0
+      "lat": 46.52258787519147,
+      "lon": 11.522579989366147
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260809175802-320.jpg",
@@ -17994,11 +18052,11 @@
     "origine_date": "exif",
     "jour": "2026-08-09",
     "position": {
-      "lat": 46.5299,
-      "lon": 11.5198
+      "lat": 46.52249848879014,
+      "lon": 11.522515976099148
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -18027,7 +18085,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCVli25Tb7hj1rf62+iMlRXcSRJSD5awLxwATWH1mfcvkj2GQ9qwLHv98/WkB//2Q==",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 4624,
     "hauteur": 2608,
@@ -18075,7 +18134,7 @@
       "lat": 46.4859,
       "lon": 11.4552
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -18093,7 +18152,7 @@
       "lat": 46.5394,
       "lon": 11.4589
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -18348,7 +18407,9 @@
       "repli": "photos/IMG20260809204912-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC7DtKbSPlPUUDF8n5/lfPfFAEUH3aAHD/XL9BQB//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4096,
     "hauteur": 2304,
     "orientation": 1,
@@ -18376,7 +18437,9 @@
       "repli": "photos/IMG20260809204927-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCGw8sgqw6jBr0Gcz3J3hUnCODzx2xSEUrT74p9CpFu2/1R/wB40mSz/9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -18393,7 +18456,7 @@
       "lat": 46.532399999999996,
       "lon": 11.532900000000001
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -18604,11 +18667,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.53771944444444,
-      "lon": 11.631186111111111
+      "lat": 46.51910935347409,
+      "lon": 11.642805246705601
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810143258-320.jpg",
@@ -18633,12 +18696,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.53771944444444,
-      "lon": 11.631186111111111,
-      "alt": 0.0
+      "lat": 46.5191103197065,
+      "lon": 11.642848705450733
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810143327-320.jpg",
@@ -18664,12 +18726,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.530430555555554,
-      "lon": 11.636841666666665,
-      "alt": 0.0
+      "lat": 46.51914437106918,
+      "lon": 11.644380251572327
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810145029-320.jpg",
@@ -18695,12 +18756,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.534816666666664,
-      "lon": 11.632744444444445,
-      "alt": 0.0
+      "lat": 46.51916266284815,
+      "lon": 11.645202970575022
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810145938-320.jpg",
@@ -18726,12 +18786,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.534816666666664,
-      "lon": 11.632744444444445,
-      "alt": 0.0
+      "lat": 46.519169593066785,
+      "lon": 11.645514674678047
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810150306-320.jpg",
@@ -18757,12 +18816,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.534816666666664,
-      "lon": 11.632744444444445,
-      "alt": 0.0
+      "lat": 46.519170126160525,
+      "lon": 11.645538651916741
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810150322-320.jpg",
@@ -18788,12 +18846,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.55800277777777,
-      "lon": 11.750794444444445,
-      "alt": 0.0
+      "lat": 46.51917442422881,
+      "lon": 11.645731968403714
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810150531-320.jpg",
@@ -18818,11 +18875,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.530430555555554,
-      "lon": 11.636841666666665
+      "lat": 46.519175257187776,
+      "lon": 11.645769432839174
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810150556-320.jpg",
@@ -18847,12 +18904,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.55837777777778,
-      "lon": 11.744238888888889,
-      "alt": 0.0
+      "lat": 46.519178688978734,
+      "lon": 11.645923786313267
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810150739-320.jpg",
@@ -18877,12 +18933,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.53771944444444,
-      "lon": 11.631186111111111,
-      "alt": 0.0
+      "lat": 46.51918495283019,
+      "lon": 11.646205518867925
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810151047-320.jpg",
@@ -18908,12 +18963,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.525752777777775,
-      "lon": 11.640816666666666,
-      "alt": 0.0
+      "lat": 46.51919441524408,
+      "lon": 11.646631114854747
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810151531-320.jpg",
@@ -18938,12 +18992,11 @@
     "origine_date": "exif",
     "jour": "2026-08-10",
     "position": {
-      "lat": 46.525752777777775,
-      "lon": 11.640816666666666,
-      "alt": 0.0
+      "lat": 46.51919474842767,
+      "lon": 11.646646100628931
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260810151541-320.jpg",
@@ -18971,7 +19024,7 @@
       "lat": 46.5258,
       "lon": 11.640799999999999
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -19733,11 +19786,12 @@
       "lat": 46.5396,
       "lon": 11.4637
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ]
   },
   {
@@ -19860,11 +19914,11 @@
     "origine_date": "exif",
     "jour": "2026-08-11",
     "position": {
-      "lat": 45.8799,
-      "lon": 10.8551
+      "lat": 45.880993876404496,
+      "lon": 10.85485127340824
     },
-    "fiabilite": "haute",
-    "origine_position": "exif",
+    "fiabilite": "basse",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -20049,7 +20103,7 @@
       "lat": 45.8777,
       "lon": 10.8574
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -20067,7 +20121,7 @@
       "lat": 45.8775,
       "lon": 10.857
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -20272,7 +20326,9 @@
       "repli": "photos/IMG20260812101853-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCMag33dwnOOAFOT+VW67i7E+zUkOuGkaNP3SopI69Px4rkUrs3eiGaN/qmqagRILn/AI8X/wCu5/8AQq0iQz//2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -20300,7 +20356,9 @@
       "repli": "photos/IMG20260812102115-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCGeJRdbNxT5cjA4zkcfrWcOVxbY23dWLEUHls3mYD5xyM4rlndux1wtYdqHW0+r/8AoVbQ2ZxxJbj/AF7/AO8f5Cs/tM6l8KP/2Q==",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -20328,7 +20386,9 @@
       "repli": "photos/IMG20260812102752-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAcABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwA1C8lhvZ4kdkAUMDu4/KskiupHZ3d1Ncwq05KM2COabsA/V4TNdvtbh1XjGQf84oQEWlqftUQ3hiDnAGM4GP6UNaXFfoal7ZJcyb2kZeMYVN1IbIobaO1YzrK7bBgq0WDzTbFtqRfaZupfP1AoGJ9rmXOH/HApDP/Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 2304,
     "hauteur": 4096,
     "orientation": 1,
@@ -20860,7 +20920,9 @@
       "repli": "photos/IMG20260812111522-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwAPCO0mVYcBdp5NaTxM1toRGlHqMvJ0t7R3UqXYhfl6j35rFyc93c0SUVoia/8Aup9P61E/hDqZep/8er/hWVP4iuh//9k=",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4624,
     "hauteur": 2608,
     "orientation": 1,
@@ -20888,7 +20950,9 @@
       "repli": "photos/IMG20260812111549-1024.jpg"
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDQl1C3TP8ArG/3UJrXUw0K0mpKR+6hYnGfnO0fSk5NdCkk+pA3etDIY/amI//Z",
-    "anomalies": [],
+    "anomalies": [
+      "position_clonee"
+    ],
     "largeur": 4000,
     "hauteur": 2256,
     "orientation": 1,
@@ -21215,7 +21279,7 @@
       "lat": 45.6051,
       "lon": 7.3568999999999996
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -21233,7 +21297,7 @@
       "lat": 45.608000000000004,
       "lon": 7.3564
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -21350,12 +21414,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.58511666666667,
-      "lon": 7.389541666666667,
-      "alt": 0.0
+      "lat": 45.59032806441526,
+      "lon": 7.43423739895305
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814140048-320.jpg",
@@ -21365,7 +21428,8 @@
     },
     "lqip": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAgAAAQABAAD/wAARCAAJABADAREAAhEBAxEB/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCGO7lVQELAegP8qj2lhWLAubhUwD+uaPahyshH+of6GuZ7mo5Ov4f0pvYSP//Z",
     "anomalies": [
-      "altitude_nulle"
+      "altitude_nulle",
+      "position_clonee"
     ],
     "largeur": 4096,
     "hauteur": 2304,
@@ -21716,11 +21780,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.585100000000004,
-      "lon": 7.389500000000001
+      "lat": 45.58286093222938,
+      "lon": 7.42924153122764
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -22143,11 +22207,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.585100000000004,
-      "lon": 7.389500000000001
+      "lat": 45.58757567368033,
+      "lon": 7.416642340346992
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -22239,7 +22303,7 @@
       "lat": 45.611000000000004,
       "lon": 7.3617
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -22287,7 +22351,7 @@
       "lat": 45.611000000000004,
       "lon": 7.3617
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [
@@ -22302,12 +22366,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.610952777777776,
-      "lon": 7.361725,
-      "alt": 0.0
+      "lat": 45.589151144770526,
+      "lon": 7.411162378598227
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814162749-320.jpg",
@@ -22332,12 +22395,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.610952777777776,
-      "lon": 7.361725,
-      "alt": 0.0
+      "lat": 45.58917936608114,
+      "lon": 7.411101128992673
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814162813-320.jpg",
@@ -22362,12 +22424,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.60695555555556,
-      "lon": 7.368438888888888,
-      "alt": 0.0
+      "lat": 45.591540549069116,
+      "lon": 7.405976578661337
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814170141-320.jpg",
@@ -22476,12 +22537,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.59366666666667,
-      "lon": 7.390352777777778,
-      "alt": 0.0
+      "lat": 45.59492541340715,
+      "lon": 7.396910810207202
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814180214-320.jpg",
@@ -22537,7 +22597,7 @@
       "lat": 45.588300000000004,
       "lon": 7.343299999999999
     },
-    "fiabilite": "haute",
+    "fiabilite": "basse",
     "origine_position": "exif",
     "publie": true,
     "anomalies": [

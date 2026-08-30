@@ -27,6 +27,7 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
   data-jour={jour}
   style={`--hauteur:${hauteur}`}
 >
+  <p class="carte-temoin">Chargement de la carte…</p>
   <noscript>La carte demande JavaScript. Le récit, lui, se lit sans.</noscript>
 </div>
 
@@ -50,9 +51,22 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
       dragRotate: false,
     });
     carte.touchZoomRotate.disableRotation();
+    const temoin = conteneur.querySelector<HTMLElement>(".carte-temoin");
+    const dire = (texte: string) => {
+      if (temoin) temoin.textContent = texte;
+    };
+    dire("Style chargé, tuiles en cours…");
+
+    let tuiles = 0;
+    carte.on("dataloading", () => {
+      tuiles += 1;
+      dire(`Chargement des tuiles… (${tuiles})`);
+    });
+
     carte.on("load", () => {
       conteneur.dataset.etat = "pret";
       carte.resize();
+      if (temoin) temoin.remove();
     });
 
     // MapLibre fige la taille de sa toile a la construction. Si le conteneur
@@ -64,8 +78,14 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     suivi.observe(conteneur);
     // Un fond injoignable ou un style invalide ne doit pas laisser un
     // rectangle gris muet : la page le dit.
+    let echecs = 0;
     carte.on("error", (evenement: { error?: Error }) => {
-      signaler(conteneur, evenement.error?.message ?? "erreur inconnue");
+      echecs += 1;
+      const message = evenement.error?.message ?? "erreur inconnue";
+      console.error("carte :", message);
+      // Le premier echec suffit a nommer la cause ; les suivants ne font que
+      // la repeter, et noieraient le conteneur.
+      if (echecs === 1) signaler(conteneur, message);
     });
 
     const voyage = conteneur.dataset.voyage!;
@@ -202,6 +222,7 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     background: var(--trait);
     position: relative;
   }
+  .carte-temoin,
   .carte-erreur,
   .carte noscript {
     position: absolute;

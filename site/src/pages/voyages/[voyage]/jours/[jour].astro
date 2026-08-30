@@ -40,7 +40,28 @@ const { v, journee, precedente, suivante } = Astro.props;
 const { Content } = await render(journee);
 
 const jour = journee.data.date.toISOString().slice(0, 10);
-const photos: Media[] = mediasDuJour(v.id, jour).filter((m) => m.type === "photo" && m.derives);
+
+/**
+ * Les médias que le récit montre déjà.
+ *
+ * La galerie de fin de page les écarte : une photo posée au bon endroit du
+ * récit n’a pas à reparaître en vignette dix lignes plus bas. La lecture des
+ * directives est volontairement naïve, sur le Markdown brut ; c’est la même
+ * opération que fait `selection.rs` côté pipeline, et le rendu, lui, passe
+ * par le greffon `directives.ts`, qui échouerait bruyamment sur une syntaxe
+ * qu’il ne comprendrait pas.
+ */
+const cites = new Set<string>();
+for (const trouve of journee.body?.matchAll(/::photo\{[^}]*id="([^"]*)"/g) ?? []) {
+  cites.add(trouve[1]);
+}
+for (const trouve of journee.body?.matchAll(/::galerie\{[^}]*ids="([^"]*)"/g) ?? []) {
+  for (const identifiant of trouve[1].split(",")) cites.add(identifiant.trim());
+}
+
+const photos: Media[] = mediasDuJour(v.id, jour).filter(
+  (m) => m.type === "photo" && m.derives && !cites.has(m.id),
+);
 const camp = lieu(v, journee.data.camp);
 
 const enFrancais = (d: Date) =>
@@ -68,7 +89,7 @@ const lien = (e: CollectionEntry<"journees">) =>
       {
         photos.length > 0 && (
           <section class="galerie">
-            <h2>Les photos du jour</h2>
+            <h2>Les autres photos du jour</h2>
             <div class="grille">
               {photos.map((photo) => (
                 <img

@@ -66,7 +66,6 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     carte.on("load", () => {
       conteneur.dataset.etat = "pret";
       carte.resize();
-      if (temoin) temoin.remove();
     });
 
     // MapLibre fige la taille de sa toile a la construction. Si le conteneur
@@ -90,9 +89,11 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
 
     const voyage = conteneur.dataset.voyage!;
     carte.on("load", () => {
-      dessiner(carte, voyage).catch((erreur: unknown) => {
-        signaler(conteneur, erreur instanceof Error ? erreur.message : String(erreur));
-      });
+      dessiner(carte, voyage)
+        .then(() => temoin?.remove())
+        .catch((erreur: unknown) => {
+          signaler(conteneur, erreur instanceof Error ? erreur.message : String(erreur));
+        });
     });
     return carte;
   }
@@ -180,7 +181,18 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
       },
     });
 
-    carte.fitBounds(emprise(trace), { padding: 36, animate: false });
+    const [[ouest, sud], [est, nord]] = emprise(trace);
+    if (ouest > est || sud > nord) {
+      throw new Error("trace sans geometrie exploitable");
+    }
+    carte.fitBounds(
+      [
+        [ouest, sud],
+        [est, nord],
+      ],
+      { padding: 36, animate: false },
+    );
+    dire(`${trace.features?.length ?? 0} entites tracees`);
   }
 
   /** Affiche l'echec dans le conteneur, plutot que dans la seule console. */
@@ -227,6 +239,12 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
   .carte noscript {
     position: absolute;
     inset: 0;
+    /* MapLibre insere sa toile apres ces elements : sans cela, elle les
+       recouvre et le message reste invisible sous la carte. */
+    z-index: 2;
+    pointer-events: none;
+    margin: 0;
+    background: color-mix(in srgb, var(--fond) 82%, transparent);
     display: grid;
     place-items: center;
     padding: 1rem;

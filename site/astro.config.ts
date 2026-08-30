@@ -77,6 +77,11 @@ export default defineConfig({
   },
   vite: {
     plugins: [mediasLocaux()],
+    worker: {
+      // MapLibre cree son travailleur avec `{type: "module"}` : le paquet
+      // produit par Vite doit donc etre un module, non une fonction anonyme.
+      format: "es",
+    },
     optimizeDeps: {
       // MapLibre n'est atteint que par import dynamique, donc Vite ne le
       // decouvre pas au demarrage : il ne le pre-assemble qu'au premier

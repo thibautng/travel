@@ -36,8 +36,25 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
 
   async function afficher(conteneur: HTMLElement) {
     conteneur.dataset.etat = "chargement";
-    const { Map } = await import("maplibre-gl");
+    const { Map, setWorkerUrl } = await import("maplibre-gl");
     await import("maplibre-gl/dist/maplibre-gl.css");
+
+    // MapLibre 6 decode les tuiles vectorielles dans un travailleur separe,
+    // dont il deduit l'adresse de `import.meta.url` : il la cherche a cote de
+    // son propre module. Une fois empaquete, ce module devient un morceau
+    // compile, et le travailleur est demande a une adresse qui n'existe pas.
+    // Le fichier repond alors 404, sans qu'aucune erreur ne remonte : la
+    // source vectorielle reste indefiniment en cours de chargement pendant
+    // que la couche raster, decodee sur le fil principal, s'affiche.
+    //
+    // On lui donne donc l'adresse. `?worker&url` et non `?url` : le fichier
+    // travailleur importe lui-meme `./maplibre-gl-shared.mjs`, et une copie
+    // brute laisse cet import sans cible. Il faut le faire empaqueter avec
+    // ses dependances, ce que seule la forme `?worker` obtient.
+    const { default: adresseTravailleur } = await import(
+      "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url"
+    );
+    setWorkerUrl(adresseTravailleur);
 
     const carte = new Map({
       container: conteneur,

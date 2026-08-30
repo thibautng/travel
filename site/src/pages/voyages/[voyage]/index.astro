@@ -5,6 +5,7 @@
  */
 import Page from "../../../layouts/Page.astro";
 import Carte from "../../../components/Carte.astro";
+import LegendeCarte from "../../../components/LegendeCarte.astro";
 import { tousLesVoyages, camps, type Voyage } from "../../../voyages";
 import { jours, type JourAgrege } from "../../../donnees";
 import { getCollection } from "astro:content";
@@ -41,6 +42,7 @@ const enFrancais = (d: Date) =>
   </dl>
 
   <Carte voyage={v.id} vue="ensemble" hauteur="55vh" />
+  <LegendeCarte voyage={v.id} />
 
   <h2>Jour par jour</h2>
   <ol class="frise">

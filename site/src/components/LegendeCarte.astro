@@ -1,0 +1,115 @@
+---
+/**
+ * Légende de la carte.
+ *
+ * La spec n'en prévoyait pas, mais la section 9.2 demande quatre styles de
+ * trait pour dire d'où vient un tracé : sans légende, ils ne disent rien.
+ *
+ * Rien n'est codé en dur. Les modes, leurs couleurs et leurs kilomètres
+ * viennent de la trace, et seuls ceux qui y figurent sont montrés : un
+ * voyage sans bateau n'a pas à mentionner le bateau.
+ */
+import { legende } from "../donnees";
+
+interface Props {
+  voyage: string;
+}
+const { voyage } = Astro.props;
+const { modes, sources } = legende(voyage);
+
+const NOMS: Record<string, string> = {
+  route: "Route",
+  marche: "Marche",
+  velo: "Vélo",
+  bateau: "Bateau",
+  train: "Train",
+  telepherique: "Téléphérique",
+};
+
+/** Motifs de tirets, en accord avec ceux passés à MapLibre. */
+const TRAITS: Record<string, { titre: string; tirets?: string; opacite: number }> = {
+  mesuree: { titre: "Relevé par les photos", opacite: 0.95 },
+  calculee: { titre: "Calculé par le moteur d'itinéraire", tirets: "9 4", opacite: 0.9 },
+  manuelle: { titre: "Tracé à la main", tirets: "4 4", opacite: 0.9 },
+  heritee: { titre: "Déduit de deux campings", tirets: "1 5", opacite: 0.6 },
+};
+---
+
+<div class="legende">
+  <ul class="modes">
+    {
+      modes.map((m) => (
+        <li>
+          <svg width="26" height="10" aria-hidden="true">
+            <line x1="1" y1="5" x2="25" y2="5" stroke={m.couleur} stroke-width="3" stroke-linecap="round" />
+          </svg>
+          <span>{NOMS[m.cle] ?? m.cle}</span>
+          <span class="km">{m.km.toLocaleString("fr-FR")} km</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <ul class="traits">
+    {
+      sources.map((s) => (
+        <li>
+          <svg width="26" height="10" aria-hidden="true">
+            <line
+              x1="1"
+              y1="5"
+              x2="25"
+              y2="5"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray={TRAITS[s]?.tirets}
+              opacity={TRAITS[s]?.opacite}
+            />
+          </svg>
+          <span>{TRAITS[s]?.titre ?? s}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="note">
+    Seules les positions fiables sont marquées d'une pastille. Les positions
+    approximatives restent dans les données sans être portées sur la carte.
+  </p>
+</div>
+
+<style>
+  .legende {
+    margin: 0.7rem 0 0;
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.82rem;
+    color: var(--discret);
+  }
+  ul {
+    list-style: none;
+    margin: 0 0 0.4rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.1rem;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .km {
+    opacity: 0.7;
+    font-variant-numeric: tabular-nums;
+  }
+  .traits {
+    padding-top: 0.4rem;
+    border-top: 1px solid var(--trait);
+  }
+  .note {
+    margin: 0.5rem 0 0;
+    opacity: 0.85;
+    max-width: 40rem;
+  }
+</style>

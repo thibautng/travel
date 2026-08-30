@@ -122,6 +122,62 @@ export function traceBrute(voyage: string): string {
   );
 }
 
+export interface EntreeLegende {
+  cle: string;
+  couleur: string;
+  km: number;
+}
+
+export interface Legende {
+  modes: EntreeLegende[];
+  sources: string[];
+}
+
+/** Distance orthodromique en kilomètres, pour totaliser une polyligne. */
+function distanceKm(a: number[], b: number[]): number {
+  const R = 6371.0088;
+  const rad = Math.PI / 180;
+  const dphi = (b[1] - a[1]) * rad;
+  const dlam = (b[0] - a[0]) * rad;
+  const h =
+    Math.sin(dphi / 2) ** 2 +
+    Math.cos(a[1] * rad) * Math.cos(b[1] * rad) * Math.sin(dlam / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(h));
+}
+
+/**
+ * Modes et origines effectivement présents dans la trace, avec leurs
+ * kilomètres. Rien n'est codé en dur : les couleurs viennent de la trace
+ * elle-même, où le pipeline les a déjà déduites du mode. Une légende qui
+ * répéterait la palette finirait par mentir.
+ */
+export function legende(voyage: string): Legende {
+  return memoise(`legende:${voyage}`, () => {
+    const trace = JSON.parse(traceBrute(voyage));
+    const modes = new Map<string, EntreeLegende>();
+    const sources = new Set<string>();
+
+    for (const entite of trace.features ?? []) {
+      if (entite.geometry?.type !== "LineString") continue;
+      const p = entite.properties ?? {};
+      sources.add(p.source);
+      const entree = modes.get(p.mode) ?? { cle: p.mode, couleur: p.couleur, km: 0 };
+      const points: number[][] = entite.geometry.coordinates;
+      for (let i = 1; i < points.length; i += 1) {
+        entree.km += distanceKm(points[i - 1], points[i]);
+      }
+      modes.set(p.mode, entree);
+    }
+
+    return {
+      modes: [...modes.values()]
+        .map((m) => ({ ...m, km: Math.round(m.km) }))
+        .sort((a, b) => b.km - a.km),
+      sources: ["mesuree", "calculee", "manuelle", "heritee"].filter((s) => sources.has(s)),
+    };
+  });
+}
+
 /** Index des médias par identifiant, pour résoudre les directives du récit. */
 export function parIdentifiant(voyage: string): Map<string, Media> {
   return memoise(

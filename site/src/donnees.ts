@@ -109,6 +109,19 @@ export function jours(voyage: string): JourAgrege[] {
   return memoise(`jours:${voyage}`, () => lire<JourAgrege[]>(voyage, "jours.json"));
 }
 
+/**
+ * Trace du voyage, telle quelle.
+ *
+ * Rendue en chaîne et non analysée : le site ne fait que la transmettre au
+ * navigateur, qui la donnera à MapLibre. L'analyser ici coûterait une
+ * sérialisation pour rien.
+ */
+export function traceBrute(voyage: string): string {
+  return memoise(`trace:${voyage}`, () =>
+    readFileSync(path.join(RACINE, "data", voyage, "trace.geojson"), "utf-8"),
+  );
+}
+
 /** Index des médias par identifiant, pour résoudre les directives du récit. */
 export function parIdentifiant(voyage: string): Map<string, Media> {
   return memoise(

@@ -41,8 +41,9 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     const carte = new Map({
       container: conteneur,
       style: STYLE_FOND,
+      // Repli seulement : le cadrage reel vient de l'emprise de la trace.
       center: [11, 46.5],
-      zoom: 5,
+      zoom: 4,
       attributionControl: { compact: true },
       // Le site se lit d'abord au doigt : la rotation gêne plus qu'elle ne sert.
       pitchWithRotate: false,
@@ -66,7 +67,100 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     carte.on("error", (evenement: { error?: Error }) => {
       signaler(conteneur, evenement.error?.message ?? "erreur inconnue");
     });
+
+    const voyage = conteneur.dataset.voyage!;
+    carte.on("load", () => {
+      dessiner(carte, voyage).catch((erreur: unknown) => {
+        signaler(conteneur, erreur instanceof Error ? erreur.message : String(erreur));
+      });
+    });
     return carte;
+  }
+
+  /**
+   * Styles de trace de la section 9.2. Les tirets sont exprimes en multiples
+   * de la largeur du trait, et disent d'ou vient le trace : plein pour ce qui
+   * a ete mesure, tirets longs pour ce qu'un moteur a calcule, tirets courts
+   * pour ce qui a ete saisi a la main, pointilles pour ce qui est herite de
+   * deux lieux declares.
+   */
+  const STYLES: Record<string, { tirets?: number[]; opacite: number }> = {
+    mesuree: { opacite: 0.95 },
+    calculee: { tirets: [3, 1.4], opacite: 0.9 },
+    manuelle: { tirets: [1.4, 1.4], opacite: 0.9 },
+    heritee: { tirets: [0.4, 2], opacite: 0.6 },
+  };
+
+  /** Emprise de toutes les geometries, pour le cadrage initial. */
+  function emprise(trace: any): [[number, number], [number, number]] {
+    let ouest = 180, sud = 90, est = -180, nord = -90;
+    const point = ([x, y]: number[]) => {
+      if (x < ouest) ouest = x;
+      if (x > est) est = x;
+      if (y < sud) sud = y;
+      if (y > nord) nord = y;
+    };
+    for (const entite of trace.features ?? []) {
+      const g = entite.geometry;
+      if (!g) continue;
+      if (g.type === "Point") point(g.coordinates);
+      else if (g.type === "LineString") g.coordinates.forEach(point);
+    }
+    return [
+      [ouest, sud],
+      [est, nord],
+    ];
+  }
+
+  async function dessiner(carte: any, voyage: string) {
+    const reponse = await fetch(`/donnees/${voyage}/trace.geojson`);
+    if (!reponse.ok) {
+      throw new Error(`trace indisponible (HTTP ${reponse.status})`);
+    }
+    const trace = await reponse.json();
+    carte.addSource("trace", { type: "geojson", data: trace });
+
+    for (const [source, style] of Object.entries(STYLES)) {
+      carte.addLayer({
+        id: `trace-${source}`,
+        type: "line",
+        source: "trace",
+        filter: [
+          "all",
+          ["==", ["geometry-type"], "LineString"],
+          ["==", ["get", "source"], source],
+        ],
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: {
+          // La couleur vient du mode, calculee par le pipeline (section 5.6).
+          "line-color": ["get", "couleur"],
+          "line-opacity": style.opacite,
+          "line-width": ["interpolate", ["linear"], ["zoom"], 5, 1.6, 10, 3, 14, 4.5],
+          ...(style.tirets ? { "line-dasharray": style.tirets } : {}),
+        },
+      });
+    }
+
+    // Section 9.2 : les positions suspectes ne sont pas affichees par defaut.
+    carte.addLayer({
+      id: "photos",
+      type: "circle",
+      source: "trace",
+      filter: [
+        "all",
+        ["==", ["geometry-type"], "Point"],
+        ["==", ["get", "fiabilite"], "haute"],
+      ],
+      paint: {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 2, 10, 3.5, 14, 5],
+        "circle-color": "#c0562a",
+        "circle-stroke-width": 1,
+        "circle-stroke-color": "#ffffff",
+        "circle-opacity": 0.9,
+      },
+    });
+
+    carte.fitBounds(emprise(trace), { padding: 36, animate: false });
   }
 
   /** Affiche l'echec dans le conteneur, plutot que dans la seule console. */

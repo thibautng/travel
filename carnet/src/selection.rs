@@ -175,8 +175,13 @@ pub fn appliquer(medias: &mut [Media], selection: &Selection, cites: &BTreeSet<S
         }
     }
 
-    // Sans liste de retenus ni citation, rien ne restreint : tout est publié.
-    bilan.tout_retenu = retenus.is_empty() && cites.is_empty();
+    // Seule une liste `retenus` restreint. D7 dit « en l'absence de ce
+    // fichier, tout est retenu » : c'est selection.yaml qui décide, pas le
+    // récit. Une citation ajoute au choix, elle ne le déclenche pas.
+    //
+    // La lecture inverse a coûté cher : deux directives posées dans une
+    // journée ont dépublié 701 photos sur 705, sans que rien ne le dise.
+    bilan.tout_retenu = retenus.is_empty();
 
     for media in medias.iter_mut() {
         let cite = cites.contains(&media.id);
@@ -269,15 +274,30 @@ Encore du texte.
         assert!(!medias.iter().find(|m| m.id == "B").expect("B").publie);
     }
 
-    /// Un média cité par le récit est retenu sans avoir à le répéter.
+    /// Une citation ne restreint pas à elle seule : sans selection.yaml, tout
+    /// reste publié. C'est le sens de « en l'absence de ce fichier » dans D7,
+    /// et l'avoir lu autrement avait dépublié 701 photos sur 705.
     #[test]
-    fn le_recit_retient_d_office() {
+    fn une_citation_ne_restreint_pas_a_elle_seule() {
         let mut medias = vec![media("A"), media("B")];
         let cites: BTreeSet<String> = ["B".to_string()].into_iter().collect();
         let bilan = appliquer(&mut medias, &Selection::default(), &cites);
-        assert!(!bilan.tout_retenu, "une citation suffit à restreindre");
-        assert_eq!(bilan.publies, 1);
-        assert!(medias.iter().find(|m| m.id == "B").expect("B").publie);
+        assert!(bilan.tout_retenu);
+        assert_eq!(bilan.publies, 2);
+    }
+
+    /// En revanche, dès qu'une liste existe, le récit s'y ajoute d'office.
+    #[test]
+    fn le_recit_s_ajoute_a_la_liste_des_retenus() {
+        let mut medias = vec![media("A"), media("B"), media("C")];
+        let selection = Selection {
+            retenus: vec!["A".into()],
+            exclus: Vec::new(),
+        };
+        let cites: BTreeSet<String> = ["C".to_string()].into_iter().collect();
+        let bilan = appliquer(&mut medias, &selection, &cites);
+        assert_eq!(bilan.publies, 2, "A par la liste, C par le recit");
+        assert!(!medias.iter().find(|m| m.id == "B").expect("B").publie);
     }
 
     /// L'exclusion l'emporte sur tout, y compris sur une citation.

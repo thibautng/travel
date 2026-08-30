@@ -41,6 +41,14 @@ segments:
     points: [[12.9887, 47.5893], [12.9797, 47.5225], [12.9847, 47.4967]]
     note: "Königssee, Schönau vers St. Bartholomä puis Salet. Décrochage GPS en vallée encaissée."
 
+  # Le train part de Lienz, la ou la sortie s’arrete, et rejoint la derniere
+  # position relevee du retour. Sans ce tronçon, la ligne du train commencait
+  # sept kilomètres avant Lienz, la ou se trouve la derniere photo.
+  - jour: 2026-08-06
+    mode: train
+    points: [[12.7690, 46.8290], [12.6868, 46.7854]]
+    note: "Depart du train, de Lienz vers la vallee de la Drave."
+
   - jour: 2026-08-06
     mode: velo
     apres: IMG20260806161600
@@ -139,26 +147,19 @@ modes:
     de: "17:55"
     a: "19:10"
 
-  # 6 août, sortie à vélo de San Candido à Lienz. Quelques sauts de position
-  # donnent des vitesses de 60 à 300 km/h, ce qui faisait passer des tronçons
-  # de la sortie pour de la voiture et les envoyait au routeur routier, qui
-  # les faisait zigzaguer d’une rive à l’autre de la vallée.
-  - jour: 2026-08-06
-    mode: velo
-    de: "11:00"
-    a: "11:40"
-  - jour: 2026-08-06
-    mode: velo
-    de: "15:45"
-    a: "15:55"
-  # Retour de Lienz en train. Sans cette ligne, le trajet de retour était
-  # rattaché à la sortie à vélo et repassait sur elle, donnant l’impression
-  # d’un aller-retour à vélo qui n’a pas eu lieu.
+  # 6 août. Toute la journée est à vélo jusqu’à Lienz, puis en train au
+  # retour. Aucune marche : les arrêts à une ou deux heures que l’inférence
+  # prenait pour de la marche sont des portions lentes de la sortie. Quelques
+  # sauts de position donnaient par ailleurs des vitesses de 60 à 300 km/h,
+  # qui envoyaient des tronçons au routeur automobile.
   - jour: 2026-08-06
     mode: train
     de: "16:10"
-    a: "19:00"
+    a: "23:59"
     note: "Retour de Lienz à San Candido en train."
+  - jour: 2026-08-06
+    mode: velo
+    note: "Le reste de la journée est la sortie sur la piste de la Drave."
 
   # 11 août, descente vers le lac de Garde. Un seul tronçon de 89 km, que dix
   # heures d’écart entre deux photos faisaient passer pour du vélo.

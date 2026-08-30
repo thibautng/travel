@@ -150,7 +150,7 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     ];
   }
 
-  async function dessiner(carte: any, voyage: string) {
+  async function dessiner(carte: any, voyage: string): Promise<number> {
     const reponse = await fetch(`/donnees/${voyage}/trace.geojson`);
     if (!reponse.ok) {
       throw new Error(`trace indisponible (HTTP ${reponse.status})`);
@@ -209,7 +209,7 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
       ],
       { padding: 36, animate: false },
     );
-    dire(`${trace.features?.length ?? 0} entites tracees`);
+    return trace.features?.length ?? 0;
   }
 
   /** Affiche l'echec dans le conteneur, plutot que dans la seule console. */

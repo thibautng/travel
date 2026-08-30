@@ -51,7 +51,16 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     carte.touchZoomRotate.disableRotation();
     carte.on("load", () => {
       conteneur.dataset.etat = "pret";
+      carte.resize();
     });
+
+    // MapLibre fige la taille de sa toile a la construction. Si le conteneur
+    // n'a pas encore sa hauteur a cet instant, ce qui arrive quand la feuille
+    // de style du composant est injectee apres le script, la toile reste a
+    // zero et rien ne s'affiche, alors que la carte fonctionne. On suit donc
+    // la taille du conteneur.
+    const suivi = new ResizeObserver(() => carte.resize());
+    suivi.observe(conteneur);
     // Un fond injoignable ou un style invalide ne doit pas laisser un
     // rectangle gris muet : la page le dit.
     carte.on("error", (evenement: { error?: Error }) => {

@@ -654,14 +654,11 @@ La carte est le cœur du site. Trois modes.
 
 **Journée.** Sur la page d’une journée, une mini-carte non plein écran montre la seule trace du jour, avec les points photo. Cliquer un point fait défiler la page jusqu’à la photo correspondante, et inversement.
 
-**Honnêteté du tracé.** Le rendu doit dire au lecteur ce qui a été mesuré et ce qui a été reconstitué. La couleur reste celle du mode, seul le trait change.
+**Un seul style de trait.** La couleur dit le mode de déplacement, et rien d’autre. L’origine du tracé, relevé par les photos ou reconstitué par un moteur d’itinéraire, n’est plus rendue.
 
-| `source` de la trace | Rendu |
-|---|---|
-| `mesuree` | Trait plein |
-| `calculee` | Tirets longs |
-| `manuelle` | Tirets courts |
-| `heritee` | Pointillés, opacité réduite |
+La version 1.2 prévoyait quatre styles de trait, sous le titre « Honnêteté du tracé », pour que le lecteur distingue le mesuré du déduit. La distinction a été mise en œuvre puis retirée à l’usage : elle chargeait la carte d’une information qui intéresse celui qui construit le site, non celui qui lit le récit. La propriété `source` reste dans `trace.geojson`, où elle documente la provenance ; le rendu ne s’en sert plus.
+
+Les traits sont épais et bordés d’un halo clair. Le fond Positron est fait de traits gris fins, frontières et cours d’eau, dans lesquels une ligne colorée se perd sans ce dégagement.
 
 Même principe pour les points de médias : pastille pleine pour une position `haute`, pastille creuse pour une position `interpolee` ou `heritee`. Les positions `basse` non résolues ne sont pas affichées, et les positions `absente` non plus.
 
@@ -679,6 +676,10 @@ Budgets exprimés en **poids transféré, compression brotli comprise, hors tuil
 
 - moins de 50 Ko de JavaScript sur les pages sans carte ;
 - moins de 300 Ko sur les pages avec carte, MapLibre pesant à lui seul environ 230 Ko.
+
+**Plein écran et zoom.** La carte porte deux contrôles, le zoom et le plein écran, tous deux fournis par MapLibre. Une carte de 3 500 km lue dans un bandeau de téléphone a besoin de pouvoir s’étendre.
+
+**Légende.** Sous la carte, les modes présents dans le voyage, leur couleur et leurs kilomètres, calculés depuis la trace et non répétés à la main. Elle mentionne aussi que les positions approximatives ne sont pas portées, faute de quoi leur absence passerait pour un oubli.
 
 **Agrandissement des photos.** Un clic sur une photo l’ouvre en plein écran, avec les flèches du clavier, l’échappement et le balayage au doigt pour passer de l’une à l’autre. C’est le seul JavaScript des pages sans carte, et il tient en moins d’un kilooctet : le `<dialog>` natif fournit gratuitement le fond assombri, la fermeture par Échap et le piège de focus, ce qui laisse au script la seule navigation.
 

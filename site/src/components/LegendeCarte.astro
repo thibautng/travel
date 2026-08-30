@@ -2,8 +2,9 @@
 /**
  * Légende de la carte.
  *
- * La spec n'en prévoyait pas, mais la section 9.2 demande quatre styles de
- * trait pour dire d'où vient un tracé : sans légende, ils ne disent rien.
+ * La spec n'en prévoyait pas. Elle dit les modes de déplacement, seule
+ * distinction que la carte porte encore : l'origine du tracé, mesuré ou
+ * reconstitué, n'est plus rendue.
  *
  * Rien n'est codé en dur. Les modes, leurs couleurs et leurs kilomètres
  * viennent de la trace, et seuls ceux qui y figurent sont montrés : un
@@ -15,7 +16,7 @@ interface Props {
   voyage: string;
 }
 const { voyage } = Astro.props;
-const { modes, sources } = legende(voyage);
+const { modes } = legende(voyage);
 
 const NOMS: Record<string, string> = {
   route: "Route",
@@ -26,13 +27,6 @@ const NOMS: Record<string, string> = {
   telepherique: "Téléphérique",
 };
 
-/** Motifs de tirets, en accord avec ceux passés à MapLibre. */
-const TRAITS: Record<string, { titre: string; tirets?: string; opacite: number }> = {
-  mesuree: { titre: "Relevé par les photos", opacite: 0.95 },
-  calculee: { titre: "Calculé par le moteur d'itinéraire", tirets: "9 4", opacite: 0.9 },
-  manuelle: { titre: "Tracé à la main", tirets: "4 4", opacite: 0.9 },
-  heritee: { titre: "Déduit de deux campings", tirets: "1 5", opacite: 0.6 },
-};
 ---
 
 <div class="legende">
@@ -45,29 +39,6 @@ const TRAITS: Record<string, { titre: string; tirets?: string; opacite: number }
           </svg>
           <span>{NOMS[m.cle] ?? m.cle}</span>
           <span class="km">{m.km.toLocaleString("fr-FR")} km</span>
-        </li>
-      ))
-    }
-  </ul>
-
-  <ul class="traits">
-    {
-      sources.map((s) => (
-        <li>
-          <svg width="26" height="10" aria-hidden="true">
-            <line
-              x1="1"
-              y1="5"
-              x2="25"
-              y2="5"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-dasharray={TRAITS[s]?.tirets}
-              opacity={TRAITS[s]?.opacite}
-            />
-          </svg>
-          <span>{TRAITS[s]?.titre ?? s}</span>
         </li>
       ))
     }
@@ -103,12 +74,10 @@ const TRAITS: Record<string, { titre: string; tirets?: string; opacite: number }
     opacity: 0.7;
     font-variant-numeric: tabular-nums;
   }
-  .traits {
-    padding-top: 0.4rem;
-    border-top: 1px solid var(--trait);
-  }
   .note {
     margin: 0.5rem 0 0;
+    padding-top: 0.45rem;
+    border-top: 1px solid var(--trait);
     opacity: 0.85;
     max-width: 40rem;
   }

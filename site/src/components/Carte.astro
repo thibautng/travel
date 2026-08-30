@@ -36,7 +36,8 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
 
   async function afficher(conteneur: HTMLElement) {
     conteneur.dataset.etat = "chargement";
-    const { Map, setWorkerUrl } = await import("maplibre-gl");
+    const { Map, setWorkerUrl, NavigationControl, FullscreenControl } =
+      await import("maplibre-gl");
     await import("maplibre-gl/dist/maplibre-gl.css");
 
     // MapLibre 6 decode les tuiles vectorielles dans un travailleur separe,
@@ -68,6 +69,8 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
       dragRotate: false,
     });
     carte.touchZoomRotate.disableRotation();
+    carte.addControl(new NavigationControl({ showCompass: false }), "top-right");
+    carte.addControl(new FullscreenControl(), "top-right");
     const temoin = conteneur.querySelector<HTMLElement>(".carte-temoin");
     const dire = (texte: string) => {
       if (temoin) temoin.textContent = texte;
@@ -115,20 +118,6 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     return carte;
   }
 
-  /**
-   * Styles de trace de la section 9.2. Les tirets sont exprimes en multiples
-   * de la largeur du trait, et disent d'ou vient le trace : plein pour ce qui
-   * a ete mesure, tirets longs pour ce qu'un moteur a calcule, tirets courts
-   * pour ce qui a ete saisi a la main, pointilles pour ce qui est herite de
-   * deux lieux declares.
-   */
-  const STYLES: Record<string, { tirets?: number[]; opacite: number }> = {
-    mesuree: { opacite: 0.95 },
-    calculee: { tirets: [3, 1.4], opacite: 0.9 },
-    manuelle: { tirets: [1.4, 1.4], opacite: 0.9 },
-    heritee: { tirets: [0.4, 2], opacite: 0.6 },
-  };
-
   /** Emprise de toutes les geometries, pour le cadrage initial. */
   function emprise(trace: any): [[number, number], [number, number]] {
     let ouest = 180, sud = 90, est = -180, nord = -90;
@@ -158,26 +147,41 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     const trace = await reponse.json();
     carte.addSource("trace", { type: "geojson", data: trace });
 
-    for (const [source, style] of Object.entries(STYLES)) {
-      carte.addLayer({
-        id: `trace-${source}`,
-        type: "line",
-        source: "trace",
-        filter: [
-          "all",
-          ["==", ["geometry-type"], "LineString"],
-          ["==", ["get", "source"], source],
-        ],
-        layout: { "line-cap": "round", "line-join": "round" },
-        paint: {
-          // La couleur vient du mode, calculee par le pipeline (section 5.6).
-          "line-color": ["get", "couleur"],
-          "line-opacity": style.opacite,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 5, 1.6, 10, 3, 14, 4.5],
-          ...(style.tirets ? { "line-dasharray": style.tirets } : {}),
-        },
-      });
-    }
+    const lignes: any = [
+      "all",
+      ["==", ["geometry-type"], "LineString"],
+    ];
+    const epaisseur = ["interpolate", ["linear"], ["zoom"], 5, 3, 10, 5, 14, 7];
+
+    // Un contour clair sous la trace. Le fond Positron est fait de traits
+    // gris fins, frontieres et cours d'eau, dans lesquels une ligne coloree
+    // se perd : ce halo lui degage sa place.
+    carte.addLayer({
+      id: "trace-contour",
+      type: "line",
+      source: "trace",
+      filter: lignes,
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        "line-color": "#ffffff",
+        "line-opacity": 0.9,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 5, 6, 10, 9, 14, 12],
+      },
+    });
+
+    carte.addLayer({
+      id: "trace",
+      type: "line",
+      source: "trace",
+      filter: lignes,
+      layout: { "line-cap": "round", "line-join": "round" },
+      paint: {
+        // La couleur vient du mode, calculee par le pipeline (section 5.6).
+        "line-color": ["get", "couleur"],
+        "line-opacity": 0.95,
+        "line-width": epaisseur,
+      },
+    });
 
     // Section 9.2 : les positions suspectes ne sont pas affichees par defaut.
     carte.addLayer({
@@ -190,7 +194,7 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
         ["==", ["get", "fiabilite"], "haute"],
       ],
       paint: {
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 2, 10, 3.5, 14, 5],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 2.5, 10, 4, 14, 6],
         "circle-color": "#c0562a",
         "circle-stroke-width": 1,
         "circle-stroke-color": "#ffffff",

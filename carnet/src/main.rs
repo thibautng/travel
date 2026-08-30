@@ -367,7 +367,8 @@ fn main() -> Result<()> {
                 &p.bilan_qualite,
             );
             let jours_json = emit::ecrire_jours_json(&depot, &p.voyage, &jours_agreges)?;
-            let trace = emit::ecrire_trace_geojson(&depot, &p.voyage, &p.traces)?;
+            let trace =
+                emit::ecrire_trace_geojson(&depot, &p.voyage, &p.traces, &p.inventaire.medias)?;
             let cache = p.itineraires.enregistrer()?;
 
             emit::rapport_traces(&p.traces, &p.journal, &p.bilan_lieux, &p.itineraires);

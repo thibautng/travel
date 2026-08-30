@@ -44,10 +44,20 @@ const NOMS: Record<string, string> = {
     }
   </ul>
 
-  <p class="note">
-    Seules les positions fiables sont marquées d'une pastille. Les positions
-    approximatives restent dans les données sans être portées sur la carte.
-  </p>
+  <ul class="reperes">
+    <li>
+      <svg width="14" height="14" aria-hidden="true">
+        <circle cx="7" cy="7" r="4.5" fill="#2b2723" stroke="#ffffff" stroke-width="2" />
+      </svg>
+      <span>Camping</span>
+    </li>
+    <li>
+      <svg width="14" height="14" aria-hidden="true">
+        <circle cx="7" cy="7" r="3.5" fill="#c0562a" stroke="#ffffff" stroke-width="1" />
+      </svg>
+      <span>Photo</span>
+    </li>
+  </ul>
 </div>
 
 <style>
@@ -74,11 +84,8 @@ const NOMS: Record<string, string> = {
     opacity: 0.7;
     font-variant-numeric: tabular-nums;
   }
-  .note {
-    margin: 0.5rem 0 0;
+  .reperes {
     padding-top: 0.45rem;
     border-top: 1px solid var(--trait);
-    opacity: 0.85;
-    max-width: 40rem;
   }
 </style>

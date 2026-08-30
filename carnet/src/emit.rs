@@ -404,7 +404,17 @@ pub fn ecrire_trace_geojson(
     depot: &Path,
     voyage: &Voyage,
     traces: &Traces,
+    medias: &[Media],
 ) -> Result<PathBuf, ErreurEmission> {
+    // La carte montre une vignette au survol d'une pastille. Elle a donc
+    // besoin du chemin du derive, que seul le media connait. Le construire
+    // par convention cote site marcherait tant que le format ne change pas,
+    // ce qui est exactement le genre de dette que la section 5.2 evite en
+    // faisant venir toute metadonnee de media.json.
+    let vignettes: BTreeMap<&str, &str> = medias
+        .iter()
+        .filter_map(|m| m.derives.as_ref().map(|d| (m.id.as_str(), d.vignette.as_str())))
+        .collect();
     let mut features: Vec<geojson::Feature> = Vec::new();
 
     for troncon in &traces.troncons {
@@ -437,6 +447,9 @@ pub fn ecrire_trace_geojson(
             }
             .into(),
         );
+        if let Some(vignette) = vignettes.get(point.id.as_str()) {
+            proprietes.insert("vignette".to_string(), (*vignette).into());
+        }
         if let Some(origine) = point.origine {
             proprietes.insert(
                 "origine_position".to_string(),

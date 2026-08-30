@@ -679,7 +679,9 @@ Budgets exprimés en **poids transféré, compression brotli comprise, hors tuil
 
 **Plein écran et zoom.** La carte porte deux contrôles, le zoom et le plein écran, tous deux fournis par MapLibre. Une carte de 3 500 km lue dans un bandeau de téléphone a besoin de pouvoir s’étendre.
 
-**Légende.** Sous la carte, les modes présents dans le voyage, leur couleur et leurs kilomètres, calculés depuis la trace et non répétés à la main. Elle mentionne aussi que les positions approximatives ne sont pas portées, faute de quoi leur absence passerait pour un oubli.
+**Légende.** Sous la carte, les modes présents dans le voyage, leur couleur et leurs kilomètres, calculés depuis la trace et non répétés à la main, puis les deux marqueurs, le camping et la photo.
+
+**Survol.** Passer le curseur sur une trace affiche le titre de la journée ; sur une pastille, son titre et la vignette de la photo. L’étiquette s’affiche en bas à gauche et non en bulle : une bulle masquerait le tracé que l’on est en train de suivre. C’est pour cela que `trace.geojson` porte, sur chaque point, le chemin de la vignette : le site ne le reconstruit pas par convention, il le lit, comme toute autre métadonnée (section 5.2).
 
 **Agrandissement des photos.** Un clic sur une photo l’ouvre en plein écran, avec les flèches du clavier, l’échappement et le balayage au doigt pour passer de l’une à l’autre. C’est le seul JavaScript des pages sans carte, et il tient en moins d’un kilooctet : le `<dialog>` natif fournit gratuitement le fond assombri, la fermeture par Échap et le piège de focus, ce qui laisse au script la seule navigation.
 

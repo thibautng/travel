@@ -194,14 +194,11 @@ const titres = Object.fromEntries(
       id: "camps-nom",
       type: "symbol",
       source: "camps",
-      // Les noms n'apparaissent qu'une fois la carte assez zoomee : a
-      // l'echelle du voyage entier, huit etiquettes se chevauchent.
-      minzoom: 7,
       layout: {
         "text-field": ["get", "nom"],
         "text-font": ["Noto Sans Regular"],
-        "text-size": 12,
-        "text-offset": [0, 1.2],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10, 10, 13],
+        "text-offset": [0, 1.1],
         "text-anchor": "top",
         "text-allow-overlap": false,
       },
@@ -228,8 +225,10 @@ const titres = Object.fromEntries(
       });
       carte.on("mouseenter", couche, (e: any) => {
         carte.getCanvas().style.cursor = "pointer";
-        const jour = e.features?.[0]?.properties?.jour;
-        if (jour) montrerEtiquette(conteneur, titres[jour] ?? jour);
+        const p = e.features?.[0]?.properties;
+        if (p?.jour) {
+          montrerEtiquette(conteneur, titres[p.jour] ?? p.jour, p.vignette);
+        }
       });
       carte.on("mouseleave", couche, () => {
         carte.getCanvas().style.cursor = "";
@@ -248,19 +247,37 @@ const titres = Object.fromEntries(
     });
   }
 
-  /** Etiquette discrete en bas de carte, plutot qu'une bulle qui masque. */
-  function montrerEtiquette(conteneur: HTMLElement, texte: string | null) {
+  /**
+   * Etiquette discrete en bas de carte, plutot qu'une bulle qui masque le
+   * trace qu'on est en train de lire. Une pastille de photo y montre sa
+   * vignette : c'est ce que la carte a de plus utile a dire au survol.
+   */
+  function montrerEtiquette(
+    conteneur: HTMLElement,
+    texte: string | null,
+    vignette?: string,
+  ) {
     let bloc = conteneur.querySelector<HTMLElement>(".carte-etiquette");
     if (!texte) {
       bloc?.remove();
       return;
     }
     if (!bloc) {
-      bloc = document.createElement("p");
+      bloc = document.createElement("div");
       bloc.className = "carte-etiquette";
       conteneur.append(bloc);
     }
-    bloc.textContent = texte;
+    const voyage = conteneur.dataset.voyage!;
+    bloc.innerHTML = "";
+    if (vignette) {
+      const image = document.createElement("img");
+      image.src = `/media/${voyage}/${vignette}`;
+      image.alt = "";
+      bloc.append(image);
+    }
+    const legende = document.createElement("span");
+    legende.textContent = texte;
+    bloc.append(legende);
   }
 
   async function dessiner(carte: any, conteneur: HTMLElement): Promise<number> {
@@ -389,6 +406,9 @@ const titres = Object.fromEntries(
     bottom: 0.6rem;
     z-index: 2;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     padding: 0.3rem 0.6rem;
     border-radius: 3px;
     background: rgba(255, 255, 255, 0.92);
@@ -397,6 +417,13 @@ const titres = Object.fromEntries(
     font-size: 0.82rem;
     pointer-events: none;
     max-width: calc(100% - 6rem);
+  }
+  .carte-etiquette img {
+    display: block;
+    width: 84px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 2px;
   }
 
   .carte-temoin,
@@ -418,8 +445,19 @@ const titres = Object.fromEntries(
     font-family: ui-sans-serif, system-ui, sans-serif;
     font-size: 0.9rem;
   }
-  .maplibregl-ctrl-attrib {
+  /* L'attribution doit rester lisible et cessible, sans occuper le quart de
+     la carte sur un telephone. */
+  .maplibregl-ctrl-attrib,
+  .maplibregl-ctrl-attrib a {
     font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.62rem;
+    line-height: 1.35;
+  }
+  .maplibregl-ctrl-attrib.maplibregl-compact {
+    padding: 0 1.4rem 0 0.4rem;
+    min-height: 1.35rem;
+  }
+  .maplibregl-ctrl-attrib-button {
+    transform: scale(0.85);
   }
 </style>

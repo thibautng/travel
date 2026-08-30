@@ -189,10 +189,15 @@ contrôle, ce qui vaut mieux qu'une sous-commande `push` à écrire :
 rclone sync media/ r2:voyages-media/ --progress --checksum --transfers 8
 ```
 
-Le dépôt R2 doit exposer les en-têtes CORS et accepter les requêtes HTTP
-Range, dont les PMTiles ont besoin. L'adresse publique du dépôt se donne au
-site par `PUBLIC_MEDIA_URL`, que `urlMedia()` lit déjà et qui vaut `/media`
-en développement.
+**Les médias ne sont pas servis par l'adresse publique du dépôt.** Celle-ci,
+en `r2.dev`, est bridée par Cloudflare et présentée comme un outil d'essai, ce
+qui va mal à une page qui demande soixante images d'un coup. `worker/index.js`
+sert `/media/` depuis R2 sous le domaine du site : pas de seconde origine, pas
+de CORS, et `urlMedia()` garde sa valeur par défaut, `/media`, la même qu'en
+développement. `PUBLIC_MEDIA_URL` n'a donc pas à être renseignée.
+
+Le Worker sert aussi les requêtes de plage, ce dont une vidéo a besoin pour se
+lire sans être téléchargée d'abord, et les requêtes conditionnelles.
 
 **Le fond de carte.** Tant que `PUBLIC_FOND_PMTILES` est vide, la carte
 utilise l'instance publique d'OpenFreeMap, comme le prévoit D4. Pour passer

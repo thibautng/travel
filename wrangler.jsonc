@@ -1,9 +1,9 @@
 {
   // Déploiement du site sur Cloudflare. Voir SPEC.md, section 10, et le README.
   //
-  // Cloudflare a fusionné Pages dans Workers : un site statique se publie
-  // désormais comme un « Worker » sans code, qui ne fait que servir un
-  // dossier. D'où ce fichier, que l'ancien flux Pages n'exigeait pas.
+  // Cloudflare a fusionné Pages dans Workers : un site statique s'y publie
+  // désormais comme un « Worker », d'où ce fichier que l'ancien flux Pages
+  // n'exigeait pas.
   //
   // Il vit à la racine du dépôt et non dans `site/`, pour que la construction
   // fonctionne sans avoir à régler le répertoire racine dans l'interface :
@@ -11,8 +11,15 @@
   "name": "travel",
   "compatibility_date": "2026-08-30",
 
+  // Le code ne sert qu'à `/media/`, tout le reste étant statique.
+  "main": "./worker/index.js",
+
   "assets": {
     "directory": "./site/dist",
+
+    // Le nom sous lequel le Worker atteint les fichiers statiques, pour tout
+    // ce qui n'est pas un média.
+    "binding": "ASSETS",
 
     // Astro écrit une page par dossier, `voyages/.../index.html`. Ce réglage
     // est celui qui sert `index.html` quand l'adresse désigne le dossier.
@@ -21,5 +28,21 @@
     // Le site n'a pas de page 404 : une adresse inconnue rend une 404 nue
     // plutôt qu'une page d'erreur maison. À revoir si le site en gagne une.
     "not_found_handling": "none"
-  }
+  },
+
+  // Les 838 Mo de dérivés, servis sous le domaine du site plutôt que par
+  // l'adresse `r2.dev`, que Cloudflare bride et réserve aux essais.
+  "r2_buckets": [
+    {
+      "binding": "MEDIAS",
+      "bucket_name": "voyages-media"
+    }
+  ],
+
+  // Une adresse en `workers.dev` suffit tant qu'il n'y a pas de nom de
+  // domaine. Les adresses de prévisualisation, elles, sont refusées : chacune
+  // est une porte d'entrée publique de plus vers un carnet de famille, pour
+  // un bénéfice nul ici, où l'on ne travaille pas par branches.
+  "workers_dev": true,
+  "preview_urls": false
 }

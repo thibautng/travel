@@ -94,6 +94,21 @@ aucune panne.
 Le dépôt vit donc sur `D:`, en NTFS. Les photos sources, elles, restent sur
 pCloud : elles se lisent de façon stable et le pipeline n’y écrit jamais.
 
+## Budget du site
+
+Mesuré sur le build du lot 4, avant la carte.
+
+| Mesure | Valeur | Budget de la section 9.4 |
+|---|---|---|
+| JavaScript, pages sans carte | 986 octets, insérés dans la page | moins de 50 Ko transférés |
+| Fichiers JavaScript servis à part | aucun | |
+| Page médiane | 53 Ko de HTML | |
+| Page la plus lourde | 271 Ko, celle des photos | |
+| `dist` complet | 1,44 Mo, 27 fichiers | |
+
+Les 986 octets sont ceux de la visionneuse, seul script des pages sans
+carte. Les dérivés d’images ne sont pas dans `dist` : ils vont sur R2.
+
 ## État
 
 Lots 1 et 2 terminés, lot 3 écrit et validé en JPEG. Voir la feuille de route en section 11 de [SPEC.md](SPEC.md).

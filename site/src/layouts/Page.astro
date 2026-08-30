@@ -78,6 +78,45 @@ const { titre, description } = Astro.props;
       nav.fil a {
         text-decoration: none;
       }
+
+      /* Section 9.3 : une colonne en dessous de 1024 pixels, et la lecture
+         reste le sujet. La mise en page à deux colonnes arrive avec la carte,
+         au lot 5 : une colonne vide en attendant donnerait une page cassée. */
+      @media (min-width: 48rem) {
+        main {
+          padding: 3rem 2rem 8rem;
+        }
+      }
+
+      p {
+        text-wrap: pretty;
+      }
+      h1,
+      h2,
+      h3 {
+        text-wrap: balance;
+      }
+      img {
+        max-width: 100%;
+      }
+
+      footer {
+        border-top: 1px solid var(--trait);
+        margin-top: 4rem;
+        padding: 1.5rem 1.25rem 3rem;
+        text-align: center;
+        color: var(--discret);
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        font-size: 0.82rem;
+      }
+
+      /* Le lien est visible au clavier, y compris sur les vignettes. */
+      a:focus-visible,
+      button:focus-visible,
+      [data-grand]:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
     </style>
   </head>
   <body>
@@ -85,5 +124,6 @@ const { titre, description } = Astro.props;
     <main>
       <slot />
     </main>
+    <footer>Journal de voyage de la famille. Lien privé, page non indexée.</footer>
   </body>
 </html>

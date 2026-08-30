@@ -77,5 +77,13 @@ export default defineConfig({
   },
   vite: {
     plugins: [mediasLocaux()],
+    optimizeDeps: {
+      // MapLibre n'est atteint que par import dynamique, donc Vite ne le
+      // decouvre pas au demarrage : il ne le pre-assemble qu'au premier
+      // chargement de la carte. Si la dependance a ete installee pendant que
+      // le serveur tournait, cet import echoue jusqu'au redemarrage. Le
+      // declarer ici le fait pre-assembler d'entree, une fois pour toutes.
+      include: ["maplibre-gl"],
+    },
   },
 });

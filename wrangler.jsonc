@@ -1,0 +1,25 @@
+{
+  // Déploiement du site sur Cloudflare. Voir SPEC.md, section 10, et le README.
+  //
+  // Cloudflare a fusionné Pages dans Workers : un site statique se publie
+  // désormais comme un « Worker » sans code, qui ne fait que servir un
+  // dossier. D'où ce fichier, que l'ancien flux Pages n'exigeait pas.
+  //
+  // Il vit à la racine du dépôt et non dans `site/`, pour que la construction
+  // fonctionne sans avoir à régler le répertoire racine dans l'interface :
+  // Wrangler s'exécute là où le dépôt est cloné.
+  "name": "travel",
+  "compatibility_date": "2026-08-30",
+
+  "assets": {
+    "directory": "./site/dist",
+
+    // Astro écrit une page par dossier, `voyages/.../index.html`. Ce réglage
+    // est celui qui sert `index.html` quand l'adresse désigne le dossier.
+    "html_handling": "auto-trailing-slash",
+
+    // Le site n'a pas de page 404 : une adresse inconnue rend une 404 nue
+    // plutôt qu'une page d'erreur maison. À revoir si le site en gagne une.
+    "not_found_handling": "none"
+  }
+}

@@ -162,16 +162,31 @@ sur R2. Motif en section 10 de la spec : Pages plafonne à 25 Mo par fichier
 et n'est pas fait pour porter 838 Mo d'images, et R2 ne facture pas la sortie,
 ce qui est le poste qui déraperait ailleurs sur un site d'images.
 
-**Le site.** Un push sur `main` suffit une fois le dépôt connecté à Pages,
-avec `site` comme racine, `npm run build` comme commande et `dist` comme
-sortie. `carnet` ne tourne jamais en CI : le dossier source de 8,6 Go vit sur
-le poste, et `data/` est commité.
+**Le site.** Cloudflare a fusionné Pages dans Workers : un site statique s'y
+publie comme un Worker sans code, qui ne fait que servir un dossier. D'où
+`wrangler.jsonc` à la racine du dépôt, que l'ancien flux Pages n'exigeait pas.
+Il désigne `site/dist` et rien d'autre.
+
+Dans l'interface, deux commandes :
+
+```
+Build command   npm ci --prefix site && npm run build --prefix site
+Deploy command  npx wrangler deploy
+```
+
+Le préfixe évite d'avoir à régler un répertoire racine : le dépôt entier est
+cloné, ce qui est nécessaire puisque le site lit `../content` et `../data`.
+Ajouter la variable `NODE_VERSION` à `22` : Cloudflare sert par défaut une
+version de Node trop ancienne pour Astro 5.
+
+`carnet` ne tourne jamais en CI : le dossier source de 8,6 Go vit sur le
+poste, et `data/` est commité.
 
 **Les dérivés.** `rclone` fait le différentiel, la reprise et les sommes de
 contrôle, ce qui vaut mieux qu'une sous-commande `push` à écrire :
 
 ```
-rclone sync media/ r2:voyages-medias/ --progress --checksum --transfers 8
+rclone sync media/ r2:voyages-media/ --progress --checksum --transfers 8
 ```
 
 Le dépôt R2 doit exposer les en-têtes CORS et accepter les requêtes HTTP
@@ -185,7 +200,7 @@ aux PMTiles auto-hébergés, produire l'extrait des Alpes puis le poser sur R2 :
 
 ```
 pmtiles extract https://build.protomaps.com/20260801.pmtiles alpes.pmtiles   --bbox=5.5,44.0,14.5,48.5 --maxzoom=14
-rclone copy alpes.pmtiles r2:voyages-tuiles/
+rclone copy alpes.pmtiles r2:voyages-media/tuiles/
 ```
 
 Puis déclarer `PUBLIC_FOND_PMTILES` dans les variables de Pages. Le protocole

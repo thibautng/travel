@@ -34,10 +34,9 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
   const STYLE_FOND = "https://tiles.openfreemap.org/styles/positron";
 
   async function afficher(conteneur: HTMLElement) {
-    const [{ Map }] = await Promise.all([
-      import("maplibre-gl"),
-      import("maplibre-gl/dist/maplibre-gl.css"),
-    ]);
+    conteneur.dataset.etat = "chargement";
+    const { Map } = await import("maplibre-gl");
+    await import("maplibre-gl/dist/maplibre-gl.css");
 
     const carte = new Map({
       container: conteneur,
@@ -50,8 +49,26 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
       dragRotate: false,
     });
     carte.touchZoomRotate.disableRotation();
-    conteneur.dataset.pret = "oui";
+    carte.on("load", () => {
+      conteneur.dataset.etat = "pret";
+    });
+    // Un fond injoignable ou un style invalide ne doit pas laisser un
+    // rectangle gris muet : la page le dit.
+    carte.on("error", (evenement: { error?: Error }) => {
+      signaler(conteneur, evenement.error?.message ?? "erreur inconnue");
+    });
     return carte;
+  }
+
+  /** Affiche l'echec dans le conteneur, plutot que dans la seule console. */
+  function signaler(conteneur: HTMLElement, message: string) {
+    conteneur.dataset.etat = "erreur";
+    if (conteneur.querySelector(".carte-erreur")) return;
+    const bloc = document.createElement("p");
+    bloc.className = "carte-erreur";
+    bloc.textContent = `La carte n'a pas pu s'afficher : ${message}`;
+    conteneur.append(bloc);
+    console.error("carte :", message);
   }
 
   const conteneurs = Array.from(document.querySelectorAll<HTMLElement>(".carte"));
@@ -61,7 +78,10 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
         for (const entree of entrees) {
           if (!entree.isIntersecting) continue;
           observateur.unobserve(entree.target);
-          afficher(entree.target as HTMLElement);
+          const cible = entree.target as HTMLElement;
+          afficher(cible).catch((erreur: unknown) => {
+            signaler(cible, erreur instanceof Error ? erreur.message : String(erreur));
+          });
         }
       },
       // Un peu d'avance, pour que la carte soit prête à l'arrivée du regard.
@@ -79,6 +99,7 @@ const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
     background: var(--trait);
     position: relative;
   }
+  .carte-erreur,
   .carte noscript {
     position: absolute;
     inset: 0;

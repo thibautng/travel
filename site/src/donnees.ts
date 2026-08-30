@@ -91,10 +91,16 @@ function lire<T>(voyage: string, fichier: string): T {
 /**
  * Les lectures sont mises en cache par voyage : Astro construit les pages
  * une à une, et `media.json` pèse plus d'un mégaoctet.
+ *
+ * Le cache ne vaut qu'au build. En développement, `data/` vit hors des
+ * sources surveillées par Vite : un `carnet build` ne provoque aucun
+ * rechargement du module, et le serveur continuait de servir ce qu'il avait
+ * lu à son démarrage. Une trace regeneree n'arrivait donc jamais à l'écran.
  */
 const cache = new Map<string, unknown>();
 
 function memoise<T>(cle: string, produire: () => T): T {
+  if (!import.meta.env.PROD) return produire();
   if (!cache.has(cle)) {
     cache.set(cle, produire());
   }

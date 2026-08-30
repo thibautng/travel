@@ -11,6 +11,7 @@
  * PMTiles auto-hébergé sur R2 arrive au lot 6.
  */
 import { camps as campsDuVoyage, voyage as lireVoyage } from "../voyages";
+import { urlMedia } from "../donnees";
 import { getCollection } from "astro:content";
 
 interface Props {
@@ -48,6 +49,7 @@ const titres = Object.fromEntries(
   data-jour={jour}
   data-camps={JSON.stringify(camps)}
   data-titres={JSON.stringify(titres)}
+  data-media={urlMedia("", voyage)}
   style={`--hauteur:${hauteur}`}
 >
   <p class="carte-temoin">Chargement de la carte…</p>
@@ -223,27 +225,32 @@ const titres = Object.fromEntries(
         const jour = e.features?.[0]?.properties?.jour;
         if (jour) window.location.href = `/voyages/${voyage}/jours/${jour}/`;
       });
-      carte.on("mouseenter", couche, (e: any) => {
-        carte.getCanvas().style.cursor = "pointer";
-        const p = e.features?.[0]?.properties;
-        if (p?.jour) {
-          montrerEtiquette(conteneur, titres[p.jour] ?? p.jour, p.vignette);
-        }
-      });
-      carte.on("mouseleave", couche, () => {
-        carte.getCanvas().style.cursor = "";
-        montrerEtiquette(conteneur, null);
-      });
     }
 
-    carte.on("mouseenter", "camps", (e: any) => {
+    // Un seul gestionnaire, et non un par couche : une pastille se pose sur
+    // la trace, donc les deux couches repondent au meme survol. Avec un
+    // gestionnaire par couche, celui de la trace ecrasait celui de la
+    // pastille et la vignette n'apparaissait jamais. Ici l'ordre des couches
+    // interrogees fait la priorite.
+    const COUCHES = ["photos", "camps", "trace"];
+    carte.on("mousemove", (e: any) => {
+      const trouvees = carte.queryRenderedFeatures(e.point, { layers: COUCHES });
+      if (trouvees.length === 0) {
+        carte.getCanvas().style.cursor = "";
+        montrerEtiquette(conteneur, null);
+        return;
+      }
+      // La premiere couche de la liste qui repond l'emporte.
+      const entite =
+        COUCHES.map((c) => trouvees.find((f: any) => f.layer.id === c)).find(Boolean) ??
+        trouvees[0];
+      const p = entite.properties ?? {};
       carte.getCanvas().style.cursor = "pointer";
-      const p = e.features?.[0]?.properties;
-      if (p) montrerEtiquette(conteneur, p.nom);
-    });
-    carte.on("mouseleave", "camps", () => {
-      carte.getCanvas().style.cursor = "";
-      montrerEtiquette(conteneur, null);
+      if (p.nom) {
+        montrerEtiquette(conteneur, p.nom);
+      } else if (p.jour) {
+        montrerEtiquette(conteneur, titres[p.jour] ?? p.jour, p.vignette);
+      }
     });
   }
 
@@ -267,11 +274,10 @@ const titres = Object.fromEntries(
       bloc.className = "carte-etiquette";
       conteneur.append(bloc);
     }
-    const voyage = conteneur.dataset.voyage!;
     bloc.innerHTML = "";
     if (vignette) {
       const image = document.createElement("img");
-      image.src = `/media/${voyage}/${vignette}`;
+      image.src = `${conteneur.dataset.media}${vignette}`;
       image.alt = "";
       bloc.append(image);
     }

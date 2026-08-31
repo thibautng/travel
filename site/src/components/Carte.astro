@@ -417,7 +417,19 @@ const titres = Object.fromEntries(
     const titres: Record<string, string> = JSON.parse(conteneur.dataset.titres ?? "{}");
     const surPlace = conteneur.dataset.vue === "jour";
 
-    for (const couche of ["trace", "photos", "videos", "photos-posees", "videos-posees", "ancres"]) {
+    // Seules les couches reellement posees : `ancres` n'existe que sur une page
+    // de journee dont le recit numerote des blocs, et interroger une couche
+    // absente jette une erreur qui arrete la carte entiere.
+    const existantes = (liste: string[]) => liste.filter((c) => carte.getLayer(c));
+
+    for (const couche of existantes([
+      "trace",
+      "photos",
+      "videos",
+      "photos-posees",
+      "videos-posees",
+      "ancres",
+    ])) {
       carte.on("click", couche, (e: any) => {
         const proprietes = e.features?.[0]?.properties ?? {};
         if (surPlace) {
@@ -442,7 +454,15 @@ const titres = Object.fromEntries(
     // gestionnaire par couche, celui de la trace ecrasait celui de la
     // pastille et la vignette n'apparaissait jamais. Ici l'ordre des couches
     // interrogees fait la priorite.
-    const COUCHES = ["ancres", "photos", "videos", "photos-posees", "videos-posees", "camps", "trace"];
+    const COUCHES = existantes([
+      "ancres",
+      "photos",
+      "videos",
+      "photos-posees",
+      "videos-posees",
+      "camps",
+      "trace",
+    ]);
     carte.on("mousemove", (e: any) => {
       const trouvees = carte.queryRenderedFeatures(e.point, { layers: COUCHES });
       if (trouvees.length === 0) {

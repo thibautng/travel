@@ -72,7 +72,7 @@
       11.255461111111112,
       48.33555833333334
     ],
-    "distance_trace_km": 420.7,
+    "distance_trace_km": 439.9,
     "modes": [
       "route",
       "marche"
@@ -156,7 +156,7 @@
       12.936594444444445,
       47.67648888888888
     ],
-    "distance_trace_km": 195.4,
+    "distance_trace_km": 227.9,
     "modes": [
       "route",
       "marche"
@@ -182,11 +182,12 @@
       13.015294444444445,
       47.63757777777778,
       13.051808333333334,
-      47.806799999999996
+      47.80021111111111
     ],
-    "distance_trace_km": 81.3,
+    "distance_trace_km": 75.3,
     "modes": [
-      "route"
+      "route",
+      "marche"
     ],
     "anomalies": [
       "trou_candidat"
@@ -236,7 +237,7 @@
       13.56596388888889,
       46.3252
     ],
-    "distance_trace_km": 272.1,
+    "distance_trace_km": 296.5,
     "modes": [
       "route"
     ],
@@ -449,7 +450,7 @@
       11.560208333333334,
       46.567925
     ],
-    "distance_trace_km": 80.3,
+    "distance_trace_km": 99.5,
     "modes": [
       "route",
       "marche"
@@ -532,7 +533,7 @@
       10.724902777777778,
       45.73197777777778
     ],
-    "distance_trace_km": 378.5,
+    "distance_trace_km": 390.5,
     "modes": [
       "route"
     ],

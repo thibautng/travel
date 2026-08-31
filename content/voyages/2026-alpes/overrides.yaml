@@ -316,9 +316,19 @@ modes:
 
   # Trois journées sans le moindre vélo, où l’inférence en a vu : une voiture
   # qui s’arrête a la vitesse moyenne d’un cycliste, et le carnet est formel.
+  # L’après-midi à Salzbourg s’est fait à pied, de la Pferdeschwemme aux
+  # jardins Mirabell. Sur des tronçons de deux cents mètres coupés d’arrêts,
+  # la vitesse moyenne y voyait de la voiture. La tranche étroite est déclarée
+  # avant la journée entière : c’est le premier forçage qui couvre l’instant
+  # qui l’emporte.
+  - jour: 2026-07-30
+    mode: marche
+    de: "12:19"
+    a: "18:52"
+    note: "Salzbourg à pied, seul passage en ville du voyage."
   - jour: 2026-07-30
     mode: route
-    note: "Mine de sel puis Salzbourg, en voiture et à pied."
+    note: "La mine le matin, et les trajets, en voiture."
   - jour: 2026-08-12
     mode: route
     note: "Riva del Garda vers Cogne, puis montée à Gimillan."

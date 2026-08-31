@@ -475,6 +475,10 @@ fn camp_de_la_nuit(voyage: &Voyage, nuit: NaiveDate) -> Option<&crate::voyage::L
 /// d'itinéraire : on n'a pas vraiment bougé.
 const METRES_TRANSIT_MINIMUM: f64 = 3_000.0;
 
+/// Longueur en deçà de laquelle un tronçon routier survit au trajet entre
+/// camps : c'est une sortie sur place, pas le déplacement du jour.
+const KM_SORTIE_DU_SOIR: f64 = 30.0;
+
 /// Trace les journées de déplacement d'un camp à l'autre.
 ///
 /// Les photos ne documentent pas les trajets : sur 4 400 km annoncés, elles
@@ -562,9 +566,18 @@ fn tracer_transits(
             {
                 // L'itinéraire du jour remplace les tronçons routiers déduits
                 // de la vitesse : c'est le même trajet, tracé en mieux.
-                traces
-                    .troncons
-                    .retain(|t| !(t.jour == jour && t.mode == Mode::Route));
+                //
+                // Sauf les courts, qui sont les sorties une fois le camp
+                // atteint. Le 26 juillet, la famille est arrivée au Tennsee à
+                // 19 h 41 puis repartie pour Garmisch à 20 h 13 : ce trajet
+                // était effacé avec le reste, alors qu'il n'a rien à voir avec le
+                // déplacement du jour. Le critère est la longueur et non la
+                // distance au camp : un déplacement entre camps fait des
+                // centaines de kilomètres, une sortie du soir quelques dizaines.
+                traces.troncons.retain(|t| {
+                    !(t.jour == jour && t.mode == Mode::Route)
+                        || t.longueur_km() < KM_SORTIE_DU_SOIR
+                });
                 traces.troncons.push(Troncon {
                     jour,
                     mode: Mode::Route,

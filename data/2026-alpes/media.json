@@ -6814,12 +6814,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79727222222222,
-      "lon": 13.045091666666666,
-      "alt": 0.0
+      "lat": 47.79654983161237,
+      "lon": 13.045765477812731
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730145457-320.jpg",
@@ -6844,12 +6843,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79727222222222,
-      "lon": 13.045091666666666,
-      "alt": 0.0
+      "lat": 47.79654287735627,
+      "lon": 13.045815600941584
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730145509-320.jpg",
@@ -6874,12 +6872,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79727222222222,
-      "lon": 13.045091666666666,
-      "alt": 0.0
+      "lat": 47.796513676774715,
+      "lon": 13.045940446729412
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260730145542-320.jpg",
@@ -6904,11 +6901,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.7964,
-      "lon": 13.0462
+      "lat": 47.795802722517436,
+      "lon": 13.047294329110724
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -7037,11 +7034,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.7952,
-      "lon": 13.0478
+      "lat": 47.795167331162425,
+      "lon": 13.046934835105251
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -7256,11 +7253,11 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.806799999999996,
-      "lon": 13.0412
+      "lat": 47.79520367925182,
+      "lon": 13.0470264955046
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -7416,8 +7413,8 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79535159692323,
-      "lon": 13.051727936766403
+      "lat": 47.79493925870037,
+      "lon": 13.05124692266028
     },
     "fiabilite": "basse",
     "origine_position": "posee",
@@ -7445,8 +7442,8 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79533673945231,
-      "lon": 13.05170015608517
+      "lat": 47.794712881820736,
+      "lon": 13.051107525192414
     },
     "fiabilite": "basse",
     "origine_position": "posee",
@@ -7474,8 +7471,8 @@
     "origine_date": "exif",
     "jour": "2026-07-30",
     "position": {
-      "lat": 47.79531434527337,
-      "lon": 13.051671982763276
+      "lat": 47.794436661922816,
+      "lon": 13.050932216131054
     },
     "fiabilite": "basse",
     "origine_position": "posee",

@@ -64,9 +64,24 @@ def main(voyage):
         # entre camps est ajoute en dernier, et un test sur les voisins
         # immediats criait au saut sur toutes les journees de deplacement.
         #
-        # On regarde donc si les troncons du jour forment un seul morceau :
-        # deux troncons se touchent quand une de leurs extremites en rejoint
-        # une autre. Une journee en deux morceaux, c'est une teleportation.
+        # Deux troncons se touchent des qu'ils passent au meme endroit, et non
+        # seulement s'ils s'y terminent : une pause dejeuner posee au bord d'un
+        # trajet routé n'est pas un saut, meme si aucune de ses extremites ne
+        # coincide avec une extremite du trajet. D'ou la comparaison sur tous
+        # les points, ramenes a une grille d'environ cinq cents metres.
+        CELLULE = 0.005
+
+        def cellules(points):
+            vues = set()
+            for x, y in points:
+                cx, cy = int(x / CELLULE), int(y / CELLULE)
+                # Les huit voisines aussi : deux points de part et d'autre
+                # d'une frontiere de cellule doivent se rencontrer.
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        vues.add((cx + dx, cy + dy))
+            return vues
+
         parent = list(range(len(troncons)))
 
         def racine(i):
@@ -75,13 +90,10 @@ def main(voyage):
                 i = parent[i]
             return i
 
-        bouts = []
-        for f in troncons:
-            c = f["geometry"]["coordinates"]
-            bouts.append((c[0], c[-1]))
-        for i in range(len(bouts)):
-            for j in range(i + 1, len(bouts)):
-                if any(km(a, b) < SAUT_KM for a in bouts[i] for b in bouts[j]):
+        empreintes = [cellules(f["geometry"]["coordinates"]) for f in troncons]
+        for i in range(len(troncons)):
+            for j in range(i + 1, len(troncons)):
+                if empreintes[i] & empreintes[j]:
                     ri, rj = racine(i), racine(j)
                     if ri != rj:
                         parent[ri] = rj
@@ -92,7 +104,7 @@ def main(voyage):
             details = []
             for indices in morceaux.values():
                 modes = sorted({troncons[i]["properties"]["mode"] for i in indices})
-                bout = bouts[indices[0]][0]
+                bout = troncons[indices[0]]["geometry"]["coordinates"][0]
                 details.append("%s pres de %.4f,%.4f" % ("/".join(modes), bout[1], bout[0]))
             alertes.append("trace en %d morceaux : %s" % (len(morceaux), " | ".join(details)))
 

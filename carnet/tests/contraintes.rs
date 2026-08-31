@@ -3,7 +3,12 @@
 //! Les fixtures sont des JPEG minimaux fabriqués par `tests/fixtures/generer.py`,
 //! qui documente pour chaque cas le fichier réel dont il est tiré.
 
+use carnet::emit;
+use carnet::itineraire::Itineraires;
+use carnet::jours::Journee;
+use carnet::overrides::Overrides;
 use carnet::quality::{self, Bilan};
+use carnet::track;
 use carnet::scan::{self, Anomalie, Fiabilite, Media, OrigineDate};
 use carnet::voyage::Voyage;
 use chrono::NaiveDate;
@@ -216,4 +221,42 @@ fn la_date_du_nom_ne_sert_qu_en_dernier_recours() {
         .count();
 
     assert_eq!(par_le_nom, 1, "seule la fixture C10 doit être datée par son nom");
+}
+
+/// Un voyage sans la moindre coordonnée doit se construire.
+///
+/// Le Japon, la Polynésie et la Tunisie n'auront pas de trace : leurs photos
+/// ne portent pas de position. Rien dans le pipeline ne doit alors échouer ni
+/// inventer une géométrie ; l'index des journées se construit, sans distance
+/// et sans mode, et le site s'en accommode en masquant la carte.
+#[test]
+fn un_voyage_sans_position_se_construit_quand_meme() {
+    let voyage = voyage_de_test(vec![]);
+    let (mut medias, _) = inventorier();
+    for media in medias.iter_mut() {
+        media.position = None;
+        media.fiabilite = Fiabilite::Absente;
+    }
+
+    let bilan = quality::evaluer(&mut medias, &voyage);
+    let journees: Vec<Journee> = Vec::new();
+    let overrides = Overrides::default();
+    let mut itineraires =
+        Itineraires::charger(&fixtures(), "sans-position").expect("cache d'itinéraires");
+
+    let traces = track::construire(&medias, &voyage, &journees, &overrides, &mut itineraires);
+    assert!(
+        traces.troncons.is_empty(),
+        "sans position, aucune géométrie ne doit être inventée"
+    );
+    assert!(traces.points.is_empty());
+
+    let jours = emit::construire_jours(&medias, &journees, &traces, &bilan);
+    assert!(!jours.is_empty(), "les journées existent, même sans trace");
+    for jour in &jours {
+        assert_eq!(jour.distance_trace_km, 0.0);
+        assert!(jour.modes.is_empty());
+        assert_eq!(jour.mode_dominant, None);
+        assert_eq!(jour.bbox, None);
+    }
 }

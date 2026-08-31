@@ -16,6 +16,28 @@
 # Contrainte C4 : 14 fichiers GoPro HERO7, sans GPS, tous horodatés au
 # 3 janvier 2016. Le motif couvre GOPR2699 à GOPR2717 : « GOPR27* » raterait
 # GOPR2699, premier du lot.
+# Le 6 août, la sortie à vélo n’est documentée, passé Strassen, que par des
+# vidéos. C1 les tient pour douteuses faute de photo proche pour les
+# confirmer, et la trace sautait donc de Strassen à San Candido : dix-sept
+# kilomètres de vélo à rebours, là où la sortie continuait vers Lienz.
+#
+# Ces quatre positions sont justes : elles s’échelonnent régulièrement le long
+# de la Drave, dans le bon sens et à la bonne heure. Les redéclarer ici les
+# rend fiables, et la sortie retrouve son tracé.
+medias:
+  VID20260806154815:
+    position: { lat: 46.77210, lon: 12.60880 }
+    note: "Piste de la Drave, après Strassen."
+  VID20260806155217:
+    position: { lat: 46.77730, lon: 12.63260 }
+    note: "Piste de la Drave."
+  VID20260806160507:
+    position: { lat: 46.78380, lon: 12.65910 }
+    note: "Piste de la Drave."
+  VID20260806161547:
+    position: { lat: 46.78540, lon: 12.68680 }
+    note: "Piste de la Drave, avant les derniers kilomètres vers Lienz."
+
 lots:
   - motif: "GOPR2*.JPG"
     jour: 2026-08-02
@@ -74,6 +96,46 @@ segments:
       - [12.96609, 47.52030]
     note: "Königssee, Schönau vers St. Bartholomä puis Salet."
 
+  # 8 août. La boucle des Tre Cime, depuis le parking du Rifugio Auronzo où la
+  # route s’arrête. Les photos se concentrent autour du Locatelli et ne
+  # documentent ni la montée ni la descente : la trace se réduisait à deux
+  # kilomètres et demi pour une boucle qui en fait dix. Les points sont les
+  # refuges, et le moteur suit les sentiers entre eux.
+  - jour: 2026-08-08
+    mode: marche
+    calculer: true
+    points:
+      - [12.29490, 46.61350]
+      - [12.30970, 46.62090]
+      - [12.30870, 46.63370]
+      - [12.28140, 46.62960]
+      - [12.29490, 46.61350]
+    note: "Auronzo, Lavaredo, Locatelli, retour par le nord."
+
+  # 10 août. La montée à l’alpe et la descente du soir n’ont aucune photo :
+  # voiture jusqu’à la station de la cabinovia, puis téléphérique jusqu’à
+  # Compatsch, et l’inverse le soir. Sans ces segments, le pipeline routait une
+  # voiture jusqu’à la première photo, par une route interdite aux voitures.
+  - jour: 2026-08-10
+    mode: route
+    calculer: true
+    points: [[11.53290, 46.53240], [11.55560, 46.53840]]
+    note: "Camping Seiser Alm vers la station de la cabinovia, à Siusi."
+  - jour: 2026-08-10
+    mode: telepherique
+    points: [[11.55560, 46.53840], [11.60750, 46.54050]]
+    note: "Cabinovia de Siusi à Compatsch. Une remontée mécanique est une ligne
+      droite : c’est le câble."
+  - jour: 2026-08-10
+    mode: telepherique
+    points: [[11.60750, 46.54050], [11.55560, 46.53840]]
+    note: "Descente du soir, le même câble en sens inverse."
+  - jour: 2026-08-10
+    mode: route
+    calculer: true
+    points: [[11.55560, 46.53840], [11.53290, 46.53240]]
+    note: "Retour au camping."
+
   # Le tour du Lago di Braies. Les deux photos qui l’encadrent sont prises au
   # même endroit à une heure d’intervalle : aucun moteur ne tire une boucle
   # entre deux points confondus, il rend cinquante mètres. Le sentier suit la
@@ -101,10 +163,20 @@ segments:
   # Le train part de Lienz, la ou la sortie s’arrete, et rejoint la derniere
   # position relevee du retour. Sans ce tronçon, la ligne du train commencait
   # sept kilomètres avant Lienz, la ou se trouve la derniere photo.
+  # Le train de Lienz revient jusqu’à San Candido, et non jusqu’à la dernière
+  # photo de la sortie à vélo. Les points intermédiaires sont les gares de la
+  # vallée : sans eux, la ligne coupait les éperons du Pustertal.
   - jour: 2026-08-06
     mode: train
-    points: [[12.7690, 46.8290], [12.6868, 46.7854]]
-    note: "Depart du train, de Lienz vers la vallee de la Drave."
+    points:
+      - [12.76900, 46.82900]
+      - [12.68680, 46.78540]
+      - [12.61670, 46.76470]
+      - [12.54170, 46.75080]
+      - [12.41970, 46.75030]
+      - [12.35560, 46.73920]
+      - [12.28520, 46.73310]
+    note: "Retour en train de Lienz à San Candido, par la vallée de la Drave."
 
   - jour: 2026-08-06
     mode: velo
@@ -234,9 +306,10 @@ modes:
   # qui envoyaient des tronçons au routeur automobile.
   - jour: 2026-08-06
     mode: train
-    de: "16:10"
+    de: "14:10"
     a: "23:59"
-    note: "Retour de Lienz à San Candido en train."
+    sans_trace: true
+    note: "Le retour est écrit à la main : vélo jusqu’à Lienz, puis train."
   - jour: 2026-08-06
     mode: velo
     note: "Le reste de la journée est la sortie sur la piste de la Drave."
@@ -264,11 +337,30 @@ modes:
 
   # 10 août, retour de Saltria vers Compatsch : une remontée mécanique, non du
   # vélo. Le carnet parle aussi de l’Almbus sur ce trajet ; à confirmer.
+  # Le bus depuis Saltria, pris à mi-chemin du retour pour ne pas rater le
+  # dernier téléphérique. Il suit la route de l’alpe.
+  - jour: 2026-08-10
+    mode: route
+    de: "17:30"
+    a: "18:05"
+    note: "Almbus de Saltria à Compatsch."
+  # Le matin et le soir sont écrits à la main, ci-dessus.
+  - jour: 2026-08-10
+    mode: marche
+    a: "11:45"
+    sans_trace: true
   - jour: 2026-08-10
     mode: telepherique
-    de: "17:30"
-    a: "19:00"
-    note: "Retour vers Compatsch par la remontée mécanique."
+    de: "18:05"
+    sans_trace: true
+
+  # 9 août. Le retour de Castelrotto au camping passait pour six kilomètres de
+  # marche : c’est la voiture. La journée est routière, sauf la baignade au
+  # Laghetto et la promenade dans le village.
+  - jour: 2026-08-09
+    mode: route
+    de: "19:30"
+    note: "Castelrotto vers le camping, en voiture."
 
   # 11 août, descente vers le lac de Garde. Un seul tronçon de 89 km, que dix
   # heures d’écart entre deux photos faisaient passer pour du vélo.

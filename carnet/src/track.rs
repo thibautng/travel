@@ -328,7 +328,7 @@ pub fn construire(
         }
     }
 
-    tracer_sorties_de_camp(medias, voyage, itineraires, &mut traces);
+    tracer_sorties_de_camp(medias, voyage, overrides, itineraires, &mut traces);
     tracer_retours(overrides, &mut traces);
     tracer_transits(medias, voyage, overrides, itineraires, &mut traces);
     heriter_des_lieux(voyage, journees, &mut traces);
@@ -596,15 +596,19 @@ fn position_du_lieu(lieu: &crate::voyage::Lieu) -> Position {
 /// fiabilité : pour amorcer un transit, une position approximative vaut mieux
 /// que pas de trace du tout.
 fn extremite_du_jour(medias: &[Media], jour: NaiveDate, premiere: bool) -> Option<Position> {
+    media_extreme(medias, jour, premiere).and_then(|m| m.position)
+}
+
+fn media_extreme(medias: &[Media], jour: NaiveDate, premiere: bool) -> Option<&Media> {
     let mut du_jour: Vec<&Media> = medias
         .iter()
         .filter(|m| m.jour == Some(jour) && m.position.is_some() && m.prise_le.is_some())
         .collect();
     du_jour.sort_by_key(|m| m.prise_le);
     if premiere {
-        du_jour.first().and_then(|m| m.position)
+        du_jour.first().copied()
     } else {
-        du_jour.last().and_then(|m| m.position)
+        du_jour.last().copied()
     }
 }
 
@@ -627,6 +631,7 @@ const METRES_SORTIE_DE_CAMP: f64 = 1_000.0;
 fn tracer_sorties_de_camp(
     medias: &[Media],
     voyage: &Voyage,
+    overrides: &Overrides,
     itineraires: &mut Itineraires,
     traces: &mut Traces,
 ) {
@@ -644,11 +649,21 @@ fn tracer_sorties_de_camp(
         };
 
         if let Some(camp) = sur_place {
-            for (extremite, depuis_le_camp) in [
-                (extremite_du_jour(medias, jour, true), true),
-                (extremite_du_jour(medias, jour, false), false),
+            for (repere, depuis_le_camp) in [
+                (media_extreme(medias, jour, true), true),
+                (media_extreme(medias, jour, false), false),
             ] {
-                let Some(photo) = extremite else { continue };
+                let Some(media) = repere else { continue };
+                let Some(photo) = media.position else { continue };
+                // Une tranche déclarée sans trace vaut aussi pour la sortie du
+                // camp : le 10 août, la montée à l’alpe s’est faite en
+                // téléphérique, et router une voiture jusqu’à la première photo
+                // emprunterait une route interdite aux voitures.
+                if let Some(instant) = media.prise_le {
+                    if overrides.sans_trace(jour, instant.with_timezone(&voyage.fuseau).time()) {
+                        continue;
+                    }
+                }
                 if distance_m(&camp, &photo) < METRES_SORTIE_DE_CAMP {
                     continue;
                 }

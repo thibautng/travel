@@ -1,0 +1,137 @@
+---
+/**
+ * Frise des journées, en haut de chaque page de journée.
+ *
+ * Vingt-trois pastilles, une par jour, la journée lue en surbrillance. Le
+ * carnet se feuillette dans l'ordre, mais on veut aussi pouvoir sauter au
+ * 8 août sans repasser par la vue d'ensemble.
+ *
+ * Des liens, pas un script : la navigation marche sans JavaScript, au clavier
+ * comme au doigt. Le seul script fait défiler la frise jusqu'à la pastille
+ * active, que vingt-trois jours peuvent pousser hors de l'écran.
+ */
+import { getCollection } from "astro:content";
+
+interface Props {
+  voyage: string;
+  jour: string;
+}
+const { voyage, jour } = Astro.props;
+
+const journees = await getCollection("journees", (e) => e.id.startsWith(`${voyage}/`));
+journees.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const iso = (d: Date) => d.toISOString().slice(0, 10);
+const jourDuMois = (d: Date) => String(d.getUTCDate());
+const enFrancais = (d: Date) =>
+  d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+
+// Le mois n'est rappelé qu'à son premier jour : « 24 25 26 … 1 2 3 » se lit
+// mal sans savoir où l'on bascule d'août à juillet.
+let moisPrecedent = "";
+const etapes = journees.map((j) => {
+  const mois = j.data.date.toLocaleDateString("fr-FR", { month: "short" });
+  const bascule = mois !== moisPrecedent;
+  moisPrecedent = mois;
+  return {
+    jour: iso(j.data.date),
+    numero: jourDuMois(j.data.date),
+    mois: bascule ? mois.replace(".", "") : "",
+    titre: j.data.titre,
+    date: enFrancais(j.data.date),
+  };
+});
+---
+
+<nav class="frise-jours" aria-label="Journées du voyage">
+  <ol>
+    {
+      etapes.map((e) => (
+        <li>
+          <a
+            href={`/voyages/${voyage}/jours/${e.jour}/`}
+            aria-current={e.jour === jour ? "page" : undefined}
+            title={`${e.date} — ${e.titre}`}
+          >
+            <span class="numero">{e.numero}</span>
+            {e.mois && <span class="mois">{e.mois}</span>}
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script>
+  // La pastille active peut être la vingt-troisième : on l'amène sous les yeux.
+  for (const frise of document.querySelectorAll<HTMLElement>(".frise-jours")) {
+    const actif = frise.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!actif) continue;
+    const liste = frise.querySelector<HTMLElement>("ol");
+    if (!liste) continue;
+    // `scrollLeft` et non `scrollIntoView` : ce dernier ferait aussi défiler
+    // la page verticalement, alors qu'on vient d'arriver en haut.
+    liste.scrollLeft = actif.offsetLeft - liste.clientWidth / 2 + actif.offsetWidth / 2;
+  }
+</script>
+
+<style>
+  .frise-jours {
+    margin: 0 0 1.4rem;
+    border-bottom: 1px solid var(--trait);
+    padding-bottom: 0.7rem;
+  }
+  .frise-jours ol {
+    display: flex;
+    gap: 0.3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0.3rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    /* La frise déborde volontairement des marges du texte : elle appartient à
+       la page, pas à la colonne de lecture. */
+    scroll-padding-inline: 1rem;
+  }
+  .frise-jours li {
+    flex: none;
+  }
+  .frise-jours a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Quarante-quatre pixels : la plus petite cible qui se vise au pouce. */
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid var(--trait);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--discret);
+    font-family: ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.1;
+  }
+  .frise-jours a:hover {
+    border-color: var(--discret);
+    color: var(--encre);
+  }
+  .frise-jours .numero {
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .frise-jours .mois {
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .frise-jours [aria-current="page"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .frise-jours [aria-current="page"] .mois {
+    opacity: 0.85;
+  }
+</style>

@@ -12274,11 +12274,11 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.7491,
-      "lon": 12.5092
+      "lat": 46.75851467025498,
+      "lon": 12.55220213041461
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -12325,12 +12325,10 @@
       "lat": 46.7721,
       "lon": 12.6088
     },
-    "fiabilite": "basse",
-    "origine_position": "exif",
+    "fiabilite": "haute",
+    "origine_position": "override",
     "publie": true,
-    "anomalies": [
-      "altitude_nulle"
-    ]
+    "anomalies": []
   },
   {
     "id": "VID20260806155217",
@@ -12343,12 +12341,10 @@
       "lat": 46.7773,
       "lon": 12.6326
     },
-    "fiabilite": "basse",
-    "origine_position": "exif",
+    "fiabilite": "haute",
+    "origine_position": "override",
     "publie": true,
-    "anomalies": [
-      "altitude_nulle"
-    ]
+    "anomalies": []
   },
   {
     "id": "VID20260806160507",
@@ -12361,12 +12357,10 @@
       "lat": 46.7838,
       "lon": 12.6591
     },
-    "fiabilite": "basse",
-    "origine_position": "exif",
+    "fiabilite": "haute",
+    "origine_position": "override",
     "publie": true,
-    "anomalies": [
-      "altitude_nulle"
-    ]
+    "anomalies": []
   },
   {
     "id": "VID20260806161547",
@@ -12376,15 +12370,13 @@
     "origine_date": "exif",
     "jour": "2026-08-06",
     "position": {
-      "lat": 46.785399999999996,
+      "lat": 46.7854,
       "lon": 12.6868
     },
-    "fiabilite": "basse",
-    "origine_position": "exif",
+    "fiabilite": "haute",
+    "origine_position": "override",
     "publie": true,
-    "anomalies": [
-      "altitude_nulle"
-    ]
+    "anomalies": []
   },
   {
     "id": "VID20260806161616",

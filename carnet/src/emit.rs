@@ -584,12 +584,25 @@ pub fn rapport_traces(
         "  tronçons routiers : {} calculés, {} restés droits",
         traces.bilan.troncons_calcules, traces.bilan.troncons_droits
     );
-    if itineraires.quota_epuise {
+    if itineraires.refus > 0 {
+        let detail: Vec<String> = itineraires
+            .refus_par_code
+            .iter()
+            .map(|(code, nombre)| format!("{nombre} × HTTP {code}"))
+            .collect();
         println!(
-            "  QUOTA ÉPUISÉ : le moteur a refusé {} appels. Les tronçons concernés",
-            itineraires.refus
+            "  REFUS DU MOTEUR : {} appels ({})",
+            itineraires.refus,
+            detail.join(", ")
         );
-        println!("  restent droits ; relancer le build demain les calculera.");
+        if itineraires.refus_par_code.contains_key(&401)
+            || itineraires.refus_par_code.contains_key(&403)
+        {
+            println!("  La clé est refusée. Vérifier CARNET_ORS_CLE et le compte.");
+        } else if itineraires.refus_par_code.contains_key(&429) {
+            println!("  Quota épuisé ; relancer le build demain calculera le reste.");
+        }
+        println!("  Les tronçons concernés restent droits, et le cache garde le reste.");
     }
     println!(
         "  transits entre camps : {} calculés, {} en échec",

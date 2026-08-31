@@ -107,6 +107,10 @@ pub struct Itineraires {
     modifie: bool,
     pub appels: usize,
     pub manques: usize,
+    /// Codes de refus rencontrés, et combien de fois chacun. `appels` ne
+    /// compte que les succès : sans ce décompte, quarante-huit appels refusés
+    /// se lisaient « 0 appel réseau », indistinguables d’un cache complet.
+    pub refus_par_code: BTreeMap<u16, usize>,
     /// Appels refusés par le moteur. Les appelants retombent sur le trait
     /// droit sans lever d’erreur : sans ce compteur, cent refus passaient
     /// pour cent tronçons qu’on n’avait pas cherché à calculer.
@@ -166,6 +170,7 @@ impl Itineraires {
             appels: 0,
             manques: 0,
             refus: 0,
+            refus_par_code: BTreeMap::new(),
             quota_epuise: false,
         })
     }
@@ -215,6 +220,7 @@ impl Itineraires {
             // Un refus de débit se rattrape ; un quota épuisé, non. On attend
             // une minute, on retente une fois, puis on abandonne pour ce build.
             Err(ErreurItineraire::Refus { code: 429 }) => {
+                *self.refus_par_code.entry(429).or_default() += 1;
                 std::thread::sleep(PAUSE_APRES_REFUS);
                 match self.appeler(profil, &cle_api, depart, arrivee, passages) {
                     Ok(trajet) => trajet,
@@ -224,6 +230,22 @@ impl Itineraires {
                         return Ok(Resolution::Indisponible);
                     }
                 }
+            }
+            // 401 et 403 disent que la clé est refusée, pas que la demande est
+            // mauvaise : la suivante le sera tout autant. On arrête d’appeler.
+            Err(ErreurItineraire::Refus { code }) if code == 401 || code == 403 => {
+                *self.refus_par_code.entry(code).or_default() += 1;
+                self.quota_epuise = true;
+                self.refus += 1;
+                return Ok(Resolution::Indisponible);
+            }
+            Err(ErreurItineraire::Refus { code }) => {
+                // Un refus propre à cette demande : coordonnées hors réseau,
+                // points trop proches. Le tronçon reste droit, les autres
+                // partent quand même.
+                *self.refus_par_code.entry(code).or_default() += 1;
+                self.refus += 1;
+                return Ok(Resolution::Indisponible);
             }
             Err(autre) => return Err(autre),
         };
@@ -339,6 +361,7 @@ mod tests {
             appels: 0,
             manques: 0,
             refus: 0,
+            refus_par_code: BTreeMap::new(),
             quota_epuise: false,
         };
         for mode in [Mode::Bateau, Mode::Train, Mode::Telepherique] {
@@ -374,6 +397,7 @@ mod tests {
             appels: 0,
             manques: 0,
             refus: 0,
+            refus_par_code: BTreeMap::new(),
             quota_epuise: false,
         };
         let resolution = itineraires
@@ -393,6 +417,7 @@ mod tests {
             appels: 0,
             manques: 0,
             refus: 0,
+            refus_par_code: BTreeMap::new(),
             quota_epuise: false,
         };
         let resolution = itineraires

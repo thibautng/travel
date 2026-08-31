@@ -15,13 +15,15 @@ import { urlMedia, empreinteTrace } from "../donnees";
 import { getCollection } from "astro:content";
 
 interface Props {
+  /** Blocs numérotés du récit : `{ n, id }`, dans l'ordre du Markdown. */
+  ancres?: { n: number; id: string }[];
   voyage: string;
   /** `ensemble` pour tout le voyage, `jour` pour une seule journée. */
   vue?: "ensemble" | "jour";
   jour?: string;
   hauteur?: string;
 }
-const { voyage, vue = "ensemble", jour, hauteur = "60vh" } = Astro.props;
+const { voyage, vue = "ensemble", jour, hauteur = "60vh", ancres = [] } = Astro.props;
 
 // Les camps et les titres de journées sont passés au script en attributs de
 // données plutôt que par un appel réseau : neuf lieux et vingt-trois titres
@@ -51,6 +53,7 @@ const titres = Object.fromEntries(
   data-titres={JSON.stringify(titres)}
   data-media={urlMedia("", voyage)}
   data-empreinte={empreinteTrace(voyage)}
+  data-ancres={JSON.stringify(ancres)}
   style={`--hauteur:${hauteur}`}
 >
   <p class="carte-temoin">Chargement de la carte…</p>
@@ -225,6 +228,26 @@ const titres = Object.fromEntries(
   }
 
   /**
+   * Rayon des pastilles numerotees : onze au repos, quinze pour l'active.
+   * L'etat actif est unique et persiste, sans retour au repos automatique.
+   */
+  function rayonAncres(actif: string | null, ancres: { n: number; id: string }[]): any {
+    if (!actif || ancres.length === 0) return 11;
+    return ["case", ["==", ["get", "id"], actif], 15, 11];
+  }
+
+  /**
+   * Lit un jeton de couleur dans la feuille de style.
+   *
+   * Les couleurs de la carte suivent le theme : codees en dur, elles ne
+   * pourraient pas changer avec lui.
+   */
+  function lireCouleur(jeton: string, repli: string): string {
+    const valeur = getComputedStyle(document.documentElement).getPropertyValue(jeton).trim();
+    return valeur || repli;
+  }
+
+  /**
    * Emprise des geometries, pour le cadrage. Restreinte a une journee quand
    * `jour` est donne : c'est ce qui permet de recentrer au fil de la lecture.
    */
@@ -256,6 +279,17 @@ const titres = Object.fromEntries(
    */
   const COULEUR_PHOTO = "#ffffff";
   const COULEUR_VIDEO = "#8c4a6b";
+
+  /** Les six modes, lus dans les jetons pour suivre le theme. */
+  const MODES = ["route", "marche", "velo", "bateau", "train", "telepherique"];
+  function couleurParMode(): any {
+    const expression: any[] = ["match", ["get", "mode"]];
+    for (const mode of MODES) {
+      expression.push(mode, lireCouleur(`--mode-${mode}`, "#4a3b2e"));
+    }
+    expression.push(lireCouleur("--mode-route", "#4a3b2e"));
+    return expression;
+  }
 
   /** Les camps de base, en marqueurs distincts. Section 9.2. */
   function poserCamps(carte: any, conteneur: HTMLElement) {
@@ -318,7 +352,7 @@ const titres = Object.fromEntries(
     const titres: Record<string, string> = JSON.parse(conteneur.dataset.titres ?? "{}");
     const surPlace = conteneur.dataset.vue === "jour";
 
-    for (const couche of ["trace", "photos", "videos", "photos-posees", "videos-posees"]) {
+    for (const couche of ["trace", "photos", "videos", "photos-posees", "videos-posees", "ancres"]) {
       carte.on("click", couche, (e: any) => {
         const proprietes = e.features?.[0]?.properties ?? {};
         if (surPlace) {
@@ -343,7 +377,7 @@ const titres = Object.fromEntries(
     // gestionnaire par couche, celui de la trace ecrasait celui de la
     // pastille et la vignette n'apparaissait jamais. Ici l'ordre des couches
     // interrogees fait la priorite.
-    const COUCHES = ["photos", "videos", "photos-posees", "videos-posees", "camps", "trace"];
+    const COUCHES = ["ancres", "photos", "videos", "photos-posees", "videos-posees", "camps", "trace"];
     carte.on("mousemove", (e: any) => {
       const trouvees = carte.queryRenderedFeatures(e.point, { layers: COUCHES });
       if (trouvees.length === 0) {
@@ -462,8 +496,10 @@ const titres = Object.fromEntries(
       filter: lignes,
       layout: { "line-cap": "round", "line-join": "round" },
       paint: {
-        // La couleur vient du mode, calculee par le pipeline (section 5.6).
-        "line-color": ["get", "couleur"],
+        // La couleur vient des jetons CSS et non du pipeline : elle doit
+        // changer avec le theme, ce qu'une valeur figee dans le GeoJSON ne
+        // saurait pas faire.
+        "line-color": couleurParMode(),
         "line-opacity": 0.95,
         "line-width": epaisseur,
       },
@@ -516,6 +552,49 @@ const titres = Object.fromEntries(
     for (const [id, filtre, peinture] of pastilles) {
       FILTRES.set(id, filtre);
       carte.addLayer({ id, type: "circle", source: "trace", filter: filtre, paint: peinture });
+    }
+
+    // Les blocs numerotes du recit, en pastilles portant leur chiffre. C'est
+    // le lien visible entre le texte et la carte : il se voit sans survol,
+    // donc au doigt et au clavier, ce que l'anneau seul ne permettait pas.
+    const ancres: { n: number; id: string }[] = JSON.parse(conteneur.dataset.ancres ?? "[]");
+    if (ancres.length > 0) {
+      const identifiants = ancres.map((a) => a.id);
+      const numero: any[] = ["match", ["get", "id"]];
+      for (const a of ancres) numero.push(a.id, String(a.n));
+      numero.push("");
+
+      carte.addLayer({
+        id: "ancres",
+        type: "circle",
+        source: "trace",
+        filter: ["in", ["get", "id"], ["literal", identifiants]],
+        paint: {
+          "circle-radius": rayonAncres(null, ancres),
+          "circle-color": lireCouleur("--accent", "#d1491f"),
+          "circle-stroke-width": 2,
+          "circle-stroke-color": lireCouleur("--panel", "#ffffff"),
+        },
+      });
+      carte.addLayer({
+        id: "ancres-numero",
+        type: "symbol",
+        source: "trace",
+        filter: ["in", ["get", "id"], ["literal", identifiants]],
+        layout: {
+          "text-field": numero,
+          "text-font": ["Noto Sans Regular"],
+          "text-size": 12,
+          "text-allow-overlap": true,
+        },
+        paint: { "text-color": lireCouleur("--panel", "#ffffff") },
+      });
+
+      conteneur.addEventListener("carte:ancre", (evenement) => {
+        const n = (evenement as CustomEvent).detail?.n ?? null;
+        const actif = ancres.find((a) => String(a.n) === String(n)) ?? null;
+        carte.setPaintProperty("ancres", "circle-radius", rayonAncres(actif?.id ?? null, ancres));
+      });
     }
 
     // Le media que le recit est en train de montrer, cercle d'un anneau.

@@ -40,21 +40,16 @@ const NOMS_MODE: Record<string, string> = {
   telepherique: "téléphérique",
 };
 
-// Le mois n'est rappelé qu'à sa bascule : « 24 25 26 … 1 2 3 » se lit mal sans
-// savoir où l'on passe de juillet à août.
-let moisPrecedent = "";
-const etapes = journees.map((j) => {
+// Les cellules portent le rang dans le voyage, non le jour du mois : « 24 25
+// 26 … 1 2 3 » se lit mal, et la date complète est dans le fil au-dessus.
+const etapes = journees.map((j, rang) => {
   const cle = iso(j.data.date);
   const agrege = agreges.get(cle);
-  const mois = j.data.date.toLocaleDateString("fr-FR", { month: "short" });
-  const bascule = mois !== moisPrecedent;
-  moisPrecedent = mois;
   const mode = agrege?.mode_dominant ?? null;
   const km = Math.round(agrege?.distance_trace_km ?? 0);
   return {
     jour: cle,
-    numero: String(j.data.date.getUTCDate()),
-    mois: bascule ? mois.replace(".", "") : "",
+    numero: String(rang + 1).padStart(2, "0"),
     titre: j.data.titre,
     km,
     mode,
@@ -82,7 +77,6 @@ const etapes = journees.map((j) => {
             title={e.infobulle}
           >
             <span class="numero chiffre">{e.numero}</span>
-            {e.mois && <span class="mois">{e.mois}</span>}
             <span class="km chiffre">{e.km > 0 ? e.km : ""}</span>
             <span
               class="barre"
@@ -133,12 +127,6 @@ const etapes = journees.map((j) => {
   .frise-jours .numero {
     font-size: 13px;
   }
-  .frise-jours .mois {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--faint);
-  }
   .frise-jours .km {
     font-size: 10px;
     color: var(--faint);
@@ -152,17 +140,17 @@ const etapes = journees.map((j) => {
     margin-top: 0.35rem;
   }
   .frise-jours [aria-current="page"] {
-    color: var(--ink);
-    background: var(--hl);
+    color: var(--panel);
+    background: var(--ink);
   }
-  .frise-jours [aria-current="page"] .numero {
-    font-weight: 500;
+  .frise-jours [aria-current="page"] .km {
+    color: var(--panel);
+    opacity: 0.7;
   }
 
   /* Sous 640 pixels, une cellule fait moins de trente pixels : il ne reste de
      la place que pour le numéro et la barre. */
   @media (max-width: 40rem) {
-    .frise-jours .mois,
     .frise-jours .km {
       display: none;
     }

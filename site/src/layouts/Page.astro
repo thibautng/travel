@@ -9,8 +9,12 @@ interface Props {
   description?: string;
   /** `large` élargit la colonne pour la mise en page à deux colonnes (9.3). */
   gabarit?: "texte" | "large";
+  /** Miettes du fil, après « Voyages ». Chacune peut porter un lien. */
+  fil?: { texte: string; href?: string }[];
+  /** Repère aligné à droite du fil, du type « Jour 16 sur 23 ». */
+  repere?: string;
 }
-const { titre, description, gabarit = "texte" } = Astro.props;
+const { titre, description, gabarit = "texte", fil = [], repere } = Astro.props;
 ---
 
 <!doctype html>
@@ -129,14 +133,41 @@ const { titre, description, gabarit = "texte" } = Astro.props;
         font-variant-numeric: tabular-nums;
       }
       nav.fil {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
         border-bottom: 1px solid var(--rule);
         padding: 0.9rem 1.25rem;
-        font-family: var(--sans);
-        font-size: 13px;
-        font-weight: 500;
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      nav.fil .miettes {
+        display: flex;
+        align-items: baseline;
+        gap: 0.55rem;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
       }
       nav.fil a {
         text-decoration: none;
+        color: var(--muted);
+      }
+      nav.fil a:hover {
+        color: var(--ink);
+      }
+      nav.fil .separateur {
+        color: var(--faint);
+      }
+      nav.fil .repere {
+        flex: none;
+        color: var(--faint);
+        text-transform: none;
+        letter-spacing: 0;
       }
 
       @media (min-width: 48rem) {
@@ -249,7 +280,18 @@ const { titre, description, gabarit = "texte" } = Astro.props;
     </style>
   </head>
   <body>
-    <nav class="fil"><a href="/">Voyages</a></nav>
+    <nav class="fil" aria-label="Fil d’Ariane">
+      <span class="miettes">
+        <a href="/">Voyages</a>
+        {fil.map((m) => (
+          <>
+            <span class="separateur" aria-hidden="true">/</span>
+            {m.href ? <a href={m.href}>{m.texte}</a> : <span>{m.texte}</span>}
+          </>
+        ))}
+      </span>
+      {repere && <span class="repere chiffre">{repere}</span>}
+    </nav>
     <main data-gabarit={gabarit}>
       <slot />
     </main>

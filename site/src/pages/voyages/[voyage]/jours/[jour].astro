@@ -9,7 +9,7 @@ import Carte from "../../../../components/Carte.astro";
 import LegendeCarte from "../../../../components/LegendeCarte.astro";
 import FriseJours from "../../../../components/FriseJours.astro";
 import { tousLesVoyages, lieu, type Voyage } from "../../../../voyages";
-import { mediasDuJour, urlMedia, type Media } from "../../../../donnees";
+import { mediasDuJour, urlMedia, jours, type Media } from "../../../../donnees";
 import { getCollection, render, type CollectionEntry } from "astro:content";
 
 export async function getStaticPaths() {
@@ -43,6 +43,12 @@ const { Content } = await render(journee);
 
 const jour = journee.data.date.toISOString().slice(0, 10);
 
+const toutes = await getCollection("journees", (e) => e.id.startsWith(`${v.id}/`));
+toutes.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+const rang = toutes.findIndex((e) => e.id === journee.id) + 1;
+const total = toutes.length;
+const agrege = jours(v.id).find((j) => j.jour === jour);
+
 /**
  * Les médias que le récit montre déjà.
  *
@@ -53,6 +59,17 @@ const jour = journee.data.date.toISOString().slice(0, 10);
  * par le greffon `directives.ts`, qui échouerait bruyamment sur une syntaxe
  * qu’il ne comprendrait pas.
  */
+// Les blocs numérotés, dans l’ordre du Markdown : même comptage que le
+// greffon `directives.ts`, pour que les numéros coïncident.
+const ancres: { n: number; id: string }[] = [];
+for (const trouve of journee.body?.matchAll(/::(photo|galerie)\{([^}]*)\}/g) ?? []) {
+  const premier =
+    /id="([^"]*)"/.exec(trouve[2])?.[1] ??
+    /ids="([^",]*)/.exec(trouve[2])?.[1]?.trim() ??
+    null;
+  if (premier) ancres.push({ n: ancres.length + 1, id: premier });
+}
+
 const cites = new Set<string>();
 for (const trouve of journee.body?.matchAll(/::photo\{[^}]*id="([^"]*)"/g) ?? []) {
   cites.add(trouve[1]);
@@ -68,22 +85,36 @@ const camp = lieu(v, journee.data.camp);
 
 const enFrancais = (d: Date) =>
   d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const courte = (d: Date) => d.toLocaleDateString("fr-FR", { day: "numeric", month: "long" });
 const lien = (e: CollectionEntry<"journees">) =>
   `/voyages/${v.id}/jours/${e.data.date.toISOString().slice(0, 10)}/`;
 ---
 
-<Page titre={`${journee.data.titre} — ${v.titre}`} gabarit="large">
+<Page
+  titre={`${journee.data.titre} — ${v.titre}`}
+  gabarit="large"
+  fil={[
+    { texte: v.titre, href: `/voyages/${v.id}/` },
+    { texte: courte(journee.data.date) },
+  ]}
+  repere={`Jour ${rang} sur ${total}`}
+>
   <FriseJours voyage={v.id} jour={jour} />
 
   <div class="deux-colonnes" data-journee={jour}>
     <div class="colonne-recit">
-      <p class="discret">
-        <a href={`/voyages/${v.id}/`}>{v.titre}</a>
-      </p>
       <h1>{journee.data.titre}</h1>
-      <p class="discret">
-        {enFrancais(journee.data.date)}
-        {camp && ` · ${camp.nom}`}
+      <p class="meta chiffre">
+        {[
+          enFrancais(journee.data.date),
+          camp?.nom,
+          agrege && agrege.distance_trace_km > 0
+            ? `${agrege.distance_trace_km.toLocaleString("fr-FR")} km`
+            : null,
+          agrege && agrege.medias.total > 0 ? `${agrege.medias.total} médias` : null,
+        ]
+          .filter(Boolean)
+          .join(" · ")}
       </p>
 
       <article>
@@ -122,7 +153,20 @@ const lien = (e: CollectionEntry<"journees">) =>
     </div>
 
     <div class="colonne-carte">
-      <Carte voyage={v.id} vue="jour" jour={jour} />
+      <Carte voyage={v.id} vue="jour" jour={jour} ancres={ancres} />
+      {
+        ancres.length > 0 && (
+          <ol class="boutons-ancres" aria-label="Photos situées sur la carte">
+            {ancres.map((a) => (
+              <li>
+                <a href={`#m${a.n}`} data-ancre={a.n} class="chiffre">
+                  {a.n}
+                </a>
+              </li>
+            ))}
+          </ol>
+        )
+      }
       <LegendeCarte voyage={v.id} jour={jour} />
       <p class="sous-carte discret">
         <a href={`/voyages/${v.id}/?jour=${jour}#lecteur`}>Voir cette journée dans le lecteur</a>
@@ -216,9 +260,109 @@ const lien = (e: CollectionEntry<"journees">) =>
   for (const bloc of document.querySelectorAll<HTMLElement>(".deux-colonnes")) {
     synchroniser(bloc);
   }
+
+  /**
+   * Les ancres numérotées. Un seul écouteur délégué pour les boutons, les
+   * pastilles de carte et les blocs eux-mêmes.
+   *
+   * Sans JavaScript, les numéros restent des liens `#m1` : l’ancre HTML fait
+   * le défilement, la carte reste immobile, rien ne casse.
+   */
+  function activerAncre(n: string | number | null) {
+    const carte = document.querySelector<HTMLElement>(".carte");
+    for (const el of document.querySelectorAll(".actif")) el.classList.remove("actif");
+    for (const el of document.querySelectorAll("[data-ancre][aria-current]")) {
+      el.removeAttribute("aria-current");
+    }
+    if (n === null) return;
+    const bloc = document.getElementById(`m${n}`);
+    if (bloc) {
+      bloc.classList.add("actif");
+      bloc.focus({ preventScroll: true });
+    }
+    const bouton = document.querySelector(`.boutons-ancres [data-ancre="${n}"]`);
+    if (bouton) bouton.setAttribute("aria-current", "true");
+    carte?.dispatchEvent(new CustomEvent("carte:ancre", { detail: { n } }));
+  }
+
+  document.addEventListener("click", (evenement) => {
+    const cible = (evenement.target as HTMLElement)?.closest?.("[data-ancre]");
+    if (!cible) return;
+    activerAncre((cible as HTMLElement).dataset.ancre ?? null);
+  });
+
+  // Depuis la carte : la pastille cliquée désigne un média, on remonte au
+  // bloc qui le porte.
+  for (const carte of document.querySelectorAll<HTMLElement>(".carte")) {
+    carte.addEventListener("carte:media", (evenement) => {
+      const id = (evenement as CustomEvent).detail?.id;
+      const bloc = document.querySelector<HTMLElement>(`[data-media-ancre="${id}"]`);
+      if (bloc?.dataset.ancre) activerAncre(bloc.dataset.ancre);
+    });
+  }
 </script>
 
 <style>
+  /* La pastille numérotée d’un bloc du récit, et son état actif. */
+  .colonne-recit :global([data-ancre]) {
+    position: relative;
+    scroll-margin-top: 4rem;
+    outline: 2px solid transparent;
+    outline-offset: 3px;
+  }
+  .colonne-recit :global([data-ancre].actif) {
+    outline-color: var(--accent);
+  }
+  .colonne-recit :global(.numero-ancre) {
+    position: absolute;
+    top: -0.6rem;
+    left: -0.6rem;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+  }
+
+  /* Les cibles tactiles : la pastille de carte n’a pas à en être une. */
+  .boutons-ancres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+  }
+  .boutons-ancres a {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .boutons-ancres a:hover,
+  .boutons-ancres a[aria-current="true"] {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .meta {
+    margin: 0.55rem 0 1.6rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
   /* L’image que la carte vient de désigner, le temps qu’on la retrouve. */
   .colonne-recit :global([data-media].designee) {
     outline: 3px solid var(--accent);

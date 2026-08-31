@@ -87,6 +87,12 @@ export function directivesMedias() {
     const index = parIdentifiant(voyage);
     const nom = chemin.split(/[\\/]/).pop() ?? chemin;
 
+    // Les blocs sont numérotés dans l'ordre du Markdown, et le même numéro
+    // devient une pastille sur la carte. La numérotation sort du récit, pas
+    // des données : un jour à trois blocs a trois numéros, un jour sans bloc
+    // n'a pas de pastille numérotée.
+    let ancre = 0;
+
     visit(arbre, (noeud: any, rang: number | undefined, parent: any) => {
       if (noeud.type !== "leafDirective" && noeud.type !== "textDirective") return;
       if (!NOMS.has(noeud.name) || !parent || rang === undefined) return;
@@ -96,10 +102,17 @@ export function directivesMedias() {
 
       if (noeud.name === "photo") {
         const media = resoudre(attributs.id, index, "photo", nom);
+        ancre += 1;
         const legende = attributs.legende
           ? `<figcaption>${echapper(attributs.legende)}</figcaption>`
           : "";
-        html = `<figure class="photo">${image(media, voyage, "(min-width: 48rem) 44rem, 100vw", true)}${legende}</figure>`;
+        // `tabindex="-1"` rend le bloc atteignable par `focus()` sans l'insérer
+        // dans l'ordre de tabulation : c'est la carte qui l'y amène.
+        html =
+          `<figure class="photo" id="m${ancre}" data-ancre="${ancre}"` +
+          ` data-media-ancre="${echapper(media.id)}" tabindex="-1">` +
+          `<span class="numero-ancre chiffre" aria-hidden="true">${ancre}</span>` +
+          `${image(media, voyage, "(min-width: 48rem) 44rem, 100vw", true)}${legende}</figure>`;
       } else if (noeud.name === "galerie") {
         const identifiants = String(attributs.ids ?? "")
           .split(",")
@@ -108,10 +121,18 @@ export function directivesMedias() {
         if (identifiants.length === 0) {
           throw new Error(`${nom} : la directive ::galerie ne cite aucun identifiant.`);
         }
+        ancre += 1;
+        const premier = resoudre(identifiants[0], index, "galerie", nom);
         const images = identifiants
           .map((i) => image(resoudre(i, index, "galerie", nom), voyage, "(min-width: 48rem) 22rem, 45vw", false))
           .join("");
-        html = `<div class="galerie">${images}</div>`;
+        // La position du bloc est celle de sa première photo : aucun calcul
+        // géographique nouveau, on réutilise ce que le pipeline a déjà posé.
+        html =
+          `<div class="galerie" id="m${ancre}" data-ancre="${ancre}"` +
+          ` data-media-ancre="${echapper(premier.id)}" tabindex="-1">` +
+          `<span class="numero-ancre chiffre" aria-hidden="true">${ancre}</span>` +
+          `${images}</div>`;
       } else {
         const media = resoudre(attributs.id, index, "video", nom);
         if (!media.derives) {

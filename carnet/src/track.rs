@@ -206,6 +206,8 @@ pub struct BilanTraces {
     pub transits: usize,
     /// Journées de déplacement dont l’itinéraire n’a pas pu l’être.
     pub transits_manques: Vec<NaiveDate>,
+    /// Trajets calculés entre le camp et la première ou la dernière photo.
+    pub sorties_de_camp: usize,
 }
 
 pub struct Traces {
@@ -326,6 +328,7 @@ pub fn construire(
         }
     }
 
+    tracer_sorties_de_camp(medias, voyage, itineraires, &mut traces);
     tracer_retours(overrides, &mut traces);
     tracer_transits(medias, voyage, overrides, itineraires, &mut traces);
     heriter_des_lieux(voyage, journees, &mut traces);
@@ -602,6 +605,83 @@ fn extremite_du_jour(medias: &[Media], jour: NaiveDate, premiere: bool) -> Optio
         du_jour.first().and_then(|m| m.position)
     } else {
         du_jour.last().and_then(|m| m.position)
+    }
+}
+
+/// Distance à partir de laquelle le trajet camp-photo mérite d'être tracé.
+///
+/// On sort d'un camping à pied sans que cela fasse une étape ; au-delà d'un
+/// kilomètre, on a pris la voiture, et le trajet manque à la trace.
+const METRES_SORTIE_DE_CAMP: f64 = 1_000.0;
+
+/// Relie le camp à la première photo du jour, et la dernière au camp.
+///
+/// Les journées sur place n'étaient tracées qu'entre leur première et leur
+/// dernière photo : le trajet depuis le camping n'existait nulle part, alors
+/// qu'on y a dormi. Le 4 août, la journée se réduisait à 1,1 km de voiture
+/// entre deux photos de la Nadiža, sans le trajet qui y mène.
+///
+/// Le raisonnement est celui du camp : on part de là où l'on a dormi et l'on y
+/// revient. Les journées de déplacement, elles, changent de camp et relèvent
+/// de `tracer_transits`.
+fn tracer_sorties_de_camp(
+    medias: &[Media],
+    voyage: &Voyage,
+    itineraires: &mut Itineraires,
+    traces: &mut Traces,
+) {
+    let mut jour = voyage.date_debut;
+    while jour <= voyage.date_fin {
+        let suivant = jour.succ_opt();
+        let veille = jour.pred_opt().and_then(|d| camp_de_la_nuit(voyage, d));
+        let soir = camp_de_la_nuit(voyage, jour);
+
+        // Seulement les journées sur place : un changement de camp est un
+        // transit, tracé ailleurs et d'un camp à l'autre.
+        let sur_place = match (veille, soir) {
+            (Some(a), Some(b)) if a.id == b.id => Some(position_du_lieu(a)),
+            _ => None,
+        };
+
+        if let Some(camp) = sur_place {
+            for (extremite, depuis_le_camp) in [
+                (extremite_du_jour(medias, jour, true), true),
+                (extremite_du_jour(medias, jour, false), false),
+            ] {
+                let Some(photo) = extremite else { continue };
+                if distance_m(&camp, &photo) < METRES_SORTIE_DE_CAMP {
+                    continue;
+                }
+                let (depart, arrivee) = if depuis_le_camp {
+                    (camp, photo)
+                } else {
+                    (photo, camp)
+                };
+                // Sans itinéraire, on n'écrit rien. Ce tronçon est une
+                // déduction, pas une mesure : si le moteur ne sait pas relier le
+                // camp à la photo, une droite de dix kilomètres à travers la
+                // montagne affirmerait plus que ce que l'on sait. Le 31 juillet,
+                // la dernière photo est prise sur le bateau, au milieu du lac.
+                let points = match itineraires.resoudre(Mode::Route, &depart, &arrivee, &[]) {
+                    Ok(Resolution::Cache(trajet)) | Ok(Resolution::Calcule(trajet)) => {
+                        traces.bilan.sorties_de_camp += 1;
+                        trajet.points
+                    }
+                    _ => continue,
+                };
+                traces.troncons.push(Troncon {
+                    jour,
+                    mode: Mode::Route,
+                    source: SourceTrace::Heritee,
+                    points,
+                });
+            }
+        }
+
+        jour = match suivant {
+            Some(j) => j,
+            None => break,
+        };
     }
 }
 

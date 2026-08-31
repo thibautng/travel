@@ -41,6 +41,15 @@ segments:
   # bateau du lac par le sud et traverser la montagne. Le Königssee s’arrête à
   # 47,5203 à Salet, et son chenal part vers l’ouest dans sa moitié sud.
   # Le retour est déduit par la section `retours`.
+  # Le retour au camping. La dernière photo du jour est prise sur le bateau,
+  # au milieu du lac : sans ce segment, le trajet de retour partait de l’eau,
+  # et aucun moteur ne sait en sortir. Il part donc de l’embarcadère.
+  - jour: 2026-07-31
+    mode: route
+    calculer: true
+    points: [[12.98931, 47.58931], [12.89263, 47.60736]]
+    note: "Embarcadère du Königssee vers Winkl-Landthal, en voiture."
+
   - jour: 2026-07-31
     mode: bateau
     points:
@@ -76,6 +85,7 @@ segments:
   - jour: 2026-08-06
     mode: velo
     apres: IMG20260806161600
+    calculer: true
     points: [[12.6868, 46.7854], [12.7690, 46.8290]]
     note: "Derniers kilomètres vers Lienz, après la dernière photo de la sortie.
       La sortie est partie de San Candido, pas de Tassenbach, et les photos la
@@ -206,6 +216,18 @@ modes:
   - jour: 2026-08-06
     mode: velo
     note: "Le reste de la journée est la sortie sur la piste de la Drave."
+
+  # Trois journées sans le moindre vélo, où l’inférence en a vu : une voiture
+  # qui s’arrête a la vitesse moyenne d’un cycliste, et le carnet est formel.
+  - jour: 2026-07-30
+    mode: route
+    note: "Mine de sel puis Salzbourg, en voiture et à pied."
+  - jour: 2026-08-12
+    mode: route
+    note: "Riva del Garda vers Cogne, puis montée à Gimillan."
+  - jour: 2026-08-14
+    mode: marche
+    note: "La grande boucle de l’Urtier, à pied de bout en bout."
 
   # 11 août, descente vers le lac de Garde. Un seul tronçon de 89 km, que dix
   # heures d’écart entre deux photos faisaient passer pour du vélo.

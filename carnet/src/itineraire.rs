@@ -294,7 +294,18 @@ impl Itineraires {
         coordonnees.extend_from_slice(passages);
         coordonnees.push([arrivee.lon, arrivee.lat]);
 
-        let corps = serde_json::json!({ "coordinates": coordonnees });
+        // Par défaut, le moteur refuse de rattacher un point à plus de 350 mètres
+        // d'une voie, et rend un 404. C'est la bonne prudence pour un sentier,
+        // où l'absence de chemin est une information. Pour la voiture, non : le
+        // point de départ est souvent une photo posée sur un sentier ou sur un
+        // lac, et l'on sait très bien qu'on a rejoint la route la plus proche.
+        // `-1` libère la recherche pour ce seul mode.
+        let corps = if profil == "driving-car" {
+            let rayons: Vec<i32> = vec![-1; coordonnees.len()];
+            serde_json::json!({ "coordinates": coordonnees, "radiuses": rayons })
+        } else {
+            serde_json::json!({ "coordinates": coordonnees })
+        };
         let reponse = ureq::post(url_ors(profil))
             .header("Authorization", cle_api)
             .header("Content-Type", "application/json")

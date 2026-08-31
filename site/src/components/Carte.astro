@@ -11,7 +11,7 @@
  * PMTiles auto-hébergé sur R2 arrive au lot 6.
  */
 import { camps as campsDuVoyage, voyage as lireVoyage } from "../voyages";
-import { urlMedia } from "../donnees";
+import { urlMedia, empreinteTrace } from "../donnees";
 import { getCollection } from "astro:content";
 
 interface Props {
@@ -50,6 +50,7 @@ const titres = Object.fromEntries(
   data-camps={JSON.stringify(camps)}
   data-titres={JSON.stringify(titres)}
   data-media={urlMedia("", voyage)}
+  data-empreinte={empreinteTrace(voyage)}
   style={`--hauteur:${hauteur}`}
 >
   <p class="carte-temoin">Chargement de la carte…</p>
@@ -403,9 +404,12 @@ const titres = Object.fromEntries(
     // La page d'une journee ne charge que la sienne : le fichier complet
     // pese 246 Ko comprimes, pour une carte cadree sur un seul jour.
     const jourSeul = conteneur.dataset.vue === "jour" ? conteneur.dataset.jour : null;
+    // L'empreinte change avec la trace : sans elle, un navigateur garderait
+    // l'ancienne version une heure durant, meme apres rechargement force.
+    const version = conteneur.dataset.empreinte ?? "";
     const adresse = jourSeul
-      ? `/donnees/${voyage}/jours/${jourSeul}.geojson`
-      : `/donnees/${voyage}/trace.geojson`;
+      ? `/donnees/${voyage}/jours/${jourSeul}.geojson?v=${version}`
+      : `/donnees/${voyage}/trace.geojson?v=${version}`;
     const reponse = await fetch(adresse);
     if (!reponse.ok) {
       throw new Error(`trace indisponible (HTTP ${reponse.status})`);

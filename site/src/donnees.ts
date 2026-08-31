@@ -138,6 +138,26 @@ export function trace(voyage: string): { features?: any[] } {
   return memoise(`trace-lue:${voyage}`, () => JSON.parse(traceBrute(voyage)));
 }
 
+/**
+ * Empreinte de la trace, à mettre dans l’adresse des fichiers servis.
+ *
+ * Les en-têtes donnent une heure de cache aux données, ce qui est le bon
+ * réglage tant que rien ne change. Mais quand le pipeline retrace un voyage,
+ * le navigateur garde l’ancienne version jusqu’à l’expiration, et un
+ * rechargement forcé n’y suffit pas : il ne couvre pas les `fetch` du script.
+ * L’empreinte change avec le fichier, donc l’adresse aussi.
+ */
+export function empreinteTrace(voyage: string): string {
+  return memoise(`empreinte:${voyage}`, () => {
+    const texte = traceBrute(voyage);
+    let somme = 0;
+    for (let i = 0; i < texte.length; i += 1) {
+      somme = (somme * 31 + texte.charCodeAt(i)) >>> 0;
+    }
+    return somme.toString(36);
+  });
+}
+
 export interface EntreeLegende {
   cle: string;
   couleur: string;

@@ -128,7 +128,7 @@
       11.18523888888889,
       47.483758333333334
     ],
-    "distance_trace_km": 8.9,
+    "distance_trace_km": 11.6,
     "modes": [
       "marche"
     ],
@@ -215,7 +215,6 @@
     "modes": [
       "route",
       "marche",
-      "velo",
       "bateau"
     ],
     "anomalies": []

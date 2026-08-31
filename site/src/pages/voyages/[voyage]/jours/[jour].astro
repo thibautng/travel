@@ -6,6 +6,7 @@
 import Page from "../../../../layouts/Page.astro";
 import Visionneuse from "../../../../components/Visionneuse.astro";
 import Carte from "../../../../components/Carte.astro";
+import LegendeCarte from "../../../../components/LegendeCarte.astro";
 import { tousLesVoyages, lieu, type Voyage } from "../../../../voyages";
 import { mediasDuJour, urlMedia, type Media } from "../../../../donnees";
 import { getCollection, render, type CollectionEntry } from "astro:content";
@@ -119,6 +120,7 @@ const lien = (e: CollectionEntry<"journees">) =>
 
     <div class="colonne-carte">
       <Carte voyage={v.id} vue="jour" jour={jour} />
+      <LegendeCarte voyage={v.id} jour={jour} />
       <p class="sous-carte discret">
         <a href={`/voyages/${v.id}/carte/?jour=${jour}`}>Voir cette journée dans le lecteur</a>
       </p>

@@ -36,19 +36,25 @@ segments:
     points: [[12.89263, 47.60736], [12.98931, 47.58931]]
     note: "Winkl-Landthal vers l’embarcadère du Königssee, en voiture."
 
+  # Trois points suffisaient à dire le trajet, pas à le dessiner : le lac
+  # tourne deux fois, et la droite coupait la montagne. Les points suivent
+  # l’axe du lac, relevés à la main sur la carte. Le retour est déduit par la
+  # section `retours`, le bateau reprenant exactement le même chemin.
   - jour: 2026-07-31
     mode: bateau
-    points: [[12.9887, 47.5893], [12.9797, 47.5225], [12.9847, 47.4967]]
-    note: "Königssee, Schönau vers St. Bartholomä puis Salet. Décrochage GPS en vallée encaissée."
-
-  # 28 juillet : le retour du Hoellentalklamm n’est pas photographié. La
-  # dernière photo est prise à mi-descente ; sans ce tronçon, la journée ne
-  # compte que l’aller, alors que la marche est un aller-retour.
-  - jour: 2026-07-28
-    mode: marche
-    calculer: true
-    points: [[11.0338, 47.4409], [11.0375, 47.4696]]
-    note: "Descente de la Hoellentalangerhuette au parking de Hammersbach."
+    points:
+      - [12.98836, 47.58860]
+      - [12.98330, 47.58170]
+      - [12.97960, 47.57330]
+      - [12.97430, 47.56410]
+      - [12.97600, 47.55600]
+      - [12.97930, 47.55200]
+      - [12.98180, 47.54200]
+      - [12.98700, 47.53100]
+      - [12.98960, 47.52100]
+      - [12.98700, 47.51100]
+      - [12.98620, 47.50250]
+    note: "Königssee, Schönau vers St. Bartholomä puis Salet."
 
   # Le train part de Lienz, la ou la sortie s’arrete, et rejoint la derniere
   # position relevee du retour. Sans ce tronçon, la ligne du train commencait
@@ -132,21 +138,28 @@ modes:
     de: "10:45"
     a: "10:55"
 
-  # 31 juillet, tout ce qui bouge est sur le lac. La voiture s’est arrêtée à
-  # l’embarcadère avant la première photo, et son trajet est déclaré en segment
-  # calculé plus haut. Ce qui suit est la traversée vers St. Bartholomä.
+  # 31 juillet. Le téléphone a perdu les satellites dans la vallée encaissée et
+  # a recopié sa dernière position : les vitesses déduites de ces positions ne
+  # veulent rien dire, d’où le vélo apparu sur une journée qui n’en a pas vu.
+  #
+  # Les deux traversées sont écrites à la main, aller en `segments` et retour
+  # en `retours` : `sans_trace` empêche l’inférence d’en dessiner une seconde,
+  # en droite, par-dessus. Entre les deux, tout est à pied.
   - jour: 2026-07-31
     mode: bateau
-    de: "08:45"
-    a: "09:25"
+    a: "09:35"
+    sans_trace: true
+    note: "Embarquement à 8 h 32, débarquement à 9 h 30 à Salet."
+  - jour: 2026-07-31
+    mode: marche
+    de: "09:35"
+    a: "12:30"
+    note: "Obersee, Fischunkelalm et la plage, à pied."
   - jour: 2026-07-31
     mode: bateau
-    de: "11:44"
-    a: "12:00"
-  - jour: 2026-07-31
-    mode: bateau
-    de: "12:15"
-    a: "12:55"
+    de: "12:30"
+    sans_trace: true
+    note: "Bateau du retour, à 12 h 45."
 
   # 3 août, route vers le col de Vršič.
   - jour: 2026-08-03
@@ -218,3 +231,18 @@ itineraires:
     points_de_passage: [[6.88669, 45.68517], [5.21311, 45.61349]]
     note: "Col du Petit-Saint-Bernard puis la Tarentaise et Lyon, et non le
       tunnel du Mont-Blanc."
+
+# Journées dont le retour reprend l’aller à l’envers.
+#
+# On photographie à la montée et plus à la descente : la trace s’arrête au
+# point haut et les kilomètres sont divisés par deux. Un segment droit du
+# sommet au parking serait honnête mais faux : il n’y a qu’un chemin, et
+# c’est celui de l’aller.
+retours:
+  - jour: 2026-07-31
+    mode: bateau
+    note: "Le bateau du retour reprend le lac dans l’autre sens."
+  - jour: 2026-07-28
+    mode: marche
+    note: "Höllentalklamm : montée photographiée jusqu’au refuge, descente par
+      le même sentier."

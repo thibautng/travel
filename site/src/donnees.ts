@@ -167,8 +167,14 @@ function distanceKm(a: number[], b: number[]): number {
  * elle-même, où le pipeline les a déjà déduites du mode. Une légende qui
  * répéterait la palette finirait par mentir.
  */
-export function legende(voyage: string): Legende {
-  return memoise(`legende:${voyage}`, () => {
+/**
+ * Légende du voyage, ou d’une seule journée quand `jour` est donné.
+ *
+ * Sur la page d’une journée, la légende du voyage entier annoncerait des
+ * modes absents de la carte et des kilomètres qui ne sont pas ceux du jour.
+ */
+export function legende(voyage: string, jour?: string): Legende {
+  return memoise(`legende:${voyage}:${jour ?? ""}`, () => {
     const trace = JSON.parse(traceBrute(voyage));
     const modes = new Map<string, EntreeLegende>();
     const sources = new Set<string>();
@@ -176,6 +182,7 @@ export function legende(voyage: string): Legende {
     for (const entite of trace.features ?? []) {
       if (entite.geometry?.type !== "LineString") continue;
       const p = entite.properties ?? {};
+      if (jour && p.jour !== jour) continue;
       sources.add(p.source);
       const entree = modes.get(p.mode) ?? { cle: p.mode, couleur: p.couleur, km: 0 };
       const points: number[][] = entite.geometry.coordinates;

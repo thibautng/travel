@@ -8849,12 +8849,11 @@
     "origine_date": "exif",
     "jour": "2026-07-31",
     "position": {
-      "lat": 47.57386666666667,
-      "lon": 12.987697222222222,
-      "alt": 0.0
+      "lat": 47.512673851294906,
+      "lon": 12.989001023391811
     },
     "fiabilite": "basse",
-    "origine_position": "exif",
+    "origine_position": "posee",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260731114817-320.jpg",

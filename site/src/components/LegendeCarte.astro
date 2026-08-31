@@ -14,9 +14,11 @@ import { legende } from "../donnees";
 
 interface Props {
   voyage: string;
+  /** Restreint la légende à une journée, sur la page de cette journée. */
+  jour?: string;
 }
-const { voyage } = Astro.props;
-const { modes } = legende(voyage);
+const { voyage, jour } = Astro.props;
+const { modes } = legende(voyage, jour);
 
 const NOMS: Record<string, string> = {
   route: "Route",

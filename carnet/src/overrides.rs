@@ -106,6 +106,27 @@ pub struct Segment {
     pub note: Option<String>,
 }
 
+/// Journée dont le retour reprend l'aller à l'envers.
+///
+/// Sur un aller-retour, on photographie à la montée et plus à la descente :
+/// la trace s'arrête au point haut, et les kilomètres sont divisés par deux.
+/// Déclarer le départ et l'arrivée en segment manuel ne suffit pas, parce que
+/// le moteur d'itinéraire ne connaît pas toujours le chemin : la gorge du
+/// Höllentalklamm est un sentier à péage qu'OpenStreetMap ne route pas, et le
+/// segment retombe alors en ligne droite à travers la montagne.
+///
+/// Or il n'y a qu'un chemin, et on l'a déjà : celui de l'aller. Le retour en
+/// est la copie, parcourue à l'envers. C'est une déduction et non une mesure,
+/// mais elle est plus juste qu'une droite, et l'humain la déclare.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct Retour {
+    pub jour: NaiveDate,
+    pub mode: Mode,
+    #[serde(default)]
+    pub note: Option<String>,
+}
+
 /// Mode imposé à une journée, ou à une tranche horaire de journée.
 ///
 /// L'inférence par la vitesse est une proposition, pas un verdict : une
@@ -122,6 +143,15 @@ pub struct ForcageMode {
     /// Fin de la tranche. À défaut, la fin de journée.
     #[serde(default)]
     pub a: Option<NaiveTime>,
+    /// Ne produire aucun tronçon sur cette tranche.
+    ///
+    /// Pour les trajets déjà déclarés à la main. Sur le Königssee, la traversée
+    /// en bateau est écrite en `segments`, avec les points qui suivent le lac ;
+    /// sans cela, l'inférence en traçait une seconde, en droite, qui coupait
+    /// les terres là où le lac tourne. Deux traits pour un trajet, dont un
+    /// faux.
+    #[serde(default)]
+    pub sans_trace: bool,
     #[serde(default)]
     pub note: Option<String>,
 }
@@ -161,6 +191,8 @@ pub struct Overrides {
     pub itineraires: Vec<ForcageItineraire>,
     #[serde(default)]
     pub modes: Vec<ForcageMode>,
+    #[serde(default)]
+    pub retours: Vec<Retour>,
 }
 
 impl Overrides {
@@ -173,6 +205,17 @@ impl Overrides {
             .iter()
             .find(|f| f.couvre(jour, instant))
             .map(|f| f.mode)
+    }
+
+    /// Vrai si cette tranche est déclarée sans trace : le trajet existe, il
+    /// est écrit à la main ailleurs, et l'inférence ne doit pas en dessiner un
+    /// second.
+    pub fn sans_trace(&self, jour: NaiveDate, instant: NaiveTime) -> bool {
+        self.modes
+            .iter()
+            .find(|f| f.couvre(jour, instant))
+            .map(|f| f.sans_trace)
+            .unwrap_or(false)
     }
 }
 

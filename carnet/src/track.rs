@@ -326,6 +326,7 @@ pub fn construire(
         }
     }
 
+    tracer_retours(overrides, &mut traces);
     tracer_transits(medias, voyage, overrides, itineraires, &mut traces);
     heriter_des_lieux(voyage, journees, &mut traces);
 
@@ -380,6 +381,15 @@ fn tracer_journee(
         // L'heure est ramenée au fuseau du voyage avant d'interroger les
         // forçages : les vidéos portent leur horodatage en temps universel,
         // et une plage écrite en heure locale les manquerait de deux heures.
+        // Une tranche déclarée sans trace ne produit rien : son trajet est écrit
+        // à la main dans `segments`, et une droite de plus le doublerait.
+        if overrides.sans_trace(jour, t0.with_timezone(&fuseau).time()) {
+            if let Some(termine) = courant.take() {
+                troncons.push(termine);
+            }
+            continue;
+        }
+
         let mode = overrides
             .mode_force(jour, t0.with_timezone(&fuseau).time())
             .unwrap_or(if heures <= 0.0 {
@@ -592,6 +602,33 @@ fn extremite_du_jour(medias: &[Media], jour: NaiveDate, premiere: bool) -> Optio
         du_jour.first().and_then(|m| m.position)
     } else {
         du_jour.last().and_then(|m| m.position)
+    }
+}
+
+/// Ajoute le retour des journées déclarées en aller-retour.
+///
+/// Le retour est l'aller à l'envers : on recolle les tronçons du jour dans ce
+/// mode, dans l'ordre où ils ont été bâtis, et on les parcourt à rebours. La
+/// source est `manuelle` : c'est une déduction de l'humain, pas une mesure.
+fn tracer_retours(overrides: &Overrides, traces: &mut Traces) {
+    for retour in &overrides.retours {
+        let aller: Vec<[f64; 2]> = traces
+            .troncons
+            .iter()
+            .filter(|t| t.jour == retour.jour && t.mode == retour.mode)
+            .flat_map(|t| t.points.iter().copied())
+            .collect();
+        if aller.len() < 2 {
+            continue;
+        }
+        let mut points = aller;
+        points.reverse();
+        traces.troncons.push(Troncon {
+            jour: retour.jour,
+            mode: retour.mode,
+            source: SourceTrace::Manuelle,
+            points,
+        });
     }
 }
 

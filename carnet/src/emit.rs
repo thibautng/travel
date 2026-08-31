@@ -277,7 +277,38 @@ pub struct JourAgrege {
     pub bbox: Option<[f64; 4]>,
     pub distance_trace_km: f64,
     pub modes: Vec<Mode>,
+    /// Mode qui caractérise la journée, pour la frise. Voir `mode_dominant`.
+    pub mode_dominant: Option<Mode>,
     pub anomalies: Vec<String>,
+}
+
+/// Mode qui caractérise une journée.
+///
+/// Le plus long en kilomètres, sauf la route, qui s'efface dès qu'un autre
+/// mode dépasse cinq kilomètres. Sans cette exception, le 8 août et ses
+/// quatre-vingt-neuf kilomètres de voiture ferait oublier ses onze kilomètres
+/// aux Tre Cime, et quinze journées sur vingt-trois se ressembleraient.
+///
+/// C'est un choix de récit, pas une mesure : la journée du 8 août s'est
+/// racontée à pied, même si elle s'est parcourue en voiture.
+const KM_MODE_SIGNIFICATIF: f64 = 5.0;
+
+fn mode_dominant(km_par_mode: &BTreeMap<Mode, f64>) -> Option<Mode> {
+    let plus_long = |exclure_la_route: bool| {
+        km_par_mode
+            .iter()
+            .filter(|(mode, km)| {
+                !(exclure_la_route && **mode == Mode::Route) && **km >= KM_MODE_SIGNIFICATIF
+            })
+            .max_by(|a, b| a.1.partial_cmp(b.1).unwrap_or(std::cmp::Ordering::Equal))
+            .map(|(mode, _)| *mode)
+    };
+    plus_long(true).or_else(|| {
+        km_par_mode
+            .iter()
+            .max_by(|a, b| a.1.partial_cmp(b.1).unwrap_or(std::cmp::Ordering::Equal))
+            .map(|(mode, _)| *mode)
+    })
 }
 
 /// Construit l'index des journées à partir des médias et des traces.
@@ -330,6 +361,12 @@ pub fn construire_jours(
             modes.sort();
             modes.dedup();
 
+            let mut km_par_mode: BTreeMap<Mode, f64> = BTreeMap::new();
+            for troncon in &troncons {
+                *km_par_mode.entry(troncon.mode).or_default() += troncon.longueur_km();
+            }
+            let mode_dominant = mode_dominant(&km_par_mode);
+
             // La couverture déclarée par la rédaction l'emporte ; à défaut,
             // le premier média fiable de la journée.
             let couverture = frontmatter
@@ -368,6 +405,7 @@ pub fn construire_jours(
                     .round()
                     / 10.0,
                 modes,
+                mode_dominant,
                 anomalies,
             }
         })

@@ -2,15 +2,20 @@
 /**
  * Frise des journées, en haut de chaque page de journée.
  *
- * Vingt-trois pastilles, une par jour, la journée lue en surbrillance. Le
- * carnet se feuillette dans l'ordre, mais on veut aussi pouvoir sauter au
- * 8 août sans repasser par la vue d'ensemble.
+ * Vingt-trois cellules de largeur égale, chacune portant le numéro du jour,
+ * ses kilomètres et une barre à la couleur de son mode dominant. Le carnet se
+ * feuillette dans l'ordre, mais on veut aussi sauter au 8 août sans repasser
+ * par la vue d'ensemble.
  *
  * Des liens, pas un script : la navigation marche sans JavaScript, au clavier
- * comme au doigt. Le seul script fait défiler la frise jusqu'à la pastille
- * active, que vingt-trois jours peuvent pousser hors de l'écran.
+ * comme au doigt.
+ *
+ * La barre de couleur ne porte jamais seule son information : le mode est
+ * écrit dans l'attribut `title` de chaque cellule, avec la date, le titre et
+ * la distance.
  */
 import { getCollection } from "astro:content";
+import { jours as joursAgreges, type JourAgrege } from "../donnees";
 
 interface Props {
   voyage: string;
@@ -20,25 +25,48 @@ const { voyage, jour } = Astro.props;
 
 const journees = await getCollection("journees", (e) => e.id.startsWith(`${voyage}/`));
 journees.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+const agreges = new Map<string, JourAgrege>(joursAgreges(voyage).map((j) => [j.jour, j]));
 
 const iso = (d: Date) => d.toISOString().slice(0, 10);
-const jourDuMois = (d: Date) => String(d.getUTCDate());
 const enFrancais = (d: Date) =>
   d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
 
-// Le mois n'est rappelé qu'à son premier jour : « 24 25 26 … 1 2 3 » se lit
-// mal sans savoir où l'on bascule d'août à juillet.
+const NOMS_MODE: Record<string, string> = {
+  route: "route",
+  marche: "marche",
+  velo: "vélo",
+  bateau: "bateau",
+  train: "train",
+  telepherique: "téléphérique",
+};
+
+// Le mois n'est rappelé qu'à sa bascule : « 24 25 26 … 1 2 3 » se lit mal sans
+// savoir où l'on passe de juillet à août.
 let moisPrecedent = "";
 const etapes = journees.map((j) => {
+  const cle = iso(j.data.date);
+  const agrege = agreges.get(cle);
   const mois = j.data.date.toLocaleDateString("fr-FR", { month: "short" });
   const bascule = mois !== moisPrecedent;
   moisPrecedent = mois;
+  const mode = agrege?.mode_dominant ?? null;
+  const km = Math.round(agrege?.distance_trace_km ?? 0);
   return {
-    jour: iso(j.data.date),
-    numero: jourDuMois(j.data.date),
+    jour: cle,
+    numero: String(j.data.date.getUTCDate()),
     mois: bascule ? mois.replace(".", "") : "",
     titre: j.data.titre,
-    date: enFrancais(j.data.date),
+    km,
+    mode,
+    // Le titre de survol dit tout ce que la couleur ne dit pas.
+    infobulle: [
+      enFrancais(j.data.date),
+      j.data.titre,
+      mode ? NOMS_MODE[mode] ?? mode : null,
+      km > 0 ? `${km} km` : null,
+    ]
+      .filter(Boolean)
+      .join(" — "),
   };
 });
 ---
@@ -51,10 +79,15 @@ const etapes = journees.map((j) => {
           <a
             href={`/voyages/${voyage}/jours/${e.jour}/`}
             aria-current={e.jour === jour ? "page" : undefined}
-            title={`${e.date} — ${e.titre}`}
+            title={e.infobulle}
           >
-            <span class="numero">{e.numero}</span>
+            <span class="numero chiffre">{e.numero}</span>
             {e.mois && <span class="mois">{e.mois}</span>}
+            <span class="km chiffre">{e.km > 0 ? e.km : ""}</span>
+            <span
+              class="barre"
+              style={e.mode ? `background: var(--mode-${e.mode})` : "background: var(--rule)"}
+            />
           </a>
         </li>
       ))
@@ -62,76 +95,76 @@ const etapes = journees.map((j) => {
   </ol>
 </nav>
 
-<script>
-  // La pastille active peut être la vingt-troisième : on l'amène sous les yeux.
-  for (const frise of document.querySelectorAll<HTMLElement>(".frise-jours")) {
-    const actif = frise.querySelector<HTMLElement>('[aria-current="page"]');
-    if (!actif) continue;
-    const liste = frise.querySelector<HTMLElement>("ol");
-    if (!liste) continue;
-    // `scrollLeft` et non `scrollIntoView` : ce dernier ferait aussi défiler
-    // la page verticalement, alors qu'on vient d'arriver en haut.
-    liste.scrollLeft = actif.offsetLeft - liste.clientWidth / 2 + actif.offsetWidth / 2;
-  }
-</script>
-
 <style>
   .frise-jours {
-    margin: 0 0 1.4rem;
-    border-bottom: 1px solid var(--trait);
-    padding-bottom: 0.7rem;
+    margin: 0 0 1.6rem;
+    border-bottom: 1px solid var(--rule);
   }
   .frise-jours ol {
     display: flex;
-    gap: 0.3rem;
     list-style: none;
     margin: 0;
-    padding: 0 0 0.3rem;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    /* La frise déborde volontairement des marges du texte : elle appartient à
-       la page, pas à la colonne de lecture. */
-    scroll-padding-inline: 1rem;
+    padding: 0;
   }
   .frise-jours li {
-    flex: none;
+    /* `min-width: 0` est indispensable : sans lui, une cellule ne descend
+       jamais sous la largeur de son texte et la page s'élargit. */
+    flex: 1;
+    min-width: 0;
   }
   .frise-jours a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* Quarante-quatre pixels : la plus petite cible qui se vise au pouce. */
-    min-width: 2.75rem;
+    gap: 1px;
+    /* Quarante-quatre pixels de haut : la plus petite cible qui se vise au
+       pouce sans effort. */
     min-height: 2.75rem;
-    padding: 0.2rem 0.4rem;
-    border: 1px solid var(--trait);
-    border-radius: 6px;
+    padding: 0.35rem 0.15rem 0;
     text-decoration: none;
-    color: var(--discret);
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    color: var(--muted);
+    font-family: var(--sans);
     line-height: 1.1;
   }
   .frise-jours a:hover {
-    border-color: var(--discret);
-    color: var(--encre);
+    color: var(--ink);
+    background: var(--hl);
   }
   .frise-jours .numero {
-    font-size: 0.95rem;
-    font-variant-numeric: tabular-nums;
+    font-size: 13px;
   }
   .frise-jours .mois {
-    font-size: 0.62rem;
+    font-size: 9px;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
+    color: var(--faint);
+  }
+  .frise-jours .km {
+    font-size: 10px;
+    color: var(--faint);
+    /* Les kilomètres sont arrondis à l'entier en amont : non arrondis, ils se
+       coupent en plein milieu dès que la cellule passe sous 34 pixels. */
+  }
+  .frise-jours .barre {
+    display: block;
+    width: 100%;
+    height: 3px;
+    margin-top: 0.35rem;
   }
   .frise-jours [aria-current="page"] {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    font-weight: 600;
+    color: var(--ink);
+    background: var(--hl);
   }
-  .frise-jours [aria-current="page"] .mois {
-    opacity: 0.85;
+  .frise-jours [aria-current="page"] .numero {
+    font-weight: 500;
+  }
+
+  /* Sous 640 pixels, une cellule fait moins de trente pixels : il ne reste de
+     la place que pour le numéro et la barre. */
+  @media (max-width: 40rem) {
+    .frise-jours .mois,
+    .frise-jours .km {
+      display: none;
+    }
   }
 </style>

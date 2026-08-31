@@ -80,6 +80,8 @@ export interface JourAgrege {
   bbox?: [number, number, number, number];
   distance_trace_km: number;
   modes: Mode[];
+  /** Mode qui caracterise la journee, pour la frise. Calcule par le pipeline. */
+  mode_dominant?: Mode | null;
   anomalies: string[];
 }
 

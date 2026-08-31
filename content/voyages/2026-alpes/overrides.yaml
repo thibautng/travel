@@ -36,24 +36,33 @@ segments:
     points: [[12.89263, 47.60736], [12.98931, 47.58931]]
     note: "Winkl-Landthal vers l’embarcadère du Königssee, en voiture."
 
-  # Trois points suffisaient à dire le trajet, pas à le dessiner : le lac
-  # tourne deux fois, et la droite coupait la montagne. Les points suivent
-  # l’axe du lac, relevés à la main sur la carte. Le retour est déduit par la
-  # section `retours`, le bateau reprenant exactement le même chemin.
+  # L’axe du lac, tiré du polygone d’OpenStreetMap par `outils/axe_lac.py` et
+  # non placé à l’œil : la première version, de mémoire, faisait sortir le
+  # bateau du lac par le sud et traverser la montagne. Le Königssee s’arrête à
+  # 47,5203 à Salet, et son chenal part vers l’ouest dans sa moitié sud.
+  # Le retour est déduit par la section `retours`.
   - jour: 2026-07-31
     mode: bateau
     points:
       - [12.98836, 47.58860]
-      - [12.98330, 47.58170]
-      - [12.97960, 47.57330]
-      - [12.97430, 47.56410]
-      - [12.97600, 47.55600]
-      - [12.97930, 47.55200]
-      - [12.98180, 47.54200]
-      - [12.98700, 47.53100]
-      - [12.98960, 47.52100]
-      - [12.98700, 47.51100]
-      - [12.98620, 47.50250]
+      - [12.98755, 47.58601]
+      - [12.99111, 47.58214]
+      - [12.99295, 47.57828]
+      - [12.99087, 47.57441]
+      - [12.98630, 47.57055]
+      - [12.98478, 47.56668]
+      - [12.98266, 47.56282]
+      - [12.97996, 47.55895]
+      - [12.97655, 47.55508]
+      - [12.97474, 47.55122]
+      - [12.97486, 47.54735]
+      - [12.97468, 47.54349]
+      - [12.97255, 47.53962]
+      - [12.96862, 47.53576]
+      - [12.96762, 47.53189]
+      - [12.96694, 47.52803]
+      - [12.96837, 47.52416]
+      - [12.96609, 47.52030]
     note: "Königssee, Schönau vers St. Bartholomä puis Salet."
 
   # Le train part de Lienz, la ou la sortie s’arrete, et rejoint la derniere

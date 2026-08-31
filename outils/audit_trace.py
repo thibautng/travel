@@ -17,6 +17,9 @@ DROITE_SUSPECTE_KM = 1.5
 MARCHE_LONGUE_KM = 20.0
 # Distance a laquelle la trace doit approcher le camp du soir.
 LOIN_DU_CAMP_KM = 1.5
+# Ecart tolere entre la fin d'un troncon et le debut du suivant, dans l'ordre
+# chronologique. Au-dela, la trace saute : on ne se teleporte pas.
+SAUT_KM = 0.5
 
 
 def km(a, b):
@@ -57,6 +60,42 @@ def main(voyage):
             # Une droite est un tronçon a deux points : rien ne l'a calcule.
             if len(c) == 2 and d >= DROITE_SUSPECTE_KM:
                 alertes.append("droite de %.1f km en %s" % (d, p["mode"]))
+        # Continuite. L'ordre des Features n'est pas chronologique : le trajet
+        # entre camps est ajoute en dernier, et un test sur les voisins
+        # immediats criait au saut sur toutes les journees de deplacement.
+        #
+        # On regarde donc si les troncons du jour forment un seul morceau :
+        # deux troncons se touchent quand une de leurs extremites en rejoint
+        # une autre. Une journee en deux morceaux, c'est une teleportation.
+        parent = list(range(len(troncons)))
+
+        def racine(i):
+            while parent[i] != i:
+                parent[i] = parent[parent[i]]
+                i = parent[i]
+            return i
+
+        bouts = []
+        for f in troncons:
+            c = f["geometry"]["coordinates"]
+            bouts.append((c[0], c[-1]))
+        for i in range(len(bouts)):
+            for j in range(i + 1, len(bouts)):
+                if any(km(a, b) < SAUT_KM for a in bouts[i] for b in bouts[j]):
+                    ri, rj = racine(i), racine(j)
+                    if ri != rj:
+                        parent[ri] = rj
+        morceaux = {}
+        for i in range(len(troncons)):
+            morceaux.setdefault(racine(i), []).append(i)
+        if len(morceaux) > 1:
+            details = []
+            for indices in morceaux.values():
+                modes = sorted({troncons[i]["properties"]["mode"] for i in indices})
+                bout = bouts[indices[0]][0]
+                details.append("%s pres de %.4f,%.4f" % ("/".join(modes), bout[1], bout[0]))
+            alertes.append("trace en %d morceaux : %s" % (len(morceaux), " | ".join(details)))
+
         if par_mode.get("marche", 0) > MARCHE_LONGUE_KM:
             alertes.append("marche de %.1f km" % par_mode["marche"])
         for mode in ("velo", "bateau", "train", "telepherique"):

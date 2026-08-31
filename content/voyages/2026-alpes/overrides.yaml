@@ -340,7 +340,7 @@ modes:
   # qui envoyaient des tronçons au routeur automobile.
   - jour: 2026-08-06
     mode: train
-    de: "14:10"
+    de: "16:16"
     a: "23:59"
     sans_trace: true
     note: "Le retour est écrit à la main : vélo jusqu’à Lienz, puis train."

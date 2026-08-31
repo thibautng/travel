@@ -20,12 +20,30 @@
 
 const PREFIXE = "/media/";
 
+/**
+ * L'ancien lecteur jour par jour, fondu dans la page du voyage.
+ *
+ * Une seule carte interactive par voyage, une seule adresse. La redirection
+ * est permanente : les liens déjà partagés continuent de fonctionner, et le
+ * paramètre `?jour=` est conservé, le lecteur sachant l'ouvrir.
+ */
+const ANCIEN_LECTEUR = /^\/voyages\/([^/]+)\/carte\/?$/;
+
 /** Les dérivés ne changent jamais sous un même nom : le pipeline en écrit de nouveaux. */
 const CACHE_MEDIA = "public, max-age=31536000, immutable";
 
 export default {
   async fetch(requete, env) {
     const url = new URL(requete.url);
+
+    const ancien = ANCIEN_LECTEUR.exec(url.pathname);
+    if (ancien) {
+      const cible = new URL(`/voyages/${ancien[1]}/`, url);
+      cible.search = url.search;
+      cible.hash = "lecteur";
+      return Response.redirect(cible.toString(), 301);
+    }
+
     if (!url.pathname.startsWith(PREFIXE)) {
       return env.ASSETS.fetch(requete);
     }

@@ -1,13 +1,16 @@
 ---
 /**
- * Vue d'ensemble d'un voyage : chiffres clés et frise des journées.
- * Voir SPEC.md, section 9.1. La carte arrive au lot 5.
+ * Vue d'ensemble d'un voyage, et lecteur jour par jour.
+ *
+ * Les deux étaient deux pages. Une seule carte interactive par voyage, une
+ * seule adresse, un seul modèle mental : `/voyages/<id>/carte/` redirige ici,
+ * sur l'ancre `#lecteur`.
  */
 import Page from "../../../layouts/Page.astro";
 import Carte from "../../../components/Carte.astro";
 import LegendeCarte from "../../../components/LegendeCarte.astro";
 import { tousLesVoyages, camps, type Voyage } from "../../../voyages";
-import { jours, type JourAgrege } from "../../../donnees";
+import { jours, legende, medias, urlMedia, type JourAgrege } from "../../../donnees";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
@@ -24,10 +27,43 @@ journees.sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
 
 const agreges = new Map<string, JourAgrege>(jours(v.id).map((j) => [j.jour, j]));
 const km = Math.round(jours(v.id).reduce((t, j) => t + j.distance_trace_km, 0));
+const totalMedias = jours(v.id).reduce((t, j) => t + j.medias.total, 0);
+
+// Les vignettes du curseur : une par journée, celle que le pipeline a retenue
+// comme couverture. Un index par identifiant évite de parcourir 833 médias
+// vingt-trois fois.
+const parIdentifiant = new Map(medias(v.id).map((m) => [m.id, m]));
+
+const { modes } = legende(v.id);
+const NOMS_MODE: Record<string, string> = {
+  route: "Route",
+  marche: "Marche",
+  velo: "Vélo",
+  bateau: "Bateau",
+  train: "Train",
+  telepherique: "Téléphérique",
+};
 
 const dateIso = (d: Date) => d.toISOString().slice(0, 10);
 const enFrancais = (d: Date) =>
   d.toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+const courte = (d: Date) => d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+
+const etapes = journees.map((j) => {
+  const cle = dateIso(j.data.date);
+  const agrege = agreges.get(cle);
+  const couverture = agrege?.couverture ? parIdentifiant.get(agrege.couverture) : undefined;
+  return {
+    jour: cle,
+    date: enFrancais(j.data.date),
+    courte: courte(j.data.date),
+    titre: j.data.titre,
+    km: Math.round(agrege?.distance_trace_km ?? 0),
+    medias: agrege?.medias.total ?? 0,
+    mode: agrege?.mode_dominant ?? null,
+    vignette: couverture?.derives ? urlMedia(couverture.derives.vignette, v.id) : null,
+  };
+});
 ---
 
 <Page titre={v.titre} description={v.sous_titre}>
@@ -35,78 +71,332 @@ const enFrancais = (d: Date) =>
   {v.sous_titre && <p class="discret">{v.sous_titre}</p>}
 
   <dl class="chiffres">
-    <div><dt>Journées</dt><dd>{journees.length}</dd></div>
-    <div><dt>Kilomètres</dt><dd>{km.toLocaleString("fr-FR")}</dd></div>
-    {v.nuits && <div><dt>Nuits</dt><dd>{v.nuits}</dd></div>}
-    <div><dt>Campings</dt><dd>{camps(v).length}</dd></div>
+    <div><dt>Journées</dt><dd class="chiffre">{journees.length}</dd></div>
+    {km > 0 && <div><dt>Kilomètres</dt><dd class="chiffre">{km.toLocaleString("fr-FR")}</dd></div>}
+    {v.nuits && <div><dt>Nuits</dt><dd class="chiffre">{v.nuits}</dd></div>}
+    <div><dt>Campings</dt><dd class="chiffre">{camps(v).length}</dd></div>
+    <div><dt>Médias</dt><dd class="chiffre">{totalMedias}</dd></div>
   </dl>
 
-  <Carte voyage={v.id} vue="ensemble" hauteur="55vh" />
-  <p class="sous-carte discret">
-    <a href={`/voyages/${v.id}/carte/`}>Lire la carte jour par jour</a>
-  </p>
-  <LegendeCarte voyage={v.id} />
+  {
+    modes.length > 0 && (
+      <div class="modes">
+        <div class="barre">
+          {modes.map((m) => (
+            <span
+              style={`flex: ${m.km}; background: var(--mode-${m.cle})`}
+              title={`${NOMS_MODE[m.cle] ?? m.cle} — ${m.km.toLocaleString("fr-FR")} km`}
+            />
+          ))}
+        </div>
+        <ul>
+          {modes.map((m) => (
+            <li>
+              <span class="pastille" style={`background: var(--mode-${m.cle})`} />
+              {NOMS_MODE[m.cle] ?? m.cle}
+              <span class="chiffre km">{m.km.toLocaleString("fr-FR")}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 
-  <h2>Jour par jour</h2>
-  <ol class="frise">
+  <section id="lecteur" class="lecteur" data-etapes={JSON.stringify(etapes)}>
+    <h2>La carte, jour par jour</h2>
+    <Carte voyage={v.id} vue="ensemble" hauteur="58vh" />
+
+    <div class="barre-lecteur">
+      <button type="button" class="fleche" data-pas="-1" aria-label="Journée précédente">
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <div class="fiche" aria-live="polite">
+        <img class="vignette" alt="" hidden />
+        <span class="texte">
+          <span class="date discret" data-champ="date">Tout le voyage</span>
+          <a class="titre" data-champ="titre" href="#journees">{journees.length} journées</a>
+          <span class="chiffres-jour discret chiffre" data-champ="chiffres"></span>
+        </span>
+      </div>
+
+      <button type="button" class="fleche" data-pas="1" aria-label="Journée suivante">
+        <span aria-hidden="true">›</span>
+      </button>
+    </div>
+
+    <label class="curseur">
+      <span class="visuellement-cache">Journée du voyage</span>
+      <input type="range" min="0" max={etapes.length} value="0" step="1" data-role="curseur" />
+    </label>
+
+    <LegendeCarte voyage={v.id} />
+  </section>
+
+  <h2 id="journees">Jour par jour</h2>
+  <ol class="liste-jours">
     {
-      journees.map((journee) => {
-        const jour = dateIso(journee.data.date);
-        const agrege = agreges.get(jour);
-        return (
-          <li>
-            <a href={`/voyages/${v.id}/jours/${jour}/`}>
-              <span class="date discret">{enFrancais(journee.data.date)}</span>
-              <span class="titre">{journee.data.titre}</span>
-            </a>
-            {agrege && (
-              <span class="discret">
-                {agrege.medias.total} médias
-                {agrege.distance_trace_km > 0 && ` · ${agrege.distance_trace_km} km`}
-              </span>
-            )}
-          </li>
-        );
-      })
+      etapes.map((e) => (
+        <li>
+          <a href={`/voyages/${v.id}/jours/${e.jour}/`}>
+            <span class="date discret chiffre">{e.courte}</span>
+            <span class="titre">{e.titre}</span>
+          </a>
+          <span class="detail discret">
+            {e.mode && <span>{NOMS_MODE[e.mode] ?? e.mode}</span>}
+            <span class="chiffre">{e.medias} médias</span>
+            {e.km > 0 && <span class="chiffre">{e.km.toLocaleString("fr-FR")} km</span>}
+          </span>
+        </li>
+      ))
     }
   </ol>
 </Page>
 
-<style>
-  .sous-carte {
-    margin: 0.5rem 0 0;
-    text-align: right;
-    font-size: 0.82rem;
+<script>
+  interface Etape {
+    jour: string;
+    date: string;
+    titre: string;
+    km: number;
+    medias: number;
+    vignette: string | null;
   }
+
+  function equiper(lecteur: HTMLElement) {
+    const etapes: Etape[] = JSON.parse(lecteur.dataset.etapes ?? "[]");
+    const carte = lecteur.querySelector<HTMLElement>(".carte");
+    const curseur = lecteur.querySelector<HTMLInputElement>('[data-role="curseur"]');
+    if (!carte || !curseur || etapes.length === 0) return;
+
+    const champ = (nom: string) => lecteur.querySelector<HTMLElement>(`[data-champ="${nom}"]`);
+    const vignette = lecteur.querySelector<HTMLImageElement>(".vignette");
+    const voyage = carte.dataset.voyage!;
+    let differe = 0;
+
+    // Position zéro : le voyage entier. Les journées commencent à un, ce qui
+    // évite un mode « aucune sélection » distinct du reste.
+    const afficher = (rang: number) => {
+      const etape = rang === 0 ? null : etapes[rang - 1];
+      carte.dispatchEvent(
+        new CustomEvent("carte:jour", { detail: { jour: etape?.jour ?? null } }),
+      );
+
+      const date = champ("date");
+      const titre = champ("titre");
+      const chiffres = champ("chiffres");
+      if (date) date.textContent = etape ? etape.date : "Tout le voyage";
+      if (titre) {
+        titre.textContent = etape ? etape.titre : `${etapes.length} journées`;
+        titre.setAttribute("href", etape ? `/voyages/${voyage}/jours/${etape.jour}/` : "#journees");
+      }
+      if (chiffres) {
+        chiffres.textContent = etape
+          ? [
+              etape.medias > 0 ? `${etape.medias} médias` : null,
+              etape.km > 0 ? `${etape.km.toLocaleString("fr-FR")} km` : null,
+            ]
+              .filter(Boolean)
+              .join(" · ")
+          : "";
+      }
+      if (vignette) {
+        if (etape?.vignette) {
+          vignette.src = etape.vignette;
+          vignette.hidden = false;
+        } else {
+          vignette.hidden = true;
+          vignette.removeAttribute("src");
+        }
+      }
+
+      // Le curseur annonce sa position en toutes lettres, faute de quoi un
+      // lecteur d'écran ne dirait que « 16 sur 23 ».
+      curseur.setAttribute(
+        "aria-valuetext",
+        etape
+          ? `jour ${rang} sur ${etapes.length}, ${etape.date}, ${etape.titre}`
+          : "tout le voyage",
+      );
+
+      // L'adresse reste partageable sans que chaque cran encombre l'historique.
+      window.clearTimeout(differe);
+      differe = window.setTimeout(() => {
+        const url = new URL(location.href);
+        if (etape) url.searchParams.set("jour", etape.jour);
+        else url.searchParams.delete("jour");
+        history.replaceState(null, "", url);
+      }, 400);
+    };
+
+    curseur.addEventListener("input", () => afficher(Number(curseur.value)));
+
+    for (const bouton of lecteur.querySelectorAll<HTMLButtonElement>(".fleche")) {
+      bouton.addEventListener("click", () => {
+        const pas = Number(bouton.dataset.pas ?? 0);
+        const vise = Math.min(etapes.length, Math.max(0, Number(curseur.value) + pas));
+        curseur.value = String(vise);
+        afficher(vise);
+      });
+    }
+
+    const demandee = new URLSearchParams(location.search).get("jour");
+    const rang = demandee ? etapes.findIndex((e) => e.jour === demandee) + 1 : 0;
+    if (rang > 0) {
+      curseur.value = String(rang);
+      afficher(rang);
+    }
+  }
+
+  for (const lecteur of document.querySelectorAll<HTMLElement>(".lecteur")) {
+    equiper(lecteur);
+  }
+</script>
+
+<style>
   .chiffres {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
-    margin: 2rem 0;
+    gap: 2.5rem;
+    margin: 2rem 0 1.4rem;
     padding: 1.2rem 0;
-    border-top: 1px solid var(--trait);
-    border-bottom: 1px solid var(--trait);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
   .chiffres div {
     margin: 0;
   }
   .chiffres dt {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 0.8rem;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--discret);
+    letter-spacing: 0.08em;
+    color: var(--faint);
   }
   .chiffres dd {
-    margin: 0.15rem 0 0;
-    font-size: 1.5rem;
+    margin: 0.2rem 0 0;
+    font-size: 1.6rem;
+    color: var(--ink);
   }
-  .frise {
+
+  /* La répartition des kilomètres par mode, en une barre. Chaque segment est
+     proportionnel, et son titre dit le mode et la distance : la couleur ne
+     porte pas seule. */
+  .modes .barre {
+    display: flex;
+    height: 6px;
+    overflow: hidden;
+  }
+  .modes .barre span {
+    display: block;
+  }
+  .modes ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.4rem;
+    list-style: none;
+    margin: 0.55rem 0 0;
+    padding: 0;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .modes li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .modes .pastille {
+    width: 9px;
+    height: 9px;
+  }
+  .modes .km {
+    color: var(--faint);
+  }
+
+  .lecteur {
+    margin: 2.5rem 0 0;
+    scroll-margin-top: 1rem;
+  }
+  .lecteur h2 {
+    margin-bottom: 0.8rem;
+  }
+  .barre-lecteur {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 0.9rem;
+  }
+  .fleche {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--rule);
+    background: transparent;
+    color: var(--ink);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .fleche:hover {
+    border-color: var(--muted);
+    background: var(--hl);
+  }
+  .fiche {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .fiche .vignette {
+    flex: none;
+    width: 72px;
+    height: 48px;
+    object-fit: cover;
+    border: 1px solid var(--rule);
+  }
+  .fiche .texte {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .fiche .titre {
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--serif);
+    font-size: 1.05rem;
+  }
+  .fiche .titre:hover {
+    text-decoration: underline;
+  }
+  .curseur {
+    display: block;
+    margin-top: 0.8rem;
+  }
+  .curseur input {
+    width: 100%;
+    height: 2rem;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .visuellement-cache {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .liste-jours {
     list-style: none;
     padding: 0;
   }
-  .frise li {
-    border-top: 1px solid var(--trait);
+  .liste-jours li {
+    border-top: 1px solid var(--rule);
     padding: 0.9rem 0;
     display: flex;
     flex-wrap: wrap;
@@ -114,15 +404,25 @@ const enFrancais = (d: Date) =>
     align-items: baseline;
     justify-content: space-between;
   }
-  .frise a {
+  .liste-jours a {
     text-decoration: none;
     display: flex;
-    flex-direction: column;
+    align-items: baseline;
+    gap: 0.9rem;
+    min-width: 0;
   }
-  .frise .date {
-    font-size: 0.85rem;
+  .liste-jours .date {
+    flex: none;
+    width: 4.5rem;
+    color: var(--faint);
   }
-  .frise .titre {
-    color: var(--encre);
+  .liste-jours .titre {
+    color: var(--ink);
+    font-family: var(--serif);
+  }
+  .liste-jours .detail {
+    display: flex;
+    gap: 1rem;
+    color: var(--faint);
   }
 </style>

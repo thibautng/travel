@@ -125,7 +125,7 @@ const lien = (e: CollectionEntry<"journees">) =>
       <Carte voyage={v.id} vue="jour" jour={jour} />
       <LegendeCarte voyage={v.id} jour={jour} />
       <p class="sous-carte discret">
-        <a href={`/voyages/${v.id}/carte/?jour=${jour}`}>Voir cette journée dans le lecteur</a>
+        <a href={`/voyages/${v.id}/?jour=${jour}#lecteur`}>Voir cette journée dans le lecteur</a>
       </p>
     </div>
   </div>

@@ -18006,11 +18006,11 @@
     "origine_date": "exif",
     "jour": "2026-08-09",
     "position": {
-      "lat": 46.52276841199882,
-      "lon": 11.522262760890591
+      "lat": 46.5249,
+      "lon": 11.533100000000001
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -18024,11 +18024,12 @@
     "origine_date": "exif",
     "jour": "2026-08-09",
     "position": {
-      "lat": 46.52276688882322,
-      "lon": 11.522261624412673
+      "lat": 46.52990277777778,
+      "lon": 11.519816666666667,
+      "alt": 0.0
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260809175802-320.jpg",
@@ -18053,11 +18054,11 @@
     "origine_date": "exif",
     "jour": "2026-08-09",
     "position": {
-      "lat": 46.52266712082149,
-      "lon": 11.522187185109058
+      "lat": 46.5299,
+      "lon": 11.5198
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "anomalies": [
       "altitude_nulle"
@@ -21415,11 +21416,12 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.59032806441526,
-      "lon": 7.43423739895305
+      "lat": 45.58511666666667,
+      "lon": 7.389541666666667,
+      "alt": 0.0
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814140048-320.jpg",
@@ -21781,11 +21783,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.58286093222938,
-      "lon": 7.42924153122764
+      "lat": 45.585100000000004,
+      "lon": 7.389500000000001
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -22208,11 +22210,11 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.58757567368033,
-      "lon": 7.416642340346992
+      "lat": 45.585100000000004,
+      "lon": 7.389500000000001
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "anomalies": [
       "altitude_nulle",
@@ -22367,11 +22369,12 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.589151144770526,
-      "lon": 7.411162378598227
+      "lat": 45.610952777777776,
+      "lon": 7.361725,
+      "alt": 0.0
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814162749-320.jpg",
@@ -22396,11 +22399,12 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.58917936608114,
-      "lon": 7.411101128992673
+      "lat": 45.610952777777776,
+      "lon": 7.361725,
+      "alt": 0.0
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814162813-320.jpg",
@@ -22425,11 +22429,12 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.591540549069116,
-      "lon": 7.405976578661337
+      "lat": 45.60695555555556,
+      "lon": 7.368438888888888,
+      "alt": 0.0
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814170141-320.jpg",
@@ -22538,11 +22543,12 @@
     "origine_date": "exif",
     "jour": "2026-08-14",
     "position": {
-      "lat": 45.59492541340715,
-      "lon": 7.396910810207202
+      "lat": 45.59366666666667,
+      "lon": 7.390352777777778,
+      "alt": 0.0
     },
     "fiabilite": "basse",
-    "origine_position": "posee",
+    "origine_position": "exif",
     "publie": true,
     "derives": {
       "vignette": "photos/IMG20260814180214-320.jpg",

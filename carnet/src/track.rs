@@ -308,6 +308,38 @@ pub fn construire(
                 points = trajet.points;
                 source = SourceTrace::Calculee;
                 traces.bilan.troncons_calcules += 1;
+            } else if segment.points.len() > 2 {
+                // Un seul point hors réseau fait échouer toute la demande, et
+                // l'on perd les neuf autres. Sur une boucle de randonnée
+                // déclarée point par point, c'est tout le sentier qui retombe en
+                // droites. On rejoue alors les points deux à deux, et l'on ne
+                // perd que le tronçon fautif.
+                let mut recolle: Vec<[f64; 2]> = Vec::new();
+                let mut au_moins_un = false;
+                for paire in segment.points.windows(2) {
+                    let a = Position {
+                        lat: paire[0][1],
+                        lon: paire[0][0],
+                        alt: None,
+                    };
+                    let b = Position {
+                        lat: paire[1][1],
+                        lon: paire[1][0],
+                        alt: None,
+                    };
+                    match itineraires.resoudre(segment.mode, &a, &b, &[]) {
+                        Ok(Resolution::Cache(trajet)) | Ok(Resolution::Calcule(trajet)) => {
+                            au_moins_un = true;
+                            recolle.extend(trajet.points);
+                        }
+                        _ => recolle.extend_from_slice(paire),
+                    }
+                }
+                if au_moins_un {
+                    points = recolle;
+                    source = SourceTrace::Calculee;
+                    traces.bilan.troncons_calcules += 1;
+                }
             }
         }
 
@@ -668,14 +700,25 @@ fn tracer_sorties_de_camp(
             ] {
                 let Some(media) = repere else { continue };
                 let Some(photo) = media.position else { continue };
-                // Une tranche déclarée sans trace vaut aussi pour la sortie du
-                // camp : le 10 août, la montée à l’alpe s’est faite en
-                // téléphérique, et router une voiture jusqu’à la première photo
-                // emprunterait une route interdite aux voitures.
-                if let Some(instant) = media.prise_le {
-                    if overrides.sans_trace(jour, instant.with_timezone(&voyage.fuseau).time()) {
-                        continue;
-                    }
+                // Un segment manuel qui part ou arrive au camp dit déjà comment
+                // on en est sorti : le 10 août, en voiture jusqu'à la station
+                // puis en téléphérique. Router une voiture jusqu'à la première
+                // photo emprunterait, là, une route interdite aux voitures.
+                let deja_declare = overrides.segments.iter().any(|segment| {
+                    segment.jour == jour
+                        && segment.points.iter().any(|p| {
+                            distance_m(
+                                &Position {
+                                    lat: p[1],
+                                    lon: p[0],
+                                    alt: None,
+                                },
+                                &camp,
+                            ) < METRES_SORTIE_DE_CAMP
+                        })
+                });
+                if deja_declare {
+                    continue;
                 }
                 if distance_m(&camp, &photo) < METRES_SORTIE_DE_CAMP {
                     continue;

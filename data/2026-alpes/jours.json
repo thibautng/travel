@@ -367,7 +367,7 @@
       12.6868,
       46.7854
     ],
-    "distance_trace_km": 104.8,
+    "distance_trace_km": 127.9,
     "modes": [
       "route",
       "velo",
@@ -423,7 +423,7 @@
       12.451783333333333,
       46.77536111111111
     ],
-    "distance_trace_km": 98.7,
+    "distance_trace_km": 100.7,
     "modes": [
       "route",
       "marche"
@@ -450,7 +450,7 @@
       11.560208333333334,
       46.567925
     ],
-    "distance_trace_km": 99.5,
+    "distance_trace_km": 106.0,
     "modes": [
       "route",
       "marche"
@@ -586,7 +586,7 @@
       7.435411111111112,
       45.611000000000004
     ],
-    "distance_trace_km": 17.0,
+    "distance_trace_km": 20.6,
     "modes": [
       "route",
       "marche"

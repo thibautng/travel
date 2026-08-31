@@ -112,6 +112,40 @@ segments:
       - [12.29490, 46.61350]
     note: "Auronzo, Lavaredo, Locatelli, retour par le nord."
 
+  # 9 août. La boucle au-dessus du Laghetto di Fiè, dix kilomètres dont les
+  # photos ne montraient que deux : le téléphone est resté dans la poche. Les
+  # points de passage viennent de la famille, le moteur suit les sentiers.
+  - jour: 2026-08-09
+    mode: marche
+    calculer: true
+    points:
+      - [11.54129, 46.52484]
+      - [11.53648, 46.51892]
+      - [11.53099, 46.51572]
+      - [11.52287, 46.51795]
+      - [11.52429, 46.52340]
+    note: "Boucle par la Malga Tuff, retour au Laghetto di Fiè."
+
+  # 14 août. La grande boucle de l’Urtier, six heures de marche que la trace
+  # réduisait à sept kilomètres : les tronçons entre photos recevaient un 404,
+  # le sentier n’étant pas routable en tous points. Les points de passage
+  # viennent de la famille.
+  - jour: 2026-08-14
+    mode: marche
+    calculer: true
+    points:
+      - [7.39900, 45.59736]
+      - [7.41036, 45.59765]
+      - [7.42755, 45.59544]
+      - [7.43626, 45.58978]
+      - [7.43352, 45.58358]
+      - [7.42376, 45.58554]
+      - [7.41197, 45.58713]
+      - [7.40179, 45.58665]
+      - [7.39743, 45.59436]
+      - [7.39900, 45.59736]
+    note: "Lillaz, vallon de l’Urtier, Lago di Loie, retour par les cascades."
+
   # 10 août. La montée à l’alpe et la descente du soir n’ont aucune photo :
   # voiture jusqu’à la station de la cabinovia, puis téléphérique jusqu’à
   # Compatsch, et l’inverse le soir. Sans ces segments, le pipeline routait une
@@ -313,6 +347,19 @@ modes:
   - jour: 2026-08-06
     mode: velo
     note: "Le reste de la journée est la sortie sur la piste de la Drave."
+
+  # Les deux boucles ci-dessus remplacent ce que les photos donnaient : sans
+  # cela, les fragments mesurés se superposaient au sentier déclaré.
+  - jour: 2026-08-09
+    mode: marche
+    de: "16:30"
+    a: "19:00"
+    sans_trace: true
+  - jour: 2026-08-14
+    mode: marche
+    de: "12:00"
+    a: "18:30"
+    sans_trace: true
 
   # Trois journées sans le moindre vélo, où l’inférence en a vu : une voiture
   # qui s’arrête a la vitesse moyenne d’un cycliste, et le carnet est formel.

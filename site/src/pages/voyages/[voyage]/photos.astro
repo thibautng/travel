@@ -44,16 +44,32 @@ const enFrancais = (jour: string) =>
   });
 ---
 
-<Page titre={`Photos — ${v.titre}`}>
-  <p class="discret"><a href={`/voyages/${v.id}/`}>{v.titre}</a></p>
+<Page
+  titre={`Photos — ${v.titre}`}
+  gabarit="large"
+  fil={[{ texte: v.titre, href: `/voyages/${v.id}/` }, { texte: "Photos" }]}
+  repere={`${total} photos`}
+>
   <h1>Photos</h1>
-  <p class="discret">{total} photos sur {groupes.length} journées.</p>
+  <p class="meta chiffre">{total} photos · {groupes.length} journées</p>
+
+  <nav class="index" aria-label="Aller à une journée">
+    {
+      groupes.map(([jour, liste], rang) => (
+        <a href={`#j${jour}`}>
+          <span class="chiffre numero">{String(rang + 1).padStart(2, "0")}</span>
+          <span class="chiffre compte">{liste.length}</span>
+        </a>
+      ))
+    }
+  </nav>
 
   {
     groupes.map(([jour, liste]) => (
-      <section>
+      <section id={`j${jour}`}>
         <h2>
           <a href={`/voyages/${v.id}/jours/${jour}/`}>{enFrancais(jour)}</a>
+          <span class="chiffre compte">{liste.length}</span>
         </h2>
         <div class="grille">
           {liste.map((photo) => (
@@ -77,24 +93,88 @@ const enFrancais = (jour: string) =>
 </Page>
 
 <style>
+  .meta {
+    margin: 0.55rem 0 1.6rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* L’index des journées, en tête : sept cents vignettes font une page longue,
+     et l’on veut atteindre le 8 août sans la parcourir. */
+  .index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .index a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    border: 1px solid var(--rule);
+    color: var(--muted);
+    text-decoration: none;
+    line-height: 1.15;
+  }
+  .index a:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+  .index .numero {
+    font-size: 13px;
+  }
+  .index .compte {
+    font-size: 10px;
+    color: var(--faint);
+  }
+
+  section {
+    scroll-margin-top: 3.2rem;
+  }
+  /* L’en-tête reste sous les yeux pendant qu’on parcourt les vignettes du
+     jour : sans lui, on ne sait plus où l’on est. */
   h2 {
-    margin-top: 2.5rem;
-    font-size: 1.05rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 2.4rem 0 0.7rem;
+    padding: 0.5rem 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
   }
   h2 a {
     text-decoration: none;
+    color: var(--ink);
+  }
+  h2 .compte {
+    font-size: 12px;
+    color: var(--faint);
   }
   .grille {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
-    gap: 0.4rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 7.5rem), 1fr));
+    gap: 2px;
   }
   .grille img {
     width: 100%;
     height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
-    border-radius: 2px;
-    background-color: var(--trait);
+    background-color: var(--rule);
   }
 </style>

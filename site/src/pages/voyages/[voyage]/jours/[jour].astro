@@ -70,6 +70,9 @@ for (const trouve of journee.body?.matchAll(/::(photo|galerie)\{([^}]*)\}/g) ?? 
   if (premier) ancres.push({ n: ancres.length + 1, id: premier });
 }
 
+/** Vignettes montrées d’emblée ; le reste se déplie. */
+const PLANCHE = 12;
+
 const cites = new Set<string>();
 for (const trouve of journee.body?.matchAll(/::photo\{[^}]*id="([^"]*)"/g) ?? []) {
   cites.add(trouve[1]);
@@ -124,9 +127,12 @@ const lien = (e: CollectionEntry<"journees">) =>
       {
         photos.length > 0 && (
           <section class="galerie">
-            <h2>Les autres photos du jour</h2>
+            <h2>
+              La planche contact
+              <span class="chiffre compte">{photos.length}</span>
+            </h2>
             <div class="grille">
-              {photos.map((photo) => (
+              {photos.slice(0, PLANCHE).map((photo) => (
                 <img
                   src={urlMedia(photo.derives!.moyen, v.id)}
                   srcset={`${urlMedia(photo.derives!.vignette, v.id)} 320w, ${urlMedia(photo.derives!.moyen, v.id)} 1024w, ${urlMedia(photo.derives!.grand, v.id)} 2048w`}
@@ -142,6 +148,36 @@ const lien = (e: CollectionEntry<"journees">) =>
                 />
               ))}
             </div>
+            {photos.length > PLANCHE && (
+              /* `details` natif : le dépliement ne coûte pas un octet de
+                 JavaScript, marche au clavier et laisse la page imprimable. */
+              <details class="reste">
+                <summary>
+                  Voir les {photos.length - PLANCHE} autres photos de la journée
+                </summary>
+                <div class="grille">
+                  {photos.slice(PLANCHE).map((photo) => (
+                    <img
+                      src={urlMedia(photo.derives!.vignette, v.id)}
+                      srcset={`${urlMedia(photo.derives!.vignette, v.id)} 320w, ${urlMedia(photo.derives!.moyen, v.id)} 1024w`}
+                      sizes="(min-width: 64rem) 11rem, 30vw"
+                      width={photo.largeur}
+                      height={photo.hauteur}
+                      data-grand={urlMedia(photo.derives!.grand, v.id)}
+                      data-media={photo.id}
+                      loading="lazy"
+                      decoding="async"
+                      alt=""
+                    />
+                  ))}
+                </div>
+              </details>
+            )}
+            <p class="vers-photos discret">
+              <a href={`/voyages/${v.id}/photos/#j${jour}`}>
+                Toutes les photos du voyage
+              </a>
+            </p>
           </section>
         )
       }
@@ -352,6 +388,37 @@ const lien = (e: CollectionEntry<"journees">) =>
     border-color: var(--accent);
     background: var(--accent);
     color: #fff;
+  }
+
+  .galerie h2 {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .galerie .compte {
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .reste summary {
+    margin-top: 0.5rem;
+    padding: 0.6rem 0;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .reste summary:hover {
+    color: var(--ink);
+  }
+  .vers-photos {
+    margin: 0.9rem 0 0;
+    text-align: right;
   }
 
   .meta {

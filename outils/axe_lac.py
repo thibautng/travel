@@ -53,6 +53,37 @@ def anneaux(reponse):
     return sorties
 
 
+def recoller(morceaux):
+    """Recolle les tronçons d'un contour eclate en plusieurs chemins.
+
+    Une relation OpenStreetMap decoupe souvent la rive d'un lac en une dizaine
+    de chemins. Pris separement, le plus long ne fait qu'un cinquieme du tour.
+    On les enchaine par leurs extremites communes.
+    """
+    if len(morceaux) == 1:
+        return morceaux[0]
+    restants = [list(m) for m in morceaux]
+    chaine = restants.pop(0)
+    progresse = True
+    while restants and progresse:
+        progresse = False
+        for i, m in enumerate(restants):
+            if m[0] == chaine[-1]:
+                chaine += m[1:]
+            elif m[-1] == chaine[-1]:
+                chaine += list(reversed(m))[1:]
+            elif m[-1] == chaine[0]:
+                chaine = m[:-1] + chaine
+            elif m[0] == chaine[0]:
+                chaine = list(reversed(m))[:-1] + chaine
+            else:
+                continue
+            restants.pop(i)
+            progresse = True
+            break
+    return chaine
+
+
 def dans_le_polygone(x, y, anneau):
     dedans = False
     n = len(anneau)
@@ -95,16 +126,35 @@ def axe(anneau, pas):
     return points, (min(lons), sud, max(lons), nord)
 
 
+def contour(anneau, pas):
+    """Le pourtour du plan d'eau, reduit a `pas` points regulierement espaces.
+
+    Le sentier qui fait le tour d'un lac suit sa rive : le polygone lui-meme
+    en est une bonne approximation, la ou aucun profil de routage ne sait
+    tracer une boucle entre deux points confondus.
+    """
+    n = len(anneau)
+    indices = [round(i * n / pas) % n for i in range(pas)]
+    points = [[round(anneau[i][0], 5), round(anneau[i][1], 5)] for i in indices]
+    points.append(points[0])
+    return points
+
+
 if __name__ == "__main__":
     nom, bbox, pas = sys.argv[1], sys.argv[2], int(sys.argv[3])
+    forme = sys.argv[4] if len(sys.argv) > 4 else "axe"
     reponse = interroger(nom, bbox)
     listes = anneaux(reponse)
     print("anneaux recuperes :", len(listes), "taille max :", max((len(a) for a in listes), default=0))
     if not listes:
         sys.exit("aucun polygone")
-    principal = max(listes, key=len)
-    points, boite = axe(principal, pas)
-    print("emprise lon %.5f..%.5f  lat %.5f..%.5f" % (boite[0], boite[2], boite[1], boite[3]))
-    print("axe de %d points :" % len(points))
+    principal = recoller(listes)
+    print("contour recolle :", len(principal), "points")
+    if forme == "contour":
+        points = contour(principal, pas)
+    else:
+        points, boite = axe(principal, pas)
+        print("emprise lon %.5f..%.5f  lat %.5f..%.5f" % (boite[0], boite[2], boite[1], boite[3]))
+    print("%s de %d points :" % (forme, len(points)))
     for p in points:
         print("      - [%.5f, %.5f]" % (p[0], p[1]))

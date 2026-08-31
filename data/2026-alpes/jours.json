@@ -391,14 +391,13 @@
     "bbox": [
       12.033222222222223,
       46.697925,
-      12.096335576212029,
+      12.085725,
       46.775352777777776
     ],
-    "distance_trace_km": 41.8,
+    "distance_trace_km": 41.2,
     "modes": [
       "route",
-      "marche",
-      "velo"
+      "marche"
     ],
     "anomalies": [
       "trou_candidat"
@@ -476,11 +475,11 @@
       11.670883333333332,
       46.543680555555554
     ],
-    "distance_trace_km": 75.7,
+    "distance_trace_km": 61.8,
     "modes": [
       "route",
       "marche",
-      "velo"
+      "telepherique"
     ],
     "anomalies": [
       "trou_candidat",

@@ -74,6 +74,30 @@ segments:
       - [12.96609, 47.52030]
     note: "Königssee, Schönau vers St. Bartholomä puis Salet."
 
+  # Le tour du Lago di Braies. Les deux photos qui l’encadrent sont prises au
+  # même endroit à une heure d’intervalle : aucun moteur ne tire une boucle
+  # entre deux points confondus, il rend cinquante mètres. Le sentier suit la
+  # rive, et la rive est dans OpenStreetMap : `outils/axe_lac.py ... contour`.
+  - jour: 2026-08-07
+    mode: marche
+    points:
+      - [12.08307, 46.68926]
+      - [12.08130, 46.68984]
+      - [12.08065, 46.69136]
+      - [12.08296, 46.69342]
+      - [12.08341, 46.69643]
+      - [12.08441, 46.69807]
+      - [12.08557, 46.69859]
+      - [12.08686, 46.69895]
+      - [12.08825, 46.70033]
+      - [12.08754, 46.69942]
+      - [12.08771, 46.69748]
+      - [12.08808, 46.69439]
+      - [12.08682, 46.69119]
+      - [12.08531, 46.68944]
+      - [12.08307, 46.68926]
+    note: "Tour complet du lac à pied, tracé sur la rive."
+
   # Le train part de Lienz, la ou la sortie s’arrete, et rejoint la derniere
   # position relevee du retour. Sans ce tronçon, la ligne du train commencait
   # sept kilomètres avant Lienz, la ou se trouve la derniere photo.
@@ -228,6 +252,23 @@ modes:
   - jour: 2026-08-14
     mode: marche
     note: "La grande boucle de l’Urtier, à pied de bout en bout."
+
+  # 7 août. Deux photos prises au même endroit à une heure d’intervalle : le
+  # moteur en tirait une boucle cyclable de 3,8 km autour du lac. C’est bien
+  # le tour du lac, mais à pied.
+  - jour: 2026-08-07
+    mode: marche
+    de: "13:55"
+    a: "18:00"
+    note: "Tour du Lago di Braies, à pied."
+
+  # 10 août, retour de Saltria vers Compatsch : une remontée mécanique, non du
+  # vélo. Le carnet parle aussi de l’Almbus sur ce trajet ; à confirmer.
+  - jour: 2026-08-10
+    mode: telepherique
+    de: "17:30"
+    a: "19:00"
+    note: "Retour vers Compatsch par la remontée mécanique."
 
   # 11 août, descente vers le lac de Garde. Un seul tronçon de 89 km, que dix
   # heures d’écart entre deux photos faisaient passer pour du vélo.

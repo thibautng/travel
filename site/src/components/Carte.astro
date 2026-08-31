@@ -102,6 +102,20 @@ const titres = Object.fromEntries(
     // HTTP Range sur le fichier unique pose sur R2. Import dynamique, pour
     // qu'un site servi par OpenFreeMap ne le telecharge jamais.
     let style: any = STYLE_FOND;
+    if (sombre()) {
+      // OpenFreeMap ne publie pas de variante sombre de Positron. On charge
+      // donc le style et l'on assombrit ses couches de fond.
+      //
+      // C'est le point le plus fragile du site : le style vient d'un tiers et
+      // peut changer sans preavis. En cas d'echec, on retombe sur le style
+      // clair, qui reste lisible - c'est laid, ce n'est pas casse.
+      try {
+        const reponse = await fetch(STYLE_FOND);
+        if (reponse.ok) style = assombrir(await reponse.json());
+      } catch {
+        style = STYLE_FOND;
+      }
+    }
     if (FOND_PMTILES) {
       const { Protocol } = await import("pmtiles");
       addProtocol("pmtiles", new Protocol().tile);
@@ -227,6 +241,57 @@ const titres = Object.fromEntries(
     };
   }
 
+  /** Le lecteur a-t-il demande le theme sombre ? */
+  function sombre(): boolean {
+    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+  }
+
+  /**
+   * Assombrit un style MapLibre clair.
+   *
+   * Trois familles de couches, trois traitements. Le fond et les surfaces
+   * prennent la couleur du papier de la carte ; les traits, celle de la
+   * grille ; les etiquettes, l'encre discrete avec un halo de fond. L'eau et
+   * la vegetation gardent une nuance, sans quoi une carte de lacs devient une
+   * carte de rien.
+   *
+   * Les couleurs viennent des jetons : le fond de carte suit la meme palette
+   * que la page qui l'entoure.
+   */
+  function assombrir(style: any): any {
+    const papier = lireCouleur("--map", "#1b2124");
+    const grille = lireCouleur("--grid", "#242c2f");
+    const encre = lireCouleur("--muted", "#9aa29d");
+    const eau = "#16242e";
+    const vegetation = "#1b2620";
+
+    const teinte = (id: string) => {
+      if (/water|ocean|sea|river|lake/i.test(id)) return eau;
+      if (/park|wood|forest|grass|green|landcover/i.test(id)) return vegetation;
+      return null;
+    };
+
+    for (const couche of style.layers ?? []) {
+      const peinture = (couche.paint ??= {});
+      const particuliere = teinte(couche.id ?? "");
+      if (couche.type === "background") {
+        peinture["background-color"] = papier;
+      } else if (couche.type === "fill") {
+        peinture["fill-color"] = particuliere ?? papier;
+        if (peinture["fill-outline-color"]) peinture["fill-outline-color"] = grille;
+      } else if (couche.type === "line") {
+        peinture["line-color"] = particuliere ?? grille;
+      } else if (couche.type === "symbol") {
+        peinture["text-color"] = encre;
+        peinture["text-halo-color"] = papier;
+        peinture["icon-opacity"] = 0.5;
+      } else if (couche.type === "fill-extrusion") {
+        peinture["fill-extrusion-color"] = grille;
+      }
+    }
+    return style;
+  }
+
   /**
    * Rayon des pastilles numerotees : onze au repos, quinze pour l'active.
    * L'etat actif est unique et persiste, sans retour au repos automatique.
@@ -277,7 +342,7 @@ const titres = Object.fromEntries(
    * mode : la pastille ne doit pas se confondre avec le trace qui la porte.
    * La legende reprend les memes valeurs.
    */
-  const COULEUR_PHOTO = "#ffffff";
+  const COULEUR_PHOTO = "#ffffff";  // volontairement fixe : c'est une perle claire sur la trace.
   const COULEUR_VIDEO = "#8c4a6b";
 
   /** Les six modes, lus dans les jetons pour suivre le theme. */
@@ -314,9 +379,9 @@ const titres = Object.fromEntries(
       source: "camps",
       paint: {
         "circle-radius": ["interpolate", ["linear"], ["zoom"], 5, 5, 12, 8],
-        "circle-color": "#2b2723",
+        "circle-color": lireCouleur("--ink", "#1e2422"),
         "circle-stroke-width": 2.5,
-        "circle-stroke-color": "#ffffff",
+        "circle-stroke-color": lireCouleur("--panel", "#ffffff"),
       },
     });
 
@@ -333,8 +398,8 @@ const titres = Object.fromEntries(
         "text-allow-overlap": false,
       },
       paint: {
-        "text-color": "#2b2723",
-        "text-halo-color": "#ffffff",
+        "text-color": lireCouleur("--ink", "#1e2422"),
+        "text-halo-color": lireCouleur("--bg", "#f2f3ef"),
         "text-halo-width": 1.6,
       },
     });
@@ -483,7 +548,7 @@ const titres = Object.fromEntries(
       filter: lignes,
       layout: { "line-cap": "round", "line-join": "round" },
       paint: {
-        "line-color": "#ffffff",
+        "line-color": lireCouleur("--panel", "#ffffff"),
         "line-opacity": 0.9,
         "line-width": ["interpolate", ["linear"], ["zoom"], 5, 6, 10, 9, 14, 12],
       },
@@ -516,7 +581,7 @@ const titres = Object.fromEntries(
       // ressemble, la pastille se lit sur un trace de marche comme sur une
       // route.
       "circle-stroke-width": 1.4,
-      "circle-stroke-color": "#2b2723",
+      "circle-stroke-color": lireCouleur("--ink", "#1e2422"),
       "circle-opacity": 0.95,
     });
     // Section 9.2 : pastille pleine pour une position mesurée, creuse pour une
@@ -628,6 +693,27 @@ const titres = Object.fromEntries(
     // sur une date. Le cadrage initial ne s'anime pas, il n'y a rien a suivre.
     const initial = conteneur.dataset.vue === "jour" ? conteneur.dataset.jour : null;
     montrerJour(carte, conteneur, trace, initial ?? null, false);
+
+    // Le theme peut changer pendant la lecture, sans rechargement : les
+    // couleurs de nos couches sont relues, celles du fond ne le sont pas -
+    // reconstruire le style entier coupe la carte une seconde, et le systeme
+    // ne change pas de theme dix fois par heure.
+    window.matchMedia?.("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      carte.setPaintProperty("trace", "line-color", couleurParMode());
+      carte.setPaintProperty("trace-contour", "line-color", lireCouleur("--panel", "#ffffff"));
+      for (const couche of ["photos", "photos-posees"]) {
+        if (!carte.getLayer(couche)) continue;
+        carte.setPaintProperty(couche, "circle-stroke-color", lireCouleur("--ink", "#1e2422"));
+      }
+      if (carte.getLayer("ancres")) {
+        carte.setPaintProperty("ancres", "circle-color", lireCouleur("--accent", "#d1491f"));
+        carte.setPaintProperty("ancres", "circle-stroke-color", lireCouleur("--panel", "#ffffff"));
+      }
+      if (carte.getLayer("camps")) {
+        carte.setPaintProperty("camps", "circle-color", lireCouleur("--ink", "#1e2422"));
+        carte.setPaintProperty("camps", "circle-stroke-color", lireCouleur("--panel", "#ffffff"));
+      }
+    });
 
     // Le pilotage vient du dehors : le lecteur jour par jour et la page de
     // journee poussent une date, la carte ne sait rien de leurs commandes.

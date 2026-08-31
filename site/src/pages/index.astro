@@ -1,6 +1,15 @@
 ---
-/** Accueil : la liste des voyages. Voir SPEC.md, section 9.1. */
+/**
+ * Accueil : les voyages à gauche, la carte du plus récent à droite.
+ *
+ * La forme définitive de cette page dépend d'un second voyage réellement
+ * publié : avec un seul, la colonne de gauche est une liste d'un élément et
+ * la carte montre ce voyage-là. Avec plusieurs, il faudra choisir entre une
+ * carte du monde qui les porte tous et une carte qui suit le survol. Rien ne
+ * presse, et rien ici n'empêche l'un ou l'autre.
+ */
 import Page from "../layouts/Page.astro";
+import Carte from "../components/Carte.astro";
 import { tousLesVoyages } from "../voyages";
 import { jours } from "../donnees";
 
@@ -13,45 +22,171 @@ const voyages = tousLesVoyages().map((v) => {
     medias: journees.reduce((t, j) => t + j.medias.total, 0),
   };
 });
+
+// La carte montre le voyage le plus récent, la liste étant déjà triée par
+// date décroissante. Un voyage sans trace n'en a pas : les prochains, dont
+// les photos n'ont pas de coordonnées, laisseront la colonne vide.
+const aCarte = voyages.find((v) => v.km > 0);
+
+const periode = (debut: string, fin: string) => {
+  const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
+  const d = new Date(`${debut}T12:00:00Z`);
+  const f = new Date(`${fin}T12:00:00Z`);
+  return `${d.toLocaleDateString("fr-FR", options)} — ${f.toLocaleDateString("fr-FR", {
+    ...options,
+    year: "numeric",
+  })}`;
+};
 ---
 
-<Page titre="Voyages">
-  <h1>Voyages</h1>
-  <p class="discret">Le journal de nos voyages en famille.</p>
+<Page
+  titre="Voyages"
+  gabarit="large"
+  repere={`${voyages.length} voyage${voyages.length > 1 ? "s" : ""}`}
+>
+  <div class="accueil">
+    <div class="colonne-liste">
+      <h1>Voyages</h1>
+      <p class="meta chiffre">Le journal de nos voyages en famille</p>
 
-  <ul class="liste">
+      <ul class="liste">
+        {
+          voyages.map(({ voyage, journees, km, medias }) => (
+            <li>
+              <a class="titre" href={`/voyages/${voyage.id}/`}>
+                {voyage.titre}
+              </a>
+              {voyage.sous_titre && <p class="sous-titre">{voyage.sous_titre}</p>}
+              <p class="periode chiffre">{periode(voyage.date_debut, voyage.date_fin)}</p>
+              {voyage.pays.length > 0 && <p class="pays">{voyage.pays.join(" · ")}</p>}
+              <dl class="chiffres">
+                <div>
+                  <dt>Journées</dt>
+                  <dd class="chiffre">{journees}</dd>
+                </div>
+                {km > 0 && (
+                  <div>
+                    <dt>Kilomètres</dt>
+                    <dd class="chiffre">{km.toLocaleString("fr-FR")}</dd>
+                  </div>
+                )}
+                <div>
+                  <dt>Médias</dt>
+                  <dd class="chiffre">{medias}</dd>
+                </div>
+              </dl>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
     {
-      voyages.map(({ voyage, journees, km, medias }) => (
-        <li>
-          <h2>
-            <a href={`/voyages/${voyage.id}/`}>{voyage.titre}</a>
-          </h2>
-          {voyage.sous_titre && <p class="discret">{voyage.sous_titre}</p>}
-          <p class="discret">
-            {journees} journées, {km.toLocaleString("fr-FR")} km, {medias} photos et vidéos
+      aCarte && (
+        <div class="colonne-carte">
+          <Carte voyage={aCarte.voyage.id} vue="ensemble" />
+          <p class="sous-carte discret">
+            <a href={`/voyages/${aCarte.voyage.id}/#lecteur`}>{aCarte.voyage.titre}</a>
           </p>
-        </li>
-      ))
+        </div>
+      )
     }
-  </ul>
+  </div>
 </Page>
 
 <style>
+  .accueil {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .meta {
+    margin: 0.55rem 0 2rem;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
   .liste {
     list-style: none;
+    margin: 0;
     padding: 0;
   }
   .liste li {
-    border-top: 1px solid var(--trait);
-    padding: 1.5rem 0;
+    border-top: 1px solid var(--rule);
+    padding: 1.6rem 0;
   }
-  .liste h2 {
-    margin: 0 0 0.2rem;
-  }
-  .liste a {
+  .liste .titre {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    line-height: 1.15;
+    color: var(--ink);
     text-decoration: none;
   }
-  .liste p {
-    margin: 0.2rem 0 0;
+  .liste .titre:hover {
+    text-decoration: underline;
+  }
+  .liste .sous-titre {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+  .liste .pays {
+    margin: 0.35rem 0 0;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--faint);
+  }
+  .liste .periode {
+    margin: 0.35rem 0 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--faint);
+  }
+  .liste .chiffres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.8rem;
+    margin: 1.1rem 0 0;
+  }
+  .liste .chiffres div {
+    margin: 0;
+  }
+  .liste dt {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+  }
+  .liste dd {
+    margin: 0.15rem 0 0;
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+
+  .sous-carte {
+    margin: 0.5rem 0 0;
+    text-align: right;
+  }
+
+  /* Deux colonnes au-delà de 1024 pixels : la liste tient en 440 px, la carte
+     prend le reste et toute la hauteur. */
+  @media (min-width: 64rem) {
+    .accueil {
+      grid-template-columns: 27.5rem minmax(0, 1fr);
+      gap: 3rem;
+      align-items: start;
+    }
+    .colonne-carte {
+      position: sticky;
+      top: 1.5rem;
+    }
+    .colonne-carte :global(.carte) {
+      --hauteur: calc(100vh - 8rem);
+    }
   }
 </style>

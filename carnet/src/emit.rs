@@ -603,6 +603,9 @@ pub fn rapport_traces(
             println!("  Quota épuisé ; relancer le build demain calculera le reste.");
         }
         println!("  Les tronçons concernés restent droits, et le cache garde le reste.");
+        for ligne in &itineraires.refus_details {
+            println!("    {ligne}");
+        }
     }
     println!(
         "  transits entre camps : {} calculés, {} en échec",

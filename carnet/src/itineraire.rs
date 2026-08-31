@@ -18,8 +18,16 @@ use crate::track::Mode;
 /// Variable d'environnement portant la clé OpenRouteService.
 pub const VARIABLE_CLE: &str = "CARNET_ORS_CLE";
 
+/// Adresse du moteur d’itinéraire.
+///
+/// `api.openrouteservice.org` est dépréciée depuis avril 2026 au profit de
+/// `api.heigit.org`, qui regroupe toutes les API de HeiGIT sous la forme
+/// `<service>/<version>`. L’ancienne adresse a d’abord continué à répondre,
+/// puis a vu son quota raboté, et elle rend désormais un 403 sec, sans corps,
+/// alors que le tableau de bord affiche un quota intact : rien dans la
+/// réponse ne dit que l’adresse est en cause. La clé, elle, ne change pas.
 fn url_ors(profil: &str) -> String {
-    format!("https://api.openrouteservice.org/v2/directions/{profil}/geojson")
+    format!("https://api.heigit.org/openrouteservice/v2/directions/{profil}/geojson")
 }
 
 /// Pause entre deux appels réseau. Le palier gratuit d'OpenRouteService
@@ -111,6 +119,9 @@ pub struct Itineraires {
     /// compte que les succès : sans ce décompte, quarante-huit appels refusés
     /// se lisaient « 0 appel réseau », indistinguables d’un cache complet.
     pub refus_par_code: BTreeMap<u16, usize>,
+    /// Les premières demandes refusées, en clair. Un code seul ne dit pas
+    /// quoi corriger ; ces lignes se rejouent à la main contre l’API.
+    pub refus_details: Vec<String>,
     /// Appels refusés par le moteur. Les appelants retombent sur le trait
     /// droit sans lever d’erreur : sans ce compteur, cent refus passaient
     /// pour cent tronçons qu’on n’avait pas cherché à calculer.
@@ -171,6 +182,7 @@ impl Itineraires {
             manques: 0,
             refus: 0,
             refus_par_code: BTreeMap::new(),
+            refus_details: Vec::new(),
             quota_epuise: false,
         })
     }
@@ -245,6 +257,21 @@ impl Itineraires {
                 // partent quand même.
                 *self.refus_par_code.entry(code).or_default() += 1;
                 self.refus += 1;
+                if self.refus_details.len() < 8 {
+                    self.refus_details.push(format!(
+                        "{code} {} {:.5},{:.5} -> {:.5},{:.5}{}",
+                        mode.nom(),
+                        depart.lat,
+                        depart.lon,
+                        arrivee.lat,
+                        arrivee.lon,
+                        if passages.is_empty() {
+                            String::new()
+                        } else {
+                            format!(" ({} passages)", passages.len())
+                        }
+                    ));
+                }
                 return Ok(Resolution::Indisponible);
             }
             Err(autre) => return Err(autre),
@@ -362,6 +389,7 @@ mod tests {
             manques: 0,
             refus: 0,
             refus_par_code: BTreeMap::new(),
+            refus_details: Vec::new(),
             quota_epuise: false,
         };
         for mode in [Mode::Bateau, Mode::Train, Mode::Telepherique] {
@@ -398,6 +426,7 @@ mod tests {
             manques: 0,
             refus: 0,
             refus_par_code: BTreeMap::new(),
+            refus_details: Vec::new(),
             quota_epuise: false,
         };
         let resolution = itineraires
@@ -418,6 +447,7 @@ mod tests {
             manques: 0,
             refus: 0,
             refus_par_code: BTreeMap::new(),
+            refus_details: Vec::new(),
             quota_epuise: false,
         };
         let resolution = itineraires

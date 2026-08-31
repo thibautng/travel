@@ -44,7 +44,7 @@
       8.274700000000001,
       48.59696666666667
     ],
-    "distance_trace_km": 49.0,
+    "distance_trace_km": 57.6,
     "modes": [
       "route",
       "marche"
@@ -99,7 +99,7 @@
       11.255994444444445,
       47.49968611111111
     ],
-    "distance_trace_km": 44.5,
+    "distance_trace_km": 46.5,
     "modes": [
       "route",
       "marche"
@@ -179,11 +179,11 @@
     "couverture": "IMG20260730085841",
     "bbox": [
       13.015294444444445,
-      47.63757777777778,
+      47.63723265217604,
       13.051808333333334,
       47.80021111111111
     ],
-    "distance_trace_km": 30.0,
+    "distance_trace_km": 30.7,
     "modes": [
       "route",
       "marche",
@@ -264,7 +264,7 @@
       13.648,
       46.250708333333336
     ],
-    "distance_trace_km": 12.8,
+    "distance_trace_km": 13.6,
     "modes": [
       "route",
       "marche"
@@ -291,7 +291,7 @@
       13.7496,
       46.439024999999994
     ],
-    "distance_trace_km": 15.7,
+    "distance_trace_km": 28.0,
     "modes": [
       "route"
     ],
@@ -362,11 +362,11 @@
     "couverture": "IMG20260806104415",
     "bbox": [
       12.280108333333335,
-      46.73309444444445,
+      46.72982589665112,
       12.6868,
       46.785399999999996
     ],
-    "distance_trace_km": 52.8,
+    "distance_trace_km": 55.6,
     "modes": [
       "velo",
       "train"
@@ -475,7 +475,7 @@
       11.670883333333332,
       46.543680555555554
     ],
-    "distance_trace_km": 36.2,
+    "distance_trace_km": 37.9,
     "modes": [
       "route",
       "marche",
@@ -504,7 +504,7 @@
       11.534908333333334,
       46.53241944444444
     ],
-    "distance_trace_km": 122.1,
+    "distance_trace_km": 122.2,
     "modes": [
       "route",
       "marche"
@@ -559,7 +559,7 @@
       7.3568999999999996,
       45.60854444444445
     ],
-    "distance_trace_km": 3.2,
+    "distance_trace_km": 3.4,
     "modes": [
       "marche"
     ],
